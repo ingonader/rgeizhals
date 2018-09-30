@@ -78,3 +78,25 @@ get_prices <- function(detailpagehtml) {
   return(ret)
 }
 #get_prices(detailpagehtml)
+
+#' Title
+#'
+#' @param detailpagehtml
+#'
+#' @return
+#' @export
+#'
+#' @examples
+get_price_summary <- function(detailpagehtml) {
+  prices <- get_prices(detailpagehtml = detailpagehtml)
+  ## sort (just in case):
+  prices <- sort(prices)
+  ## return summary:
+  ret_val <- c(min(prices), prices[2], prices[3], median(prices))
+  ret_key <- c("price_min", "price_2nd_min", "price_3rd_min", "price_median")
+  ret <- tibble::tibble(
+    key = ret_key,
+    value = ret_val
+  )
+  return(ret)
+}

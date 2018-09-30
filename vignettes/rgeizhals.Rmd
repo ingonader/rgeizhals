@@ -104,5 +104,9 @@ get_keyval_tbl(detailpagehtml)
 ## get prices (first page):
 get_prices(detailpagehtml)
 
+## get summary of prices (first page):
+get_price_summary(detailpagehtml)
+
+
 ```
 
