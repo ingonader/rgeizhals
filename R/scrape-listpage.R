@@ -119,3 +119,36 @@ get_single_listpage <- function(listpagehtml) {
   )
   return(ret)
 }
+
+
+#' Title
+#'
+#' @param listpagehtml
+#'
+#' @return
+#' @export
+#'
+#' @examples
+read_next_listpage <- function(listpagehtml) {
+  ## check if there is another page left:
+  nextpage <- listpagehtml %>% rvest::html_node(css = ".gh_pag_next_active") %>%
+    rvest::html_text()
+  ## result: either "vor »", or NA if no page is available.
+
+  if (is.na(nextpage)) ## no next page available
+    return(NA)
+
+  ## get url link for next page:
+  nextlistpageurl <- listpagehtml %>% rvest::html_node(css = ".gh_pag_next_active") %>%
+    rvest::html_attr("href")
+
+  ## add domain (replace "." with geizhals domain::
+  nextlistpageurl <- stringr::str_replace( nextlistpageurl, "^\\.", "https://geizhals.at")
+
+  ## read html of that url and return it:
+  nextlistpagehtml <- xml2::read_html(nextlistpageurl)
+  return(nextlistpagehtml)
+}
+# get_single_listpage(listpagehtml)
+# read_next_listpage(listpagehtml) %>% get_single_listpage()
+# read_next_listpage(listpagehtml) %>% read_next_listpage()
