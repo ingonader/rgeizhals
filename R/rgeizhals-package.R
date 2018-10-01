@@ -4,8 +4,6 @@
 #'
 #' @docType package
 #' @name rgeizhals
-#' @importFrom magrittr %>%
-#' @importFrom magrittr %<>%
 #' @keywords internal
 "_PACKAGE"
 NULL

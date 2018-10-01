@@ -11,7 +11,8 @@ Imports:
     purrr,
     rvest,
     stringr,
-    dplyr
+    dplyr,
+    tibble
 Suggests:
     knitr,
     rmarkdown,
