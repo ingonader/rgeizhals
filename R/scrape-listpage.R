@@ -152,3 +152,49 @@ read_next_listpage <- function(listpagehtml) {
 # get_single_listpage(listpagehtml)
 # read_next_listpage(listpagehtml) %>% get_single_listpage()
 # read_next_listpage(listpagehtml) %>% read_next_listpage()
+
+#' Title
+#'
+#' @param firstlistpageurl
+#' @param max_pages
+#'
+#' @return
+#' @export
+#'
+#' @examples
+read_all_listpages <- function(firstlistpageurl, max_pages = 10) {
+  ## initialize list to store all htmls:
+  listpagehtml_list <- list()
+
+  ## get first listpage html:
+  listpagehtml_list[[1]] <- xml2::read_html(firstlistpageurl)
+
+  i <- 1
+  nextlistpagehtml <- read_next_listpage(listpagehtml_list[[i]])
+  while ((!is.na(nextlistpagehtml)) & (i < max_pages)) {
+    ## increase counter variable:
+    i <- i + 1
+
+    ## store page in list:
+    listpagehtml_list[[i]] <- nextlistpagehtml
+
+    ## read next page:
+    nextlistpagehtml <- read_next_listpage(listpagehtml_list[[i]])
+    print(i)
+  }
+  return(listpagehtml_list)
+}
+# listpagehtml_list <- read_all_listpages(url_geizhals)
+# str(listpagehtml_list)
+
+#' Title
+#'
+#' @param listpagehtml_list
+#'
+#' @return
+#' @export
+#'
+#' @examples
+get_all_listpages <- function(listpagehtml_list) {
+  purrr::map(listpagehtml_list, get_single_listpage) %>% dplyr::bind_rows()
+}
