@@ -10,8 +10,8 @@
 #' @examples
 get_detailpage_categories <- function(detailpagehtml) {
   ret <- detailpagehtml %>%
-    html_nodes(css = ".gh-data-table__key") %>%
-    html_text()
+    rvest::html_nodes(css = ".gh-data-table__key") %>%
+    rvest::html_text()
   return(ret)
 }
 #get_detailpage_categories(detailpagehtml)
@@ -31,7 +31,8 @@ get_keyval_tbl <- function(detailpagehtml) {
 
   ## get text of all table rows (some containing keys, some not):
   keys_value_text_all <- detailpagehtml %>%
-    html_nodes(css = ".gh-data-table__row") %>% html_text()
+    rvest::html_nodes(css = ".gh-data-table__row") %>%
+    rvest::html_text()
 
   ## get keyval-text that contain keys:
   keys_value_text_sel <- stringr::str_subset(keys_value_text_all, paste(keys_from_table, collapse = "|"))
@@ -66,8 +67,8 @@ get_keyval_tbl <- function(detailpagehtml) {
 get_prices <- function(detailpagehtml) {
   ## get prices:
   ret <- detailpagehtml %>%
-    html_nodes(css = ".offer__price") %>%            ## get prices
-    html_text()
+    rvest::html_nodes(css = ".offer__price") %>%            ## get prices
+    rvest::html_text()
   ## remove first entry (table header):
   ret <- ret[-1]
 
@@ -92,7 +93,7 @@ get_price_summary <- function(detailpagehtml) {
   ## sort (just in case):
   prices <- sort(prices)
   ## return summary:
-  ret_val <- c(min(prices), prices[2], prices[3], median(prices))
+  ret_val <- c(min(prices), prices[2], prices[3], stats::median(prices))
   ret_key <- c("price_min", "price_2nd_min", "price_3rd_min", "price_median")
   ret <- tibble::tibble(
     key = ret_key,
