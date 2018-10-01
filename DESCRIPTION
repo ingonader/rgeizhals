@@ -10,7 +10,8 @@ LazyData: true
 Imports:
     purrr,
     rvest,
-    stringr
+    stringr,
+    dplyr
 Suggests:
     knitr,
     rmarkdown,

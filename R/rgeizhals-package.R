@@ -1,0 +1,14 @@
+#' \code{rgeizhals} package
+#'
+#' Scrapes www.geizhals.at pages
+#'
+#' @docType package
+#' @name rgeizhals
+#' @importFrom magrittr %>%
+#' @importFrom magrittr %<>%
+#' @keywords internal
+"_PACKAGE"
+NULL
+
+## quiets concerns of R CMD check re: the .'s that appear in pipelines
+if(getRversion() >= "2.15.1") utils::globalVariables(c("."))
