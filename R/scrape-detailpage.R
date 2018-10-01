@@ -101,3 +101,26 @@ get_price_summary <- function(detailpagehtml) {
   )
   return(ret)
 }
+
+#' Title
+#'
+#' @param detailpagehtml
+#'
+#' @return
+#' @export
+#'
+#' @examples
+get_single_detailpage <- function(detailpagehtml) {
+  ## get data:
+  ret_keyval <- get_keyval_tbl(detailpagehtml)
+  ret_price_summary <- get_price_summary(detailpagehtml)
+
+  ## modify data types (all character, currently):
+  ret_price_summary[["value"]] <- as.character(ret_price_summary[["value"]])
+  ret <- dplyr::bind_rows(
+    ret_keyval,
+    ret_price_summary
+  )
+  return(ret)
+}
+

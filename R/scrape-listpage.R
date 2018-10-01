@@ -101,3 +101,21 @@ get_detailpage_urls <- function(listpagehtml) {
 }
 #get_detailpage_urls(listpagehtml)
 
+#' Title
+#'
+#' @param listpagehtml
+#'
+#' @return
+#' @export
+#'
+#' @examples
+get_single_listpage <- function(listpagehtml) {
+  ret <- tibble::tibble(
+    prodname = get_product_names(listpagehtml),
+    rating = get_ratings(listpagehtml),
+    rating_n = get_ratings_n(listpagehtml),
+    offers_n = get_offers_n(listpagehtml),
+    detailpage_url = get_detailpage_urls(listpagehtml)
+  )
+  return(ret)
+}
