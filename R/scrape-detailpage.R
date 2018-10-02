@@ -124,3 +124,59 @@ get_single_detailpage <- function(detailpagehtml) {
   return(ret)
 }
 
+
+
+#' Title
+#'
+#' @param detailpageurls
+#'
+#' @return
+#' @export
+#'
+#' @examples
+read_all_detailpage_html <- function(detailpageurls) {
+  ## get html for all urls:
+  ret <- list(
+    url = detailpageurls,
+    html = purrr::map(detailpageurls, xml2::read_html)
+  )
+  return(ret)
+}
+
+#' Title
+#'
+#' @param detailpagehtml_list
+#'
+#' @return
+#' @export
+#'
+#' @examples
+get_all_detailpages <- function(detailpagehtml_list) {
+  ## get detailpage tibble:
+  singlepage_list <- purrr::map(detailpagehtml_list$html, get_single_detailpage)
+
+  ## add url to tibble (to serve as join key later):
+  singlepage_list_with_url <- purrr::map2(singlepage_list, detailpagehtml_list$url, ~ dplyr::bind_rows(
+    tibble::tibble(key = "url", value = .y),
+    .x
+  ))
+
+  ## get a list of all keys in all of the detailpage tibbles:
+  all_keys <- purrr::map(singlepage_list_with_url, ~ .x[["key"]]) %>%
+    unlist() %>% unique()
+
+  ## build tibble by joining all detailpage tibbles to key-tibble,
+  ## and transposing wide->long:
+  detaildat_wide <- tibble::tibble(key = all_keys)
+  detaildat_long <- NULL
+  # detaildat_wide_1 <- dplyr::left_join(detaildat_wide,
+  #                                      singlepage_list_with_url[[1]],
+  #                                      by = "key")
+  for (i in seq_along(singlepage_list_with_url)) {
+    detaildat_wide_tmp <- dplyr::left_join(detaildat_wide, singlepage_list_with_url[[i]], by = "key")
+    detaildat_long_tmp <- tidyr::spread(detaildat_wide_tmp, key = "key", value = "value")
+    detaildat_long <- dplyr::bind_rows(detaildat_long, detaildat_long_tmp)
+  }
+  return(detaildat_long)
+}
+#get_all_detailpages(detailpagehtml_list)
