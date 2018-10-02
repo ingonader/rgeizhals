@@ -1,15 +1,18 @@
-
-#' Returns all product names of a single geizhals html page of search results.
+#' Get product names from geizhals search
+#'
+#' Returns all product names in a geizhals search results page. The order
+#' might not correspond to the order listed on the webpage, but it is
+#' the same order in all related functions.
 #'
 #' @param listpagehtml html structure from a single geizhals page of search
 #'   results as gathered via \code{xml2::read_html()} or via a single entry
 #'   of the list of search pages resulting from \code{read_all_listpages}.
-#'   \code{}
 #'
 #' @return A character vector of the product names appearing in the search
 #'   results.
 #'
 #' @examples
+#' \dontrun{
 #' ## get html of a geizhals search page via read_html():
 #' url_geizhals <- "https://geizhals.at/?cat=hwaeschtr&xf=1027_W%E4rmepumpentrockner%7E1296_10%7E1747_8%7E7641_40%7E7653_9"
 #' listpagehtml <- xml2::read_html(url_geizhals)
@@ -18,6 +21,7 @@
 #' ## get html of multiple geizhals search pages:
 #' listpagehtml_list <- read_all_listpages(url_geizhals)
 #' get_product_names(listpagehtml_list[[1]])
+#' }
 #'
 #' @export
 get_product_names <- function(listpagehtml) {
@@ -30,8 +34,6 @@ get_product_names <- function(listpagehtml) {
   ret <- ret[-1]
   return(ret)
 }
-#get_product_names(listpagehtml)
-
 
 #' Title
 #'
@@ -76,14 +78,33 @@ get_ratings_n <- function(listpagehtml) {
 #get_ratings_n(listpagehtml)
 
 
-#' Title
+
+#' Get numbers of offers from geizhals search
 #'
-#' @param listpagehtml
+#' Returns the numbers of offers for a product in a single geizhals
+#' html page of search results. The order
+#' might not correspond to the order listed on the webpage, but it is
+#' the same order in all related functions.
 #'
-#' @return
-#' @export
+#' @inheritParams get_product_names
+#'
+#' @return A numeric vector containing the number of offers in the same
+#'   order of the products as appearing in the search results returned from
+#'   \code{get_product_names}.
 #'
 #' @examples
+#' \dontrun{
+#' ## get html of a geizhals search page via read_html():
+#' url_geizhals <- "https://geizhals.at/?cat=hwaeschtr&xf=1027_W%E4rmepumpentrockner%7E1296_10%7E1747_8%7E7641_40%7E7653_9"
+#' listpagehtml <- xml2::read_html(url_geizhals)
+#' get_offers_n(listpagehtml)
+#'
+#' ## get html of multiple geizhals search pages:
+#' listpagehtml_list <- read_all_listpages(url_geizhals)
+#' get_offers_(listpagehtml_list[[1]])
+#' }
+#'
+#' @export
 get_offers_n <- function(listpagehtml) {
   ## get relevant parts of html:
   ret <- listpagehtml %>% rvest::html_nodes(css = ".productlist__offerscount--standard") %>%
