@@ -1,12 +1,25 @@
 
-#' Title
+#' Returns all product names of a single geizhals html page of search results.
 #'
-#' @param listpagehtml
+#' @param listpagehtml html structure from a single geizhals page of search
+#'   results as gathered via \code{xml2::read_html()} or via a single entry
+#'   of the list of search pages resulting from \code{read_all_listpages}.
+#'   \code{}
 #'
-#' @return
-#' @export
+#' @return A character vector of the product names appearing in the search
+#'   results.
 #'
 #' @examples
+#' ## get html of a geizhals search page via read_html():
+#' url_geizhals <- "https://geizhals.at/?cat=hwaeschtr&xf=1027_W%E4rmepumpentrockner%7E1296_10%7E1747_8%7E7641_40%7E7653_9"
+#' listpagehtml <- xml2::read_html(url_geizhals)
+#' get_product_names(listpagehtml)
+#'
+#' ## get html of multiple geizhals search pages:
+#' listpagehtml_list <- read_all_listpages(url_geizhals)
+#' get_product_names(listpagehtml_list[[1]])
+#'
+#' @export
 get_product_names <- function(listpagehtml) {
   ## get relevant parts of html:
   ret <- listpagehtml %>% rvest::html_nodes(css = ".productlist__item.productlist__name") %>%
@@ -180,7 +193,6 @@ read_all_listpages <- function(firstlistpageurl, max_pages = 10) {
 
     ## read next page:
     nextlistpagehtml <- read_next_listpage(listpagehtml_list[[i]])
-    print(i)
   }
   return(listpagehtml_list)
 }
