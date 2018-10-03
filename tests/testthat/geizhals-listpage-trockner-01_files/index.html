@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)https://s0.2mdn.net/4386879/1523273574675/index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="ad.size" content="width=728,height=90"><title>aeg-electrolux-728x90-AT</title><script src="./banner.js" type="text/javascript"></script><script src="./banner.loader.js" type="text/javascript"></script><script src="./banner.animation.js" type="text/javascript"></script><script type="text/javascript">var banner = new Banner();</script><script type="text/javascript">var clickTag = "https://www.google.com";</script><link rel="stylesheet" href="./style.css"><script type="text/javascript">
+    
+      (function() {
+        var relegateNavigation = '';
+        var handleClickTagMessage = function(e) {
+          try {
+            var eventData = JSON.parse(e.data);
+          } catch (err) {
+            return;
+          }
+          if (eventData.isInitClickTag) {
+            if (eventData.clickTags) {
+              for (var i = 0; i < eventData.clickTags.length; i++) {
+                var clkTag = eventData.clickTags[i];
+                window[clkTag.name] = clkTag.url;
+              }
+            } else if (eventData.clickTag) {
+              window.clickTag = eventData.clickTag;
+            }
+            relegateNavigation = eventData.relegateNavigation;
+          }
+        };
+
+        if (open.call) {
+          window.open = function(open) {
+            return function(url, name, features) {
+              if (relegateNavigation === 'parent') {
+                var message = {'clickTag': url, 'isPostClickTag': true};
+                parent.postMessage(JSON.stringify(message), '*');
+              } else {
+                var args = [url, name];
+                if (features) {
+                  args.push(features);
+                }
+                open.apply(window, args);
+              }
+            };
+          }(window.open);
+        }
+
+        if (window.addEventListener) {
+          window.addEventListener(
+              'message', handleClickTagMessage, false);
+        } else {
+          window.attachEvent('onmessage', handleClickTagMessage);
+        }
+      })();
+    
+  </script><script type="text/javascript" src="./TweenLite.min.js"></script><script type="text/javascript" src="./TimelineLite.min.js"></script><script type="text/javascript" src="./CSSPlugin.min.js"></script><script type="text/javascript" src="./EasePack.min.js"></script></head><body><div class="banner"><div class="preloader" style="visibility: hidden; opacity: 0;"><div class="circle"></div></div><div class="border"></div><div id="BG1" style="background-size: 100% 100%; background-position: center center; background-repeat: no-repeat; height: 90px; width: 728px; top: 0px; left: 0px; position: absolute; background-image: url(&quot;https://s0.2mdn.net/4386879/1523273574675/images/bg1.jpg&quot;); transform: matrix(1.15, 0, 0, 1.15, 0, 0); visibility: hidden; opacity: 0;"><div id="BLACK" style="top: 0px; left: 0px; position: absolute; z-index: 10; background-color: rgb(0, 0, 0); height: 90px; width: 728px; visibility: hidden; opacity: 0;"></div><div id="BLACK-RADIENT" style="top: -50px; left: -10px; position: absolute; z-index: 10; height: 150px; width: 900px; visibility: hidden; opacity: 0; background: radial-gradient(transparent 0%, black, black, black); transform: matrix(3, 0, 0, 3, 0, 0);"></div></div><div id="BG2" style="background-size: 100% 100%; background-position: center center; background-repeat: no-repeat; height: 90px; width: 728px; top: 0px; left: 0px; position: absolute; background-image: url(&quot;https://s0.2mdn.net/4386879/1523273574675/images/bg2.jpg&quot;); visibility: hidden; opacity: 0; transform-origin: center top 0px; transform: matrix(1.25, 0, 0, 1.25, 0, 0);"></div><div id="BG3" style="background-size: 100% 100%; background-position: center center; background-repeat: no-repeat; height: 90px; width: 912px; top: 0px; left: 0px; position: absolute; background-image: url(&quot;https://s0.2mdn.net/4386879/1523273574675/images/bg3.jpg&quot;); visibility: inherit; opacity: 1; transform: matrix(1.1, 0, 0, 1.1, -137, 0);"></div><div id="COPY-MASK1" style="background-size: 100% 100%; background-position: center center; background-repeat: no-repeat; height: 16px; width: 0px; top: 50%; left: 50%; position: absolute; background-image: none; overflow: hidden; margin-left: -149px; margin-top: -8px; visibility: hidden; opacity: 0; transform: matrix(1, 0, 0, 1, 248, 0);"><div id="COPY1" style="background-size: 100% 100%; background-position: center center; background-repeat: no-repeat; height: 16px; width: 299px; top: 0px; left: 0px; position: absolute; background-image: url(&quot;https://s0.2mdn.net/4386879/1523273574675/images/copy1.png&quot;); transform: matrix(1, 0, 0, 1, -248, 0);"></div></div><div id="COPY-MASK2" style="background-size: 100% 100%; background-position: center center; background-repeat: no-repeat; height: 60px; width: 0px; top: 50%; left: 193px; position: absolute; background-image: none; overflow: hidden; margin-top: -30px; visibility: hidden; opacity: 0; transform: matrix(1, 0, 0, 1, 112, 0);"><div id="COPY2" style="background-size: 100% 100%; background-position: center center; background-repeat: no-repeat; height: 60px; width: 224px; top: 0px; left: 0px; position: absolute; background-image: url(&quot;https://s0.2mdn.net/4386879/1523273574675/images/copy2.png&quot;); transform: matrix(1, 0, 0, 1, -112, 0);"></div></div><div id="COPY-MASK3" style="background-size: 100% 100%; background-position: center center; background-repeat: no-repeat; height: 38px; width: 0px; top: 50%; left: 193px; position: absolute; background-image: none; overflow: hidden; margin-top: -19px; visibility: hidden; opacity: 0; transform: matrix(1, 0, 0, 1, 186, 0);"><div id="COPY3" style="background-size: 100% 100%; background-position: center center; background-repeat: no-repeat; height: 38px; width: 218px; top: 0px; left: 0px; position: absolute; background-image: url(&quot;https://s0.2mdn.net/4386879/1523273574675/images/copy3.png&quot;); transform: matrix(1, 0, 0, 1, -186, 0);"></div></div><div style="background-size: 100% 100%; background-position: center center; background-repeat: no-repeat; height: 16px; width: 42px; top: 21px; left: 19px; position: absolute; z-index: 100; background-image: url(&quot;https://s0.2mdn.net/4386879/1523273574675/images/logo.png&quot;);"></div><div id="GENRAL-CONTAINER-CTA" style="top: 50%; left: 7px; position: absolute; height: 69px; width: 136px; margin-top: -34px; box-shadow: rgb(207, 19, 47) 0px 0px 150px 40px; visibility: hidden; opacity: 0;"></div><div id="CTA" style="top: 50%; left: 165px; position: absolute; overflow: hidden; height: 69px; width: 168px; margin-top: -34px;"><div id="CTA-SHINE" style="background-size: 100% 100%; background-position: center center; background-repeat: no-repeat; height: 75px; width: 188px; top: 0px; left: -160px; position: absolute; z-index: 3; background-image: url(&quot;https://s0.2mdn.net/4386879/1523273574675/images/cta-red-shine.png&quot;); visibility: inherit; opacity: 0.4; transform: matrix(1, 0, 0, 1, 400, 0);"></div><div id="CTA-BG" style="top: 0px; left: 0px; position: absolute; z-index: 2; overflow: hidden; height: 165px; width: 350px; background: linear-gradient(100deg, rgb(24, 27, 29) 50%, transparent);"><div id="CTA-IMAGE" style="background-size: 100% 100%; background-position: center center; background-repeat: no-repeat; height: 47px; width: 127px; top: 11px; left: 20px; position: absolute; background-image: url(&quot;https://s0.2mdn.net/4386879/1523273574675/images/cta.png&quot;);"></div></div></div><div id="ARROW" style="top: 50%; left: 332px; position: absolute; overflow: hidden; height: 69px; width: 28px; margin-top: -34px;"><div id="ARROW-BG" style="top: 0px; left: 0px; position: absolute; overflow: hidden; height: 165px; width: 84px; background: linear-gradient(130deg, rgb(207, 19, 47) 75%, transparent); visibility: inherit; opacity: 1;"><div id="ARROW-GRADIENT" style="top: -50px; left: 0px; position: absolute; height: 110px; width: 28px; visibility: inherit; opacity: 0.15; background: linear-gradient(transparent, black 20%, transparent);"></div><div id="ARROW-IMAGE" style="background-size: 100% 100%; background-position: center center; background-repeat: no-repeat; height: 8px; width: 5px; top: 30px; left: 11px; position: absolute; background-image: url(&quot;https://s0.2mdn.net/4386879/1523273574675/images/arrow.png&quot;);"></div></div></div></div></body></html>
