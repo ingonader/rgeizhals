@@ -155,15 +155,20 @@ get_single_listpage <- function(listpagehtml) {
 }
 
 
-#' Title
+#' Get url of next listpage
 #'
-#' @param listpagehtml
+#' Returns the url of the next page of listings, or \code{NA} if no more
+#' page is availab.e
 #'
-#' @return
-#' @export
+#' @inheritParams get_product_names
+#'
+#' @return Character vector of length 1 with the full url of the next page
+#'   with product listings, or \code{NA} if no more page is available.
 #'
 #' @examples
-read_next_listpage <- function(listpagehtml) {
+#'
+#' @export
+get_next_listpage_url <- function(listpagehtml) {
   ## check if there is another page left:
   nextpage <- listpagehtml %>% rvest::html_node(css = ".gh_pag_next_active") %>%
     rvest::html_text()
@@ -178,6 +183,23 @@ read_next_listpage <- function(listpagehtml) {
 
   ## add domain (replace "." with geizhals domain::
   nextlistpageurl <- stringr::str_replace( nextlistpageurl, "^\\.", "https://geizhals.at")
+
+  return(nextlistpageurl)
+}
+
+#' Title
+#'
+#' @param listpagehtml
+#'
+#' @return
+#' @export
+#'
+#' @examples
+read_next_listpage <- function(listpagehtml) {
+  ## check if there is another page left and get url:
+  nextlistpageurl <- get_next_listpage_url(listpagehtml)
+  if (is.na(nextlistpageurl)) ## no next page available
+    return(NA)
 
   ## read html of that url and return it:
   nextlistpagehtml <- xml2::read_html(nextlistpageurl)
