@@ -12,7 +12,10 @@ Imports:
     rvest,
     stringr,
     dplyr,
-    tibble
+    tibble,
+    magrittr,
+    tidyr,
+    xml2
 Suggests:
     knitr,
     rmarkdown,
