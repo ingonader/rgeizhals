@@ -2,34 +2,38 @@
 % Please edit documentation in R/scrape-listpage.R
 \name{get_product_names}
 \alias{get_product_names}
-\title{Get product names from geizhals search}
+\title{Get product names from geizhals category page}
 \usage{
 get_product_names(listpagehtml)
 }
 \arguments{
-\item{listpagehtml}{html structure from a single geizhals page of search
-results as gathered via \code{xml2::read_html()} or via a single entry
-of the list of search pages resulting from \code{read_all_listpages}.}
+\item{listpagehtml}{html structure from a single geizhals page listing
+items in a selected category, as gathered via \code{xml2::read_html()}
+or via a single entry of the list of search pages resulting from
+\code{read_all_listpages}.}
 }
 \value{
-A character vector of the product names appearing in the search
-  results.
+A character vector of the product names appearing in the
+  geizhals listing page.
 }
 \description{
-Returns all product names in a geizhals search results page. The order
+Returns all product names in a geizhals page listing all products
+within a specific  category (i.e., not the generic page-wide search from
+the search bar, but the page showing all items within a category. Filters
+might be applied, only results corresponding to that filter will be
+shown and scraped.) The order of items returned by the function
 might not correspond to the order listed on the webpage, but it is
 the same order in all related functions.
 }
 \examples{
-\dontrun{
+
 ## get html of a geizhals search page via read_html():
-url_geizhals <- "https://geizhals.at/?cat=hwaeschtr&xf=1027_W\%E4rmepumpentrockner\%7E1296_10\%7E1747_8\%7E7641_40\%7E7653_9"
+url_geizhals <- "https://geizhals.at/?cat=acam35"
 listpagehtml <- xml2::read_html(url_geizhals)
 get_product_names(listpagehtml)
 
 ## get html of multiple geizhals search pages:
 listpagehtml_list <- read_all_listpages(url_geizhals)
 get_product_names(listpagehtml_list[[1]])
-}
 
 }

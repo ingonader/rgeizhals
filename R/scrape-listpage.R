@@ -1,27 +1,31 @@
-#' Get product names from geizhals search
+#' Get product names from geizhals category page
 #'
-#' Returns all product names in a geizhals search results page. The order
+#' Returns all product names in a geizhals page listing all products
+#' within a specific  category (i.e., not the generic page-wide search from
+#' the search bar, but the page showing all items within a category. Filters
+#' might be applied, only results corresponding to that filter will be
+#' shown and scraped.) The order of items returned by the function
 #' might not correspond to the order listed on the webpage, but it is
 #' the same order in all related functions.
 #'
-#' @param listpagehtml html structure from a single geizhals page of search
-#'   results as gathered via \code{xml2::read_html()} or via a single entry
-#'   of the list of search pages resulting from \code{read_all_listpages}.
+#' @param listpagehtml html structure from a single geizhals page listing
+#'   items in a selected category, as gathered via \code{xml2::read_html()}
+#'   or via a single entry of the list of search pages resulting from
+#'   \code{read_all_listpages}.
 #'
-#' @return A character vector of the product names appearing in the search
-#'   results.
+#' @return A character vector of the product names appearing in the
+#'   geizhals listing page.
 #'
 #' @examples
-#' \dontrun{
+#'
 #' ## get html of a geizhals search page via read_html():
-#' url_geizhals <- "https://geizhals.at/?cat=hwaeschtr&xf=1027_W%E4rmepumpentrockner%7E1296_10%7E1747_8%7E7641_40%7E7653_9"
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
 #' get_product_names(listpagehtml)
 #'
 #' ## get html of multiple geizhals search pages:
 #' listpagehtml_list <- read_all_listpages(url_geizhals)
 #' get_product_names(listpagehtml_list[[1]])
-#' }
 #'
 #' @export
 get_product_names <- function(listpagehtml) {
@@ -35,14 +39,33 @@ get_product_names <- function(listpagehtml) {
   return(ret)
 }
 
-#' Title
+#' Get product ratings from geizhals category page
 #'
-#' @param listpagehtml
+#' Returns all product ratings in a geizhals page listing all products
+#' within a specific  category (i.e., not the generic page-wide search from
+#' the search bar, but the page showing all items within a category. Filters
+#' might be applied, only results corresponding to that filter will be
+#' shown and scraped.) The order of items returned by the function
+#' might not correspond to the order listed on the webpage, but it is
+#' the same order in all related functions.
 #'
-#' @return
-#' @export
+#' @inheritParams get_product_names
+#'
+#' @return A numeric vector of the product ratings appearing in the
+#'   geizhals listing page.
 #'
 #' @examples
+#'
+#' ## get html of a geizhals search page via read_html():
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
+#' listpagehtml <- xml2::read_html(url_geizhals)
+#' get_ratings(listpagehtml)
+#'
+#' ## get html of multiple geizhals search pages:
+#' listpagehtml_list <- read_all_listpages(url_geizhals)
+#' get_ratings(listpagehtml_list[[1]])
+#'
+#' @export
 get_ratings <- function(listpagehtml) {
   ## get relevant parts of html:
   ratings_text <- listpagehtml %>% rvest::html_nodes(css = ".productlist__rating") %>%
@@ -53,16 +76,36 @@ get_ratings <- function(listpagehtml) {
   ret <- ret[-1]
   return(ret)
 }
-#get_ratings(listpagehtml)
 
-#' Title
+
+#' Get number of product ratings from geizhals category page
 #'
-#' @param listpagehtml
+#' Returns the number of product ratings for each product in a
+#' geizhals page listing all products within a specific category
+#' (i.e., not the generic page-wide search from
+#' the search bar, but the page showing all items within a category. Filters
+#' might be applied, only results corresponding to that filter will be
+#' shown and scraped.) The order of items returned by the function
+#' might not correspond to the order listed on the webpage, but it is
+#' the same order in all related functions.
 #'
-#' @return
-#' @export
+#' @inheritParams get_product_names
+#'
+#' @return A numeric vector of the number of product ratings for each item
+#'   appearing in the geizhals listing page.
 #'
 #' @examples
+#'
+#' ## get html of a geizhals search page via read_html():
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
+#' listpagehtml <- xml2::read_html(url_geizhals)
+#' get_ratings_n(listpagehtml)
+#'
+#' ## get html of multiple geizhals search pages:
+#' listpagehtml_list <- read_all_listpages(url_geizhals)
+#' get_ratings_n(listpagehtml_list[[1]])
+#'
+#' @export
 get_ratings_n <- function(listpagehtml) {
   ## get relevant parts of html:
   ratings_text <- listpagehtml %>% rvest::html_nodes(css = ".productlist__rating") %>%
@@ -75,8 +118,6 @@ get_ratings_n <- function(listpagehtml) {
   ret <- ret[-1]
   return(ret)
 }
-#get_ratings_n(listpagehtml)
-
 
 
 #' Get numbers of offers from geizhals search
@@ -95,7 +136,7 @@ get_ratings_n <- function(listpagehtml) {
 #' @examples
 #' \dontrun{
 #' ## get html of a geizhals search page via read_html():
-#' url_geizhals <- "https://geizhals.at/?cat=hwaeschtr&xf=1027_W%E4rmepumpentrockner%7E1296_10%7E1747_8%7E7641_40%7E7653_9"
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
 #' get_offers_n(listpagehtml)
 #'
@@ -115,14 +156,36 @@ get_offers_n <- function(listpagehtml) {
 }
 #get_offers_n(listpagehtml)
 
-#' Title
+
+
+#' Get urls of detail pages for items in geizhals category page
 #'
-#' @param listpagehtml
+#' Returns all urls of links to details pages (product details)
+#' in a geizhals page listing all products within a specific
+#' category (i.e., not the generic page-wide search from
+#' the search bar, but the page showing all items within a category. Filters
+#' might be applied, only results corresponding to that filter will be
+#' shown and scraped.) The order of items returned by the function
+#' might not correspond to the order listed on the webpage, but it is
+#' the same order in all related functions.
 #'
-#' @return
-#' @export
+#' @inheritParams get_product_names
+#'
+#' @return A character vector containing the urls appearing in the
+#'   geizhals listing page.
 #'
 #' @examples
+#'
+#' ## get html of a geizhals search page via read_html():
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
+#' listpagehtml <- xml2::read_html(url_geizhals)
+#' get_detailpage_urls(listpagehtml)
+#'
+#' ## get html of multiple geizhals search pages:
+#' listpagehtml_list <- read_all_listpages(url_geizhals)
+#' get_detailpage_urls(listpagehtml_list[[1]])
+#'
+#' @export
 get_detailpage_urls <- function(listpagehtml) {
   ret <- listpagehtml %>% rvest::html_nodes(css = ".productlist__item.productlist__name") %>%
     rvest::html_nodes(css = "a") %>%
@@ -133,16 +196,37 @@ get_detailpage_urls <- function(listpagehtml) {
   ret <- paste0("https://geizhals.at/", ret)
   return(ret)
 }
-#get_detailpage_urls(listpagehtml)
 
-#' Title
+
+#' Get information from geizhals category page
 #'
-#' @param listpagehtml
+#' Returns information (e.g., product names, product ratings,
+#' number of ratings, detail page urls) listed in a geizhals page that
+#' is listing all products within a specific  category (i.e., not the
+#' generic page-wide search from the search bar, but the page showing
+#' all items within a category. Filters might be applied, only results
+#' corresponding to that filter will be shown and scraped.)
+#' The order of items returned by the function
+#' might not correspond to the order listed on the webpage, but it is
+#' the same order in all related functions.
 #'
-#' @return
-#' @export
+#' @inheritParams get_product_names
+#'
+#' @return A tibble (data.frame) containing all information scraped
+#'   from the geizhals page.
 #'
 #' @examples
+#'
+#' ## get html of a geizhals search page via read_html():
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
+#' listpagehtml <- xml2::read_html(url_geizhals)
+#' get_single_listpage(listpagehtml)
+#'
+#' ## get html of multiple geizhals search pages:
+#' listpagehtml_list <- read_all_listpages(url_geizhals)
+#' get_single_listpage(listpagehtml_list[[1]])
+#'
+#' @export
 get_single_listpage <- function(listpagehtml) {
   ret <- tibble::tibble(
     prodname = get_product_names(listpagehtml),
@@ -167,6 +251,16 @@ get_single_listpage <- function(listpagehtml) {
 #'
 #' @examples
 #'
+#' ## url of next page:
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
+#' listpagehtml <- xml2::read_html(url_geizhals)
+#' get_next_listpage_url(listpagehtml)
+#'
+#' ## or NA if no next page available:
+#' url_geizhals <- "https://geizhals.at/?cat=acam35&pg=3#productlist"
+#' listpagehtml <- xml2::read_html(url_geizhals)
+#' get_next_listpage_url(listpagehtml)
+#'
 #' @export
 get_next_listpage_url <- function(listpagehtml) {
   ## check if there is another page left:
@@ -187,14 +281,31 @@ get_next_listpage_url <- function(listpagehtml) {
   return(nextlistpageurl)
 }
 
-#' Title
+#' Get next listing page html
 #'
-#' @param listpagehtml
+#' Takes the html of a listing page as input, extracts the url for
+#' the next listing page, reads the html and returns it.
 #'
-#' @return
-#' @export
+#' @inheritParams get_product_names
+#'
+#' @return An xml document as returned by \code{xml2::read_html}
 #'
 #' @examples
+#'
+#' ## url of next page:
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
+#' listpagehtml <- xml2::read_html(url_geizhals)
+#'
+#' ## get information from this listing page:
+#' get_single_listpage(listpagehtml)
+#'
+#' ## get next listing page:
+#' read_next_listpage(listpagehtml)
+#'
+#' #' ## get next listing page and get information:
+#' get_single_listpage(read_next_listpage(listpagehtml))
+#'
+#' @export
 read_next_listpage <- function(listpagehtml) {
   ## check if there is another page left and get url:
   nextlistpageurl <- get_next_listpage_url(listpagehtml)
@@ -205,9 +316,8 @@ read_next_listpage <- function(listpagehtml) {
   nextlistpagehtml <- xml2::read_html(nextlistpageurl)
   return(nextlistpagehtml)
 }
-# get_single_listpage(listpagehtml)
-# read_next_listpage(listpagehtml) %>% get_single_listpage()
-# read_next_listpage(listpagehtml) %>% read_next_listpage()
+
+
 
 #' Title
 #'

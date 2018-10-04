@@ -7,9 +7,10 @@
 get_offers_n(listpagehtml)
 }
 \arguments{
-\item{listpagehtml}{html structure from a single geizhals page of search
-results as gathered via \code{xml2::read_html()} or via a single entry
-of the list of search pages resulting from \code{read_all_listpages}.}
+\item{listpagehtml}{html structure from a single geizhals page listing
+items in a selected category, as gathered via \code{xml2::read_html()}
+or via a single entry of the list of search pages resulting from
+\code{read_all_listpages}.}
 }
 \value{
 A numeric vector containing the number of offers in the same
@@ -25,7 +26,7 @@ the same order in all related functions.
 \examples{
 \dontrun{
 ## get html of a geizhals search page via read_html():
-url_geizhals <- "https://geizhals.at/?cat=hwaeschtr&xf=1027_W\%E4rmepumpentrockner\%7E1296_10\%7E1747_8\%7E7641_40\%7E7653_9"
+url_geizhals <- "https://geizhals.at/?cat=acam35"
 listpagehtml <- xml2::read_html(url_geizhals)
 get_offers_n(listpagehtml)
 

@@ -7,9 +7,10 @@
 get_next_listpage_url(listpagehtml)
 }
 \arguments{
-\item{listpagehtml}{html structure from a single geizhals page of search
-results as gathered via \code{xml2::read_html()} or via a single entry
-of the list of search pages resulting from \code{read_all_listpages}.}
+\item{listpagehtml}{html structure from a single geizhals page listing
+items in a selected category, as gathered via \code{xml2::read_html()}
+or via a single entry of the list of search pages resulting from
+\code{read_all_listpages}.}
 }
 \value{
 Character vector of length 1 with the full url of the next page
@@ -20,5 +21,15 @@ Returns the url of the next page of listings, or \code{NA} if no more
 page is availab.e
 }
 \examples{
+
+## url of next page:
+url_geizhals <- "https://geizhals.at/?cat=acam35"
+listpagehtml <- xml2::read_html(url_geizhals)
+get_next_listpage_url(listpagehtml)
+
+## or NA if no next page available:
+url_geizhals <- "https://geizhals.at/?cat=acam35&pg=3#productlist"
+listpagehtml <- xml2::read_html(url_geizhals)
+get_next_listpage_url(listpagehtml)
 
 }

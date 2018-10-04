@@ -2,13 +2,39 @@
 % Please edit documentation in R/scrape-listpage.R
 \name{get_ratings_n}
 \alias{get_ratings_n}
-\title{Title}
+\title{Get number of product ratings from geizhals category page}
 \usage{
 get_ratings_n(listpagehtml)
 }
 \arguments{
-\item{listpagehtml}{}
+\item{listpagehtml}{html structure from a single geizhals page listing
+items in a selected category, as gathered via \code{xml2::read_html()}
+or via a single entry of the list of search pages resulting from
+\code{read_all_listpages}.}
+}
+\value{
+A numeric vector of the number of product ratings for each item
+  appearing in the geizhals listing page.
 }
 \description{
-Title
+Returns the number of product ratings for each product in a
+geizhals page listing all products within a specific category
+(i.e., not the generic page-wide search from
+the search bar, but the page showing all items within a category. Filters
+might be applied, only results corresponding to that filter will be
+shown and scraped.) The order of items returned by the function
+might not correspond to the order listed on the webpage, but it is
+the same order in all related functions.
+}
+\examples{
+
+## get html of a geizhals search page via read_html():
+url_geizhals <- "https://geizhals.at/?cat=acam35"
+listpagehtml <- xml2::read_html(url_geizhals)
+get_ratings_n(listpagehtml)
+
+## get html of multiple geizhals search pages:
+listpagehtml_list <- read_all_listpages(url_geizhals)
+get_ratings_n(listpagehtml_list[[1]])
+
 }

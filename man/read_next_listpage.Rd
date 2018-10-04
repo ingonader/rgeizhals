@@ -2,13 +2,36 @@
 % Please edit documentation in R/scrape-listpage.R
 \name{read_next_listpage}
 \alias{read_next_listpage}
-\title{Title}
+\title{Get next listing page html}
 \usage{
 read_next_listpage(listpagehtml)
 }
 \arguments{
-\item{listpagehtml}{}
+\item{listpagehtml}{html structure from a single geizhals page listing
+items in a selected category, as gathered via \code{xml2::read_html()}
+or via a single entry of the list of search pages resulting from
+\code{read_all_listpages}.}
+}
+\value{
+An xml document as returned by \code{xml2::read_html}
 }
 \description{
-Title
+Takes the html of a listing page as input, extracts the url for
+the next listing page, reads the html and returns it.
+}
+\examples{
+
+## url of next page:
+url_geizhals <- "https://geizhals.at/?cat=acam35"
+listpagehtml <- xml2::read_html(url_geizhals)
+
+## get information from this listing page:
+get_single_listpage(listpagehtml)
+
+## get next listing page:
+read_next_listpage(listpagehtml)
+
+#' ## get next listing page and get information:
+get_single_listpage(read_next_listpage(listpagehtml))
+
 }
