@@ -2,13 +2,27 @@
 % Please edit documentation in R/scrape-listpage.R
 \name{get_all_listpages}
 \alias{get_all_listpages}
-\title{Title}
+\title{Get data from multiple geizhals category pages}
 \usage{
 get_all_listpages(listpagehtml_list)
 }
 \arguments{
-\item{listpagehtml_list}{}
+\item{listpagehtml_list}{List of html structures from a multiple
+geizhals pages, each listing items in a selected category,
+as gathered via \code{read_all_listpages}.}
+}
+\value{
+A tibble (data.frame) containing all information scraped
+  from the geizhals pages.
 }
 \description{
-Title
+Takes a list of html as input, and returns the information in
+tabluar form.
+}
+\examples{
+
+url_geizhals <- "https://geizhals.at/?cat=acam35"
+listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
+get_all_listpages(listpagehtml_list)
+
 }

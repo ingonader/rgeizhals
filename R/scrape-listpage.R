@@ -319,15 +319,33 @@ read_next_listpage <- function(listpagehtml) {
 
 
 
-#' Title
+#' Get html from multiple geizhals category pages
 #'
-#' @param firstlistpageurl
-#' @param max_pages
+#' Given the url of a geizhals page listing all products
+#' within a specific  category (i.e., not the generic page-wide search from
+#' the search bar, but the page showing all items within a category),
+#' the html code from this and the following pages are returned. Filters
+#' might be applied, only results corresponding to that filter will be
+#' returned.
+#' This list is meant to be processed by the \code{\link{get_all_listpages}}
+#' function.
 #'
-#' @return
-#' @export
+#' @param firstlistpageurl Character vector of lenght 1 containting the
+#'   url of a geizhals category page (listing all items of a selected
+#'   category).
+#' @param max_pages Maximal number of pages to be scraped. Default is 10.
+#'
+#' @return A list of xml documents.
+#'
+#' @seealso \code{\link{get_all_listpages}}
 #'
 #' @examples
+#'
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
+#' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
+#' get_all_listpages(listpagehtml_list)
+#'
+#' @export
 read_all_listpages <- function(firstlistpageurl, max_pages = 10) {
   ## initialize list to store all htmls:
   listpagehtml_list <- list()
@@ -349,17 +367,27 @@ read_all_listpages <- function(firstlistpageurl, max_pages = 10) {
   }
   return(listpagehtml_list)
 }
-# listpagehtml_list <- read_all_listpages(url_geizhals)
-# str(listpagehtml_list)
 
-#' Title
+
+#' Get data from multiple geizhals category pages
 #'
-#' @param listpagehtml_list
+#' Takes a list of html as input, and returns the information in
+#' tabluar form.
 #'
-#' @return
-#' @export
+#' @param listpagehtml_list List of html structures from a multiple
+#'   geizhals pages, each listing items in a selected category,
+#'   as gathered via \code{read_all_listpages}.
+#'
+#' @return A tibble (data.frame) containing all information scraped
+#'   from the geizhals pages.
 #'
 #' @examples
+#'
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
+#' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
+#' get_all_listpages(listpagehtml_list)
+#'
+#' @export
 get_all_listpages <- function(listpagehtml_list) {
   purrr::map(listpagehtml_list, get_single_listpage) %>% dplyr::bind_rows()
 }
