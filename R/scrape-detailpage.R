@@ -1,30 +1,65 @@
-
-## get categories:
-#' Title
+#' Get categories in product detail page
 #'
-#' @param detailpagehtml
+#' Returns all categories (titles) in the detailed product
+#' description page. The categories are returned in the order
+#' that they appear in on the page, and the categories might
+#' not be identical on the detailed product description pages
+#' of different products within the same category.
 #'
-#' @return
-#' @export
+#' @param detailpagehtml html structure from a single geizhals page
+#'   listing details of a specific item.
+#'
+#' @return A character vector with the category names listed
+#'   in the specific geizhals page.
 #'
 #' @examples
+#'
+#' ## get data from multiple geizhals category pages:
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
+#' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
+#' dat_listpage <- get_all_listpages(listpagehtml_list)
+#' ## get url of a single detail page and read html:
+#' url_detailpage <- dat_listpage[["detailpage_url"]][1]
+#' detailpagehtml <- xml2::read_html(url_detailpage)
+#' ## get categories:
+#' get_detailpage_categories(detailpagehtml)
+#'
+#' @export
 get_detailpage_categories <- function(detailpagehtml) {
   ret <- detailpagehtml %>%
     rvest::html_nodes(css = ".gh-data-table__key") %>%
     rvest::html_text()
   return(ret)
 }
-#get_detailpage_categories(detailpagehtml)
 
 
-#' Title
+#' Get categories and their values in product detail page
 #'
-#' @param detailpagehtml
+#' Returns all categories (titles) and their values
+#' in the detailed product description page. The categories
+#' are returned in the order that they appear in on the page,
+#' and the categories might not be identical on the detailed
+#' product description pages of different products within
+#' the same category.
 #'
-#' @return
-#' @export
+#' @inheritParams get_detailpage_categories
+#'
+#' @return A tibble (data.frame) with two columns (key and value),
+#'   containing the categories and their values.
 #'
 #' @examples
+#'
+#' ## get data from multiple geizhals category pages:
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
+#' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
+#' dat_listpage <- get_all_listpages(listpagehtml_list)
+#' ## get url of a single detail page and read html:
+#' url_detailpage <- dat_listpage[["detailpage_url"]][1]
+#' detailpagehtml <- xml2::read_html(url_detailpage)
+#' ## get categories and their values:
+#' get_keyval_tbl(detailpagehtml)
+#'
+#' @export
 get_keyval_tbl <- function(detailpagehtml) {
   ## get keys (categories):
   keys_from_table <- get_detailpage_categories(detailpagehtml)
@@ -53,17 +88,31 @@ get_keyval_tbl <- function(detailpagehtml) {
   ret <- ret[!duplicated(ret), ]
   return(ret)
 }
-#get_keyval_tbl(detailpagehtml)
 
 
-#' Title
+
+#' Get price list in product detail page
 #'
-#' @param detailpagehtml
+#' Returns all price values from the price list
+#' in the detailed product description page.
 #'
-#' @return
-#' @export
+#' @inheritParams get_detailpage_categories
+#'
+#' @return A numeric vector containing the prices.
 #'
 #' @examples
+#'
+#' ## get data from multiple geizhals category pages:
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
+#' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
+#' dat_listpage <- get_all_listpages(listpagehtml_list)
+#' ## get url of a single detail page and read html:
+#' url_detailpage <- dat_listpage[["detailpage_url"]][1]
+#' detailpagehtml <- xml2::read_html(url_detailpage)
+#' ## get prices:
+#' get_prices(detailpagehtml)
+#'
+#' @export
 get_prices <- function(detailpagehtml) {
   ## get prices:
   ret <- detailpagehtml %>%
@@ -82,14 +131,36 @@ get_prices <- function(detailpagehtml) {
 #get_prices(detailpagehtml)
 
 
-#' Title
+#' Get a summary of prices in product detail page
 #'
-#' @param detailpagehtml
+#' Returns a summary of all price values from the price list
+#' in the detailed product description page. Currently,
+#' this summary conains the 3 lowest prices (or \code{NA} if
+#' there aren't enough prices on that page), and the median
+#' of all prices.
 #'
-#' @return
-#' @export
+#' @inheritParams get_detailpage_categories
+#'
+#' @return A tibble (data.frame) with two columns (key and value),
+#'   containing the price summary results (key being a descriptive
+#'   key like \code{price_min}, value being the respective summary
+#'   measure of the prices). The value column is of type
+#'   \code{character}, on order to be row-binded to the categories
+#'   and their values (which are also of type \code{character}).
 #'
 #' @examples
+#'
+#' ## get data from multiple geizhals category pages:
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
+#' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
+#' dat_listpage <- get_all_listpages(listpagehtml_list)
+#' ## get url of a single detail page and read html:
+#' url_detailpage <- dat_listpage[["detailpage_url"]][1]
+#' detailpagehtml <- xml2::read_html(url_detailpage)
+#' ## get prices summary:
+#' get_price_summary(detailpagehtml)
+#'
+#' @export
 get_price_summary <- function(detailpagehtml) {
   prices <- get_prices(detailpagehtml = detailpagehtml)
   ## sort (just in case):
@@ -104,14 +175,35 @@ get_price_summary <- function(detailpagehtml) {
   return(ret)
 }
 
-#' Title
+#' Get data from product detail page
 #'
-#' @param detailpagehtml
+#' Returns all categories (titles) and their values
+#' in the detailed product description page, as well as
+#' a summary of all price values from the price list
+#' in the detailed product description page.
 #'
-#' @return
-#' @export
+#' @inheritParams get_detailpage_categories
+#'
+#' @return A tibble (data.frame) with two columns (key and value),
+#'   containing the categories and their values, as well as the
+#'   price summary results (key being a descriptive
+#'   key like \code{price_min}, value being the respective summary
+#'   measure of the prices). The value column is of type
+#'   \code{character}.
 #'
 #' @examples
+#'
+#' ## get data from multiple geizhals category pages:
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
+#' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
+#' dat_listpage <- get_all_listpages(listpagehtml_list)
+#' ## get url of a single detail page and read html:
+#' url_detailpage <- dat_listpage[["detailpage_url"]][1]
+#' detailpagehtml <- xml2::read_html(url_detailpage)
+#' ## get data from detailpage:
+#' get_single_detailpage(detailpagehtml)
+#'
+#' @export
 get_single_detailpage <- function(detailpagehtml) {
   ## get data:
   ret_keyval <- get_keyval_tbl(detailpagehtml)
@@ -127,15 +219,33 @@ get_single_detailpage <- function(detailpagehtml) {
 }
 
 
-
-#' Title
+#' Read html of detailpage urls
 #'
-#' @param detailpageurls
+#' Retreive the html code for a vector of detailpage urls, returning
+#' the urls as well as the html code.
 #'
-#' @return
-#' @export
+#' @param detailpageurls A character vector containing urls to
+#'   sub-pages with detailed product descriptions (as found when following
+#'   a link in the listing page).
+#'
+#' @return A list of length two. The first element, \code{url}, contains
+#'   the vector of urls that was passed to the function. The second list
+#'   element, \code{html}, contains another list with one entry per url,
+#'   containing the html.
 #'
 #' @examples
+#'
+#' ## first, get data from all listing pages:
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
+#' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
+#' dat_listpages <- get_all_listpages(listpagehtml_list)
+#'
+#' ## pick only the the first 3 urls (e.g.):
+#' wch_urls <- dat_listpages$detailpage_url[1:3]
+#' detailpagehtml_list <- read_all_detailpage_html(wch_urls)
+#' detailpagehtml_list
+#'
+#' @export
 read_all_detailpage_html <- function(detailpageurls) {
   ## get html for all urls:
   ret <- list(
@@ -144,6 +254,8 @@ read_all_detailpage_html <- function(detailpageurls) {
   )
   return(ret)
 }
+
+
 
 #' Title
 #'

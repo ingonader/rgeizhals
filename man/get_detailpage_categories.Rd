@@ -2,13 +2,35 @@
 % Please edit documentation in R/scrape-detailpage.R
 \name{get_detailpage_categories}
 \alias{get_detailpage_categories}
-\title{Title}
+\title{Get categories in product detail page}
 \usage{
 get_detailpage_categories(detailpagehtml)
 }
 \arguments{
-\item{detailpagehtml}{}
+\item{detailpagehtml}{html structure from a single geizhals page
+listing details of a specific item.}
+}
+\value{
+A character vector with the category names listed
+  in the specific geizhals page.
 }
 \description{
-Title
+Returns all categories (titles) in the detailed product
+description page. The categories are returned in the order
+that they appear in on the page, and the categories might
+not be identical on the detailed product description pages
+of different products within the same category.
+}
+\examples{
+
+## get data from multiple geizhals category pages:
+url_geizhals <- "https://geizhals.at/?cat=acam35"
+listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
+dat_listpage <- get_all_listpages(listpagehtml_list)
+## get url of a single detail page and read html:
+url_detailpage <- dat_listpage[["detailpage_url"]][1]
+detailpagehtml <- xml2::read_html(url_detailpage)
+## get categories:
+get_detailpage_categories(detailpagehtml)
+
 }

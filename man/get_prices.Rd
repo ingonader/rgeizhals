@@ -2,13 +2,31 @@
 % Please edit documentation in R/scrape-detailpage.R
 \name{get_prices}
 \alias{get_prices}
-\title{Title}
+\title{Get price list in product detail page}
 \usage{
 get_prices(detailpagehtml)
 }
 \arguments{
-\item{detailpagehtml}{}
+\item{detailpagehtml}{html structure from a single geizhals page
+listing details of a specific item.}
+}
+\value{
+A numeric vector containing the prices.
 }
 \description{
-Title
+Returns all price values from the price list
+in the detailed product description page.
+}
+\examples{
+
+## get data from multiple geizhals category pages:
+url_geizhals <- "https://geizhals.at/?cat=acam35"
+listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
+dat_listpage <- get_all_listpages(listpagehtml_list)
+## get url of a single detail page and read html:
+url_detailpage <- dat_listpage[["detailpage_url"]][1]
+detailpagehtml <- xml2::read_html(url_detailpage)
+## get prices:
+get_prices(detailpagehtml)
+
 }

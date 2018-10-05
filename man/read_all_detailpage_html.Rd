@@ -2,13 +2,35 @@
 % Please edit documentation in R/scrape-detailpage.R
 \name{read_all_detailpage_html}
 \alias{read_all_detailpage_html}
-\title{Title}
+\title{Read html of detailpage urls}
 \usage{
 read_all_detailpage_html(detailpageurls)
 }
 \arguments{
-\item{detailpageurls}{}
+\item{detailpageurls}{A character vector containing urls to
+sub-pages with detailed product descriptions (as found when following
+a link in the listing page).}
+}
+\value{
+A list of length two. The first element, \code{url}, contains
+  the vector of urls that was passed to the function. The second list
+  element, \code{html}, contains another list with one entry per url,
+  containing the html.
 }
 \description{
-Title
+Retreive the html code for a vector of detailpage urls, returning
+the urls as well as the html code.
+}
+\examples{
+
+## first, get data from all listing pages:
+url_geizhals <- "https://geizhals.at/?cat=acam35"
+listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
+dat_listpages <- get_all_listpages(listpagehtml_list)
+
+## pick only the the first 3 urls (e.g.):
+wch_urls <- dat_listpages$detailpage_url[1:3]
+detailpagehtml_list <- read_all_detailpage_html(wch_urls)
+detailpagehtml_list
+
 }
