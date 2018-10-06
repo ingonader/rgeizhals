@@ -1,8 +1,8 @@
 context("test-scrape-listpage")
 
-listpagehtml_trockner_01 <- xml2::read_html("geizhals-listpage-trockner-01.html")
-listpagehtml_trockner_02 <- xml2::read_html("geizhals-listpage-trockner-02.html")
-listpagehtml_nas_01 <- xml2::read_html("geizhals-listpage-nas-01.html")
+listpagehtml_trockner_01 <- xml2::read_html("gh-lst-trockn-01.html")
+listpagehtml_trockner_02 <- xml2::read_html("gh-lst-trockn-02.html")
+listpagehtml_nas_01 <- xml2::read_html("gh-lst-nas-01.html")
 
 test_that("next listpage is correctly identified", {
   r <- get_next_listpage_url(listpagehtml_trockner_01)
