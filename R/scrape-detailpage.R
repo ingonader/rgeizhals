@@ -257,14 +257,42 @@ read_all_detailpage_html <- function(detailpageurls) {
 
 
 
-#' Title
+#' Get data from multiple product detail pages
 #'
-#' @param detailpagehtml_list
+#' Returns all categories and their values in a list of
+#' detailed product description pages, as well as
+#' a summary of all price values from the price list
+#' in each of the  detailed product description pages.
+#' In contrast to the \code{get_single_detailpage}
+#' function, the categories describing a product are
+#' the columns, and each product is represented as a
+#' row in the resulting tibble (data.frame).
+#' The tibble has as many columns as there are categories,
+#' if a product doesn't feature all categories in its
+#' description, this column will be \code{NA}.
 #'
-#' @return
-#' @export
+#' @param detailpagehtml_list A list of html structure
+#'   from multiple geizhals page listing details of a
+#'   specific item.
+#'
+#' @return A tibble (data.frame) with as many columns
+#'   as there are distinct categories in all feature
+#'   pages, and as many rows as there are products.
 #'
 #' @examples
+#'
+#' ## get data from multiple geizhals category pages:
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
+#' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
+#' dat_listpage <- get_all_listpages(listpagehtml_list)
+#' ## pick only the three first detailpage urls:
+#' wch_detailpage_urls <- dat_listpage[["detailpage_url"]][1:3]
+#' detailpagehtml_list <- read_all_detailpage_html(wch_detailpage_urls)
+#' ## get data from all detailpages:
+#' dat_detailpages <- get_all_detailpages(detailpagehtml_list)
+#' head(dat_detailpages)
+#'
+#' @export
 get_all_detailpages <- function(detailpagehtml_list) {
   ## get detailpage tibble:
   singlepage_list <- purrr::map(detailpagehtml_list$html, get_single_detailpage)
@@ -293,4 +321,3 @@ get_all_detailpages <- function(detailpagehtml_list) {
   }
   return(detaildat_long)
 }
-#get_all_detailpages(detailpagehtml_list)
