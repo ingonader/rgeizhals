@@ -27,10 +27,11 @@ This list is meant to be processed by the \code{\link{get_all_listpages}}
 function.
 }
 \examples{
-
+\dontrun{
 url_geizhals <- "https://geizhals.at/?cat=acam35"
 listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
 get_all_listpages(listpagehtml_list)
+}
 
 }
 \seealso{

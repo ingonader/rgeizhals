@@ -20,9 +20,10 @@ Takes a list of html as input, and returns the information in
 tabluar form.
 }
 \examples{
-
+\dontrun{
 url_geizhals <- "https://geizhals.at/?cat=acam35"
 listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
 get_all_listpages(listpagehtml_list)
+}
 
 }

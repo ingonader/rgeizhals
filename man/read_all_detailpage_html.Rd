@@ -22,7 +22,7 @@ Retreive the html code for a vector of detailpage urls, returning
 the urls as well as the html code.
 }
 \examples{
-
+\dontrun{
 ## first, get data from all listing pages:
 url_geizhals <- "https://geizhals.at/?cat=acam35"
 listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
@@ -32,5 +32,6 @@ dat_listpages <- get_all_listpages(listpagehtml_list)
 wch_urls <- dat_listpages$detailpage_url[1:3]
 detailpagehtml_list <- read_all_detailpage_html(wch_urls)
 detailpagehtml_list
+}
 
 }

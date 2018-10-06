@@ -20,7 +20,7 @@ Takes the html of a listing page as input, extracts the url for
 the next listing page, reads the html and returns it.
 }
 \examples{
-
+\dontrun{
 ## url of next page:
 url_geizhals <- "https://geizhals.at/?cat=acam35"
 listpagehtml <- xml2::read_html(url_geizhals)
@@ -33,5 +33,5 @@ read_next_listpage(listpagehtml)
 
 #' ## get next listing page and get information:
 get_single_listpage(read_next_listpage(listpagehtml))
-
+}
 }

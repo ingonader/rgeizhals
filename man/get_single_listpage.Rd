@@ -28,7 +28,7 @@ might not correspond to the order listed on the webpage, but it is
 the same order in all related functions.
 }
 \examples{
-
+\dontrun{
 ## get html of a geizhals search page via read_html():
 url_geizhals <- "https://geizhals.at/?cat=acam35"
 listpagehtml <- xml2::read_html(url_geizhals)
@@ -37,5 +37,6 @@ get_single_listpage(listpagehtml)
 ## get html of multiple geizhals search pages:
 listpagehtml_list <- read_all_listpages(url_geizhals)
 get_single_listpage(listpagehtml_list[[1]])
+}
 
 }

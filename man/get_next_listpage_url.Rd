@@ -21,7 +21,7 @@ Returns the url of the next page of listings, or \code{NA} if no more
 page is availab.e
 }
 \examples{
-
+\dontrun{
 ## url of next page:
 url_geizhals <- "https://geizhals.at/?cat=acam35"
 listpagehtml <- xml2::read_html(url_geizhals)
@@ -31,5 +31,6 @@ get_next_listpage_url(listpagehtml)
 url_geizhals <- "https://geizhals.at/?cat=acam35&pg=3#productlist"
 listpagehtml <- xml2::read_html(url_geizhals)
 get_next_listpage_url(listpagehtml)
+}
 
 }

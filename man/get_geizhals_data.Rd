@@ -2,13 +2,31 @@
 % Please edit documentation in R/scrape-geizhals.R
 \name{get_geizhals_data}
 \alias{get_geizhals_data}
-\title{Title}
+\title{Get data from geizhals list and detail pages}
 \usage{
-get_geizhals_data(firstlistpageurl)
+get_geizhals_data(firstlistpageurl, max_pages = 10)
 }
 \arguments{
-\item{firstlistpageurl}{}
+\item{firstlistpageurl}{The url of a single geizhals page listing
+items in a selected category.}
+
+\item{max_pages}{Maximal number of pages to be scraped. Default is 10.}
+}
+\value{
+A tibble (data.frame) with all the infromation in
+  the list page and the corresponding detail pages.
+  Each row corresponds to one product.
 }
 \description{
-Title
+Starting from an url, get the information on all items in this
+list (and the following pages), as well as the information
+in the detail pages that correspond to these items.
+}
+\examples{
+\dontrun{
+url_geizhals <- "https://geizhals.at/?cat=acam35"
+dat_gh <- get_geizhals_data(url_geizhals, max_pages = 1)
+head(dat_gh)
+}
+
 }

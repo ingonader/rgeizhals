@@ -23,7 +23,7 @@ product description pages of different products within
 the same category.
 }
 \examples{
-
+\dontrun{
 ## get data from multiple geizhals category pages:
 url_geizhals <- "https://geizhals.at/?cat=acam35"
 listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
@@ -33,5 +33,6 @@ url_detailpage <- dat_listpage[["detailpage_url"]][1]
 detailpagehtml <- xml2::read_html(url_detailpage)
 ## get categories and their values:
 get_keyval_tbl(detailpagehtml)
+}
 
 }

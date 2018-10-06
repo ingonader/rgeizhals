@@ -30,7 +30,7 @@ if a product doesn't feature all categories in its
 description, this column will be \code{NA}.
 }
 \examples{
-
+\dontrun{
 ## get data from multiple geizhals category pages:
 url_geizhals <- "https://geizhals.at/?cat=acam35"
 listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
@@ -41,5 +41,6 @@ detailpagehtml_list <- read_all_detailpage_html(wch_detailpage_urls)
 ## get data from all detailpages:
 dat_detailpages <- get_all_detailpages(detailpagehtml_list)
 head(dat_detailpages)
+}
 
 }

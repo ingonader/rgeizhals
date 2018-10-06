@@ -13,7 +13,7 @@
 #'   in the specific geizhals page.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' ## get data from multiple geizhals category pages:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
@@ -23,6 +23,7 @@
 #' detailpagehtml <- xml2::read_html(url_detailpage)
 #' ## get categories:
 #' get_detailpage_categories(detailpagehtml)
+#' }
 #'
 #' @export
 get_detailpage_categories <- function(detailpagehtml) {
@@ -48,7 +49,7 @@ get_detailpage_categories <- function(detailpagehtml) {
 #'   containing the categories and their values.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' ## get data from multiple geizhals category pages:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
@@ -58,6 +59,7 @@ get_detailpage_categories <- function(detailpagehtml) {
 #' detailpagehtml <- xml2::read_html(url_detailpage)
 #' ## get categories and their values:
 #' get_keyval_tbl(detailpagehtml)
+#' }
 #'
 #' @export
 get_keyval_tbl <- function(detailpagehtml) {
@@ -101,7 +103,7 @@ get_keyval_tbl <- function(detailpagehtml) {
 #' @return A numeric vector containing the prices.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' ## get data from multiple geizhals category pages:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
@@ -111,6 +113,7 @@ get_keyval_tbl <- function(detailpagehtml) {
 #' detailpagehtml <- xml2::read_html(url_detailpage)
 #' ## get prices:
 #' get_prices(detailpagehtml)
+#' }
 #'
 #' @export
 get_prices <- function(detailpagehtml) {
@@ -149,7 +152,7 @@ get_prices <- function(detailpagehtml) {
 #'   and their values (which are also of type \code{character}).
 #'
 #' @examples
-#'
+#' \dontrun{
 #' ## get data from multiple geizhals category pages:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
@@ -159,6 +162,7 @@ get_prices <- function(detailpagehtml) {
 #' detailpagehtml <- xml2::read_html(url_detailpage)
 #' ## get prices summary:
 #' get_price_summary(detailpagehtml)
+#' }
 #'
 #' @export
 get_price_summary <- function(detailpagehtml) {
@@ -192,7 +196,7 @@ get_price_summary <- function(detailpagehtml) {
 #'   \code{character}.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' ## get data from multiple geizhals category pages:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
@@ -202,6 +206,7 @@ get_price_summary <- function(detailpagehtml) {
 #' detailpagehtml <- xml2::read_html(url_detailpage)
 #' ## get data from detailpage:
 #' get_single_detailpage(detailpagehtml)
+#' }
 #'
 #' @export
 get_single_detailpage <- function(detailpagehtml) {
@@ -234,7 +239,7 @@ get_single_detailpage <- function(detailpagehtml) {
 #'   containing the html.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' ## first, get data from all listing pages:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
@@ -244,6 +249,7 @@ get_single_detailpage <- function(detailpagehtml) {
 #' wch_urls <- dat_listpages$detailpage_url[1:3]
 #' detailpagehtml_list <- read_all_detailpage_html(wch_urls)
 #' detailpagehtml_list
+#' }
 #'
 #' @export
 read_all_detailpage_html <- function(detailpageurls) {
@@ -280,7 +286,7 @@ read_all_detailpage_html <- function(detailpageurls) {
 #'   pages, and as many rows as there are products.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' ## get data from multiple geizhals category pages:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
@@ -291,6 +297,7 @@ read_all_detailpage_html <- function(detailpageurls) {
 #' ## get data from all detailpages:
 #' dat_detailpages <- get_all_detailpages(detailpagehtml_list)
 #' head(dat_detailpages)
+#' }
 #'
 #' @export
 get_all_detailpages <- function(detailpagehtml_list) {

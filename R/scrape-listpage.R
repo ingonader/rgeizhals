@@ -17,7 +17,7 @@
 #'   geizhals listing page.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' ## get html of a geizhals search page via read_html():
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
@@ -26,6 +26,7 @@
 #' ## get html of multiple geizhals search pages:
 #' listpagehtml_list <- read_all_listpages(url_geizhals)
 #' get_product_names(listpagehtml_list[[1]])
+#' }
 #'
 #' @export
 get_product_names <- function(listpagehtml) {
@@ -38,6 +39,8 @@ get_product_names <- function(listpagehtml) {
   ret <- ret[-1]
   return(ret)
 }
+
+
 
 #' Get product ratings from geizhals category page
 #'
@@ -55,7 +58,7 @@ get_product_names <- function(listpagehtml) {
 #'   geizhals listing page.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' ## get html of a geizhals search page via read_html():
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
@@ -64,6 +67,7 @@ get_product_names <- function(listpagehtml) {
 #' ## get html of multiple geizhals search pages:
 #' listpagehtml_list <- read_all_listpages(url_geizhals)
 #' get_ratings(listpagehtml_list[[1]])
+#' }
 #'
 #' @export
 get_ratings <- function(listpagehtml) {
@@ -95,7 +99,7 @@ get_ratings <- function(listpagehtml) {
 #'   appearing in the geizhals listing page.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' ## get html of a geizhals search page via read_html():
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
@@ -104,6 +108,7 @@ get_ratings <- function(listpagehtml) {
 #' ## get html of multiple geizhals search pages:
 #' listpagehtml_list <- read_all_listpages(url_geizhals)
 #' get_ratings_n(listpagehtml_list[[1]])
+#' }
 #'
 #' @export
 get_ratings_n <- function(listpagehtml) {
@@ -175,7 +180,7 @@ get_offers_n <- function(listpagehtml) {
 #'   geizhals listing page.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' ## get html of a geizhals search page via read_html():
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
@@ -184,6 +189,7 @@ get_offers_n <- function(listpagehtml) {
 #' ## get html of multiple geizhals search pages:
 #' listpagehtml_list <- read_all_listpages(url_geizhals)
 #' get_detailpage_urls(listpagehtml_list[[1]])
+#' }
 #'
 #' @export
 get_detailpage_urls <- function(listpagehtml) {
@@ -216,7 +222,7 @@ get_detailpage_urls <- function(listpagehtml) {
 #'   from the geizhals page.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' ## get html of a geizhals search page via read_html():
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
@@ -225,6 +231,7 @@ get_detailpage_urls <- function(listpagehtml) {
 #' ## get html of multiple geizhals search pages:
 #' listpagehtml_list <- read_all_listpages(url_geizhals)
 #' get_single_listpage(listpagehtml_list[[1]])
+#' }
 #'
 #' @export
 get_single_listpage <- function(listpagehtml) {
@@ -250,7 +257,7 @@ get_single_listpage <- function(listpagehtml) {
 #'   with product listings, or \code{NA} if no more page is available.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' ## url of next page:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
@@ -260,6 +267,7 @@ get_single_listpage <- function(listpagehtml) {
 #' url_geizhals <- "https://geizhals.at/?cat=acam35&pg=3#productlist"
 #' listpagehtml <- xml2::read_html(url_geizhals)
 #' get_next_listpage_url(listpagehtml)
+#' }
 #'
 #' @export
 get_next_listpage_url <- function(listpagehtml) {
@@ -291,7 +299,7 @@ get_next_listpage_url <- function(listpagehtml) {
 #' @return An xml document as returned by \code{xml2::read_html}
 #'
 #' @examples
-#'
+#' \dontrun{
 #' ## url of next page:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
@@ -304,7 +312,7 @@ get_next_listpage_url <- function(listpagehtml) {
 #'
 #' #' ## get next listing page and get information:
 #' get_single_listpage(read_next_listpage(listpagehtml))
-#'
+#' }
 #' @export
 read_next_listpage <- function(listpagehtml) {
   ## check if there is another page left and get url:
@@ -340,10 +348,11 @@ read_next_listpage <- function(listpagehtml) {
 #' @seealso \code{\link{get_all_listpages}}
 #'
 #' @examples
-#'
+#' \dontrun{
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
 #' get_all_listpages(listpagehtml_list)
+#' }
 #'
 #' @export
 read_all_listpages <- function(firstlistpageurl, max_pages = 10) {
@@ -382,10 +391,11 @@ read_all_listpages <- function(firstlistpageurl, max_pages = 10) {
 #'   from the geizhals pages.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
 #' get_all_listpages(listpagehtml_list)
+#' }
 #'
 #' @export
 get_all_listpages <- function(listpagehtml_list) {

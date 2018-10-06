@@ -72,41 +72,41 @@ library(rgeizhals)
 ## * listpage, listpagehtml
 ## * detailpage, detailpagehtml
 
-url_geizhals <- "https://geizhals.at/?cat=hwaeschtr&xf=1027_W%E4rmepumpentrockner%7E1296_10%7E1747_8%7E7641_40%7E7653_9"
+#url_geizhals <- "https://geizhals.at/?cat=hwaeschtr&xf=1027_W%E4rmepumpentrockner%7E1296_10%7E1747_8%7E7641_40%7E7653_9"
 
 ## get html of url:
-listpagehtml <- read_html(url_geizhals)
+#listpagehtml <- read_html(url_geizhals)
 
-data.frame(
-  prodname = get_product_names(listpagehtml),
-  rating = get_ratings(listpagehtml),
-  rating_n = get_ratings_n(listpagehtml),
-  offers_n = get_offers_n(listpagehtml),
-  detaipage_url = get_detailpage_urls(listpagehtml)
-)
+# data.frame(
+#   prodname = get_product_names(listpagehtml),
+#   rating = get_ratings(listpagehtml),
+#   rating_n = get_ratings_n(listpagehtml),
+#   offers_n = get_offers_n(listpagehtml),
+#   detaipage_url = get_detailpage_urls(listpagehtml)
+# )
 
 ```
 
 ```{r}
 
-## pick one detailpage:
-detailpage <- get_detailpage_urls(listpagehtml)[1]
-
-## get html of url:
-detailpagehtml <- read_html(detailpage)
-
-## just get categories (without values):
-get_detailpage_categories(detailpagehtml)
-
-## get categories and their values:
-get_keyval_tbl(detailpagehtml)
-
-## get prices (first page):
-get_prices(detailpagehtml)
-
-## get summary of prices (first page):
-get_price_summary(detailpagehtml)
-
+# ## pick one detailpage:
+# detailpage <- get_detailpage_urls(listpagehtml)[1]
+# 
+# ## get html of url:
+# detailpagehtml <- read_html(detailpage)
+# 
+# ## just get categories (without values):
+# get_detailpage_categories(detailpagehtml)
+# 
+# ## get categories and their values:
+# get_keyval_tbl(detailpagehtml)
+# 
+# ## get prices (first page):
+# get_prices(detailpagehtml)
+# 
+# ## get summary of prices (first page):
+# get_price_summary(detailpagehtml)
+# 
 
 ```
 
