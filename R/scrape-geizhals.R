@@ -6,9 +6,10 @@
 #' @export
 #'
 #' @examples
-get_geizhals_data <- function(firstlistpageurl) {
+get_geizhals_data <- function(firstlistpageurl, max_pages = 10) {
   ## get all listpages:
-  listpagehtml_list <- read_all_listpages(firstlistpageurl)
+  listpagehtml_list <- read_all_listpages(firstlistpageurl,
+                                          max_pages = max_pages)
   dat_listpage <- get_all_listpages(listpagehtml_list)
 
   ## get all detailpages:
