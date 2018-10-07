@@ -38,3 +38,34 @@ get_geizhals_data <- function(firstlistpageurl, max_pages = 10) {
                                    by = c("detailpage_url" = "url"))
   return(dat_geizhals)
 }
+
+#' Get summary table for some feature
+#'
+#' Produces a frequency table of all features in a specific column.
+#' Especially useful if one column contains a list of features.
+#'
+#' @param dat_gh A tibble (data.frame) containing the data.
+#' @param col The column name that should be summarized
+#'   (character vector of length 1).
+#' @param sep The separator to use as split, if the column contains
+#'   a list of features. Character vector of length 1. Default is ",".
+#'
+#' @return A frequency table of features.
+#'
+#' @examples
+#' \dontrun{
+#' url_geizhals <- "https://geizhals.at/?cat=acam35
+#' dat_gh <- get_geizhals_data(url_geizhals, max_pages = 1)
+#' get_feature_summary(dat_gh, col = "Typ")
+#' }
+#'
+#' @export
+get_feature_summary <- function(dat_gh, col, sep = ",") {
+  dat_gh[[col]] %>%
+    stringr::str_split(sep) %>%
+    purrr::map(stringr::str_trim) %>%
+    unlist() %>%
+    table() %>%
+    sort(decreasing = TRUE)
+}
+
