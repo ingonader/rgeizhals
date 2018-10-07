@@ -257,7 +257,7 @@ read_all_detailpage_html <- function(detailpageurls) {
   ret <- list(
     url = detailpageurls,
     html = purrr::map(detailpageurls, function(i) {
-      message("Reading html of detailpage ", i, "...")
+      message("Fetching detailpage ", i, "...")
       ret <- xml2::read_html(i)
       return(ret)
     })

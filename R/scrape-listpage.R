@@ -362,7 +362,7 @@ read_all_listpages <- function(firstlistpageurl,
   listpagehtml_list <- list()
 
   ## get first listpage html:
-  message("Reading html of listing page 1...")
+  message("Fetching listing page 1...")
   listpagehtml_list[[1]] <- xml2::read_html(firstlistpageurl)
 
   i <- 1
@@ -375,7 +375,7 @@ read_all_listpages <- function(firstlistpageurl,
     listpagehtml_list[[i]] <- nextlistpagehtml
 
     ## read next page:
-    message("Reading html of listing page ", i, "...")
+    message("Fetching listing page ", i, "...")
     nextlistpagehtml <- read_next_listpage(listpagehtml_list[[i]])
   }
   message("Done.")
