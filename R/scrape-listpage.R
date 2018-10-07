@@ -355,11 +355,14 @@ read_next_listpage <- function(listpagehtml) {
 #' }
 #'
 #' @export
-read_all_listpages <- function(firstlistpageurl, max_pages = 10) {
+read_all_listpages <- function(firstlistpageurl,
+                               max_pages = 10)
+{
   ## initialize list to store all htmls:
   listpagehtml_list <- list()
 
   ## get first listpage html:
+  message("Reading html of listing page 1...")
   listpagehtml_list[[1]] <- xml2::read_html(firstlistpageurl)
 
   i <- 1
@@ -372,8 +375,10 @@ read_all_listpages <- function(firstlistpageurl, max_pages = 10) {
     listpagehtml_list[[i]] <- nextlistpagehtml
 
     ## read next page:
+    message("Reading html of listing page ", i, "...")
     nextlistpagehtml <- read_next_listpage(listpagehtml_list[[i]])
   }
+  message("Done.")
   return(listpagehtml_list)
 }
 

@@ -54,7 +54,7 @@ get_geizhals_data <- function(firstlistpageurl, max_pages = 10) {
 #'
 #' @examples
 #' \dontrun{
-#' url_geizhals <- "https://geizhals.at/?cat=acam35
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' dat_gh <- get_geizhals_data(url_geizhals, max_pages = 1)
 #' get_feature_summary(dat_gh, col = "Typ")
 #' }
