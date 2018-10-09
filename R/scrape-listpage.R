@@ -235,13 +235,27 @@ get_detailpage_urls <- function(listpagehtml) {
 #'
 #' @export
 get_single_listpage <- function(listpagehtml) {
-  ret <- tibble::tibble(
-    prodname = get_product_names(listpagehtml),
-    rating = get_ratings(listpagehtml),
-    rating_n = get_ratings_n(listpagehtml),
-    offers_n = get_offers_n(listpagehtml),
-    detailpage_url = get_detailpage_urls(listpagehtml)
-  )
+  ## check if there is html data:
+  if (!is.na(listpagehtml)) {
+    ## if data can be extracted, do so:
+    ret <- tibble::tibble(
+      prodname = get_product_names(listpagehtml),
+      rating = get_ratings(listpagehtml),
+      rating_n = get_ratings_n(listpagehtml),
+      offers_n = get_offers_n(listpagehtml),
+      detailpage_url = get_detailpage_urls(listpagehtml)
+    )
+  } else {
+    ## when no data can be parsed, just return same structure with NAs:
+    ## (happens when reading html failed for some reason):
+    ret <- tibble::tibble(
+      prodname = NA,
+      rating = NA,
+      rating_n = NA,
+      offers_n = NA,
+      detailpage_url = NA
+    )
+  }
   return(ret)
 }
 
@@ -271,6 +285,9 @@ get_single_listpage <- function(listpagehtml) {
 #'
 #' @export
 get_next_listpage_url <- function(listpagehtml) {
+  ## check if there is html present; if not, return NA.
+  if (is.na(listpagehtml)) return(NA)
+
   ## check if there is another page left:
   nextpage <- listpagehtml %>% rvest::html_node(css = ".gh_pag_next_active") %>%
     rvest::html_text()
@@ -321,7 +338,14 @@ read_next_listpage <- function(listpagehtml) {
     return(NA)
 
   ## read html of that url and return it:
-  nextlistpagehtml <- xml2::read_html(nextlistpageurl)
+  nextlistpagehtml <- try(xml2::read_html(nextlistpageurl), silent = TRUE)
+  ## if it fails, return NA:
+  if (class(nextlistpagehtml) == "try-error") {
+    warning("Something unexpected happened when fetching listpage. \n",
+            "(", nextlistpagehtml[1], ")\n",
+            "Returning NA instead of web page html.")
+    nextlistpagehtml <- NA
+  }
   return(nextlistpagehtml)
 }
 
@@ -362,6 +386,7 @@ read_all_listpages <- function(firstlistpageurl,
   listpagehtml_list <- list()
 
   ## get first listpage html:
+  ## (no try-catch here; if first page fails, error is in order)
   message("Fetching listing page 1...")
   listpagehtml_list[[1]] <- xml2::read_html(firstlistpageurl)
 

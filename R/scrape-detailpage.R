@@ -63,31 +63,37 @@ get_detailpage_categories <- function(detailpagehtml) {
 #'
 #' @export
 get_keyval_tbl <- function(detailpagehtml) {
-  ## get keys (categories):
-  keys_from_table <- get_detailpage_categories(detailpagehtml)
+  ## if there is data...
+  if (!is.na(detailpagehtml)) {
+    ## ...get keys (categories):
+    keys_from_table <- get_detailpage_categories(detailpagehtml)
 
-  ## get text of all table rows (some containing keys, some not):
-  keys_value_text_all <- detailpagehtml %>%
-    rvest::html_nodes(css = ".gh-data-table__row") %>%
-    rvest::html_text()
+    ## get text of all table rows (some containing keys, some not):
+    keys_value_text_all <- detailpagehtml %>%
+      rvest::html_nodes(css = ".gh-data-table__row") %>%
+      rvest::html_text()
 
-  ## get keyval-text that contain keys:
-  keys_value_text_sel <- stringr::str_subset(keys_value_text_all, paste(keys_from_table, collapse = "|"))
+    ## get keyval-text that contain keys:
+    keys_value_text_sel <- stringr::str_subset(keys_value_text_all, paste(keys_from_table, collapse = "|"))
 
-  ## get keys from keyvalue text:
-  keys <- stringr::str_extract(keys_value_text_sel,  paste(keys_from_table, collapse = "|"))
+    ## get keys from keyvalue text:
+    keys <- stringr::str_extract(keys_value_text_sel,  paste(keys_from_table, collapse = "|"))
 
-  ## remove keys to get values:
-  vals <- stringr::str_replace_all(keys_value_text_sel,  paste(keys, collapse = "|"), "")
+    ## remove keys to get values:
+    vals <- stringr::str_replace_all(keys_value_text_sel,  paste(keys, collapse = "|"), "")
 
-  ## remove unnecessary characters:
-  vals <- stringr::str_replace_all(vals, "[\n]", "")
+    ## remove unnecessary characters:
+    vals <- stringr::str_replace_all(vals, "[\n]", "")
 
-  ## make data.frame:
-  ret <- tibble::tibble(key = keys, value = vals)
+    ## make data.frame:
+    ret <- tibble::tibble(key = keys, value = vals)
 
-  ## remove duplicates:
-  ret <- ret[!duplicated(ret), ]
+    ## remove duplicates:
+    ret <- ret[!duplicated(ret), ]
+  } else {
+    ## if there is no data, just return the same structure with NA's:
+    ret <- tibble::tibble(key = NA, value = NA)
+  }
   return(ret)
 }
 
@@ -166,16 +172,27 @@ get_prices <- function(detailpagehtml) {
 #'
 #' @export
 get_price_summary <- function(detailpagehtml) {
-  prices <- get_prices(detailpagehtml = detailpagehtml)
-  ## sort (just in case):
-  prices <- sort(prices)
-  ## return summary:
-  ret_val <- c(min(prices), prices[2], prices[3], stats::median(prices))
-  ret_key <- c("price_min", "price_2nd_min", "price_3rd_min", "price_median")
-  ret <- tibble::tibble(
-    key = ret_key,
-    value = ret_val
-  )
+  ## if there is html data...
+  if (!is.na(detailpagehtml)) {
+    prices <- get_prices(detailpagehtml = detailpagehtml)
+    ## sort (just in case):
+    prices <- sort(prices)
+    ## return summary:
+    ret_val <- c(min(prices), prices[2], prices[3], stats::median(prices))
+    ret_key <- c("price_min", "price_2nd_min", "price_3rd_min", "price_median")
+    ret <- tibble::tibble(
+      key = ret_key,
+      value = ret_val
+    )
+  } else {
+    ## if there is no html data, just return NA's in a similar structure:
+    ret_val <- c(rep(NA, 4))
+    ret_key <- c("price_min", "price_2nd_min", "price_3rd_min", "price_median")
+    ret <- tibble::tibble(
+      key = ret_key,
+      value = ret_val
+    )
+  }
   return(ret)
 }
 
@@ -258,7 +275,15 @@ read_all_detailpage_html <- function(detailpageurls) {
     url = detailpageurls,
     html = purrr::map(detailpageurls, function(i) {
       message("Fetching detailpage ", i, "...")
-      ret <- xml2::read_html(i)
+      ret <- try(xml2::read_html(i), silent = TRUE)
+      ## if it fails, return NA:
+      if (class(ret) == "try-error") {
+        warning("Something unexpected happened when fetching listpage. \n",
+                "(", ret[1], ")\n",
+                "Returning NA instead of web page html.")
+        ret <- NA
+      }
+
       return(ret)
     })
   )
