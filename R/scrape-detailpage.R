@@ -16,17 +16,17 @@
 #' \dontrun{
 #' ## get data from multiple geizhals category pages:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
-#' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
-#' dat_listpage <- get_all_listpages(listpagehtml_list)
+#' listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2)
+#' dat_listpage <- parse_all_listpages(listpagehtml_list)
 #' ## get url of a single detail page and read html:
 #' url_detailpage <- dat_listpage[["detailpage_url"]][1]
 #' detailpagehtml <- xml2::read_html(url_detailpage)
 #' ## get categories:
-#' get_detailpage_categories(detailpagehtml)
+#' parse_detailpage_categories(detailpagehtml)
 #' }
 #'
 #' @export
-get_detailpage_categories <- function(detailpagehtml) {
+parse_detailpage_categories <- function(detailpagehtml) {
   ret <- detailpagehtml %>%
     rvest::html_nodes(css = ".gh-data-table__key") %>%
     rvest::html_text()
@@ -43,7 +43,7 @@ get_detailpage_categories <- function(detailpagehtml) {
 #' product description pages of different products within
 #' the same category.
 #'
-#' @inheritParams get_detailpage_categories
+#' @inheritParams parse_detailpage_categories
 #'
 #' @return A tibble (data.frame) with two columns (key and value),
 #'   containing the categories and their values.
@@ -52,21 +52,21 @@ get_detailpage_categories <- function(detailpagehtml) {
 #' \dontrun{
 #' ## get data from multiple geizhals category pages:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
-#' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
-#' dat_listpage <- get_all_listpages(listpagehtml_list)
+#' listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2)
+#' dat_listpage <- parse_all_listpages(listpagehtml_list)
 #' ## get url of a single detail page and read html:
 #' url_detailpage <- dat_listpage[["detailpage_url"]][1]
 #' detailpagehtml <- xml2::read_html(url_detailpage)
 #' ## get categories and their values:
-#' get_keyval_tbl(detailpagehtml)
+#' parse_keyval_tbl(detailpagehtml)
 #' }
 #'
 #' @export
-get_keyval_tbl <- function(detailpagehtml) {
+parse_keyval_tbl <- function(detailpagehtml) {
   ## if there is data...
   if (!is.na(detailpagehtml)) {
     ## ...get keys (categories):
-    keys_from_table <- get_detailpage_categories(detailpagehtml)
+    keys_from_table <- parse_detailpage_categories(detailpagehtml)
 
     ## get text of all table rows (some containing keys, some not):
     keys_value_text_all <- detailpagehtml %>%
@@ -104,7 +104,7 @@ get_keyval_tbl <- function(detailpagehtml) {
 #' Returns all price values from the price list
 #' in the detailed product description page.
 #'
-#' @inheritParams get_detailpage_categories
+#' @inheritParams parse_detailpage_categories
 #'
 #' @return A numeric vector containing the prices.
 #'
@@ -112,17 +112,17 @@ get_keyval_tbl <- function(detailpagehtml) {
 #' \dontrun{
 #' ## get data from multiple geizhals category pages:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
-#' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
-#' dat_listpage <- get_all_listpages(listpagehtml_list)
+#' listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2)
+#' dat_listpage <- parse_all_listpages(listpagehtml_list)
 #' ## get url of a single detail page and read html:
 #' url_detailpage <- dat_listpage[["detailpage_url"]][1]
 #' detailpagehtml <- xml2::read_html(url_detailpage)
 #' ## get prices:
-#' get_prices(detailpagehtml)
+#' parse_prices(detailpagehtml)
 #' }
 #'
 #' @export
-get_prices <- function(detailpagehtml) {
+parse_prices <- function(detailpagehtml) {
   ## get prices:
   ret <- detailpagehtml %>%
     rvest::html_nodes(css = ".offer__price") %>%            ## get prices
@@ -137,7 +137,7 @@ get_prices <- function(detailpagehtml) {
     as.numeric()
   return(ret)
 }
-#get_prices(detailpagehtml)
+#parse_prices(detailpagehtml)
 
 
 #' Get a summary of prices in product detail page
@@ -148,7 +148,7 @@ get_prices <- function(detailpagehtml) {
 #' there aren't enough prices on that page), and the median
 #' of all prices.
 #'
-#' @inheritParams get_detailpage_categories
+#' @inheritParams parse_detailpage_categories
 #'
 #' @return A tibble (data.frame) with two columns (key and value),
 #'   containing the price summary results (key being a descriptive
@@ -161,20 +161,20 @@ get_prices <- function(detailpagehtml) {
 #' \dontrun{
 #' ## get data from multiple geizhals category pages:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
-#' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
-#' dat_listpage <- get_all_listpages(listpagehtml_list)
+#' listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2)
+#' dat_listpage <- parse_all_listpages(listpagehtml_list)
 #' ## get url of a single detail page and read html:
 #' url_detailpage <- dat_listpage[["detailpage_url"]][1]
 #' detailpagehtml <- xml2::read_html(url_detailpage)
 #' ## get prices summary:
-#' get_price_summary(detailpagehtml)
+#' calc_price_summary(detailpagehtml)
 #' }
 #'
 #' @export
-get_price_summary <- function(detailpagehtml) {
+calc_price_summary <- function(detailpagehtml) {
   ## if there is html data...
   if (!is.na(detailpagehtml)) {
-    prices <- get_prices(detailpagehtml = detailpagehtml)
+    prices <- parse_prices(detailpagehtml = detailpagehtml)
     ## sort (just in case):
     prices <- sort(prices)
     ## return summary:
@@ -203,7 +203,7 @@ get_price_summary <- function(detailpagehtml) {
 #' a summary of all price values from the price list
 #' in the detailed product description page.
 #'
-#' @inheritParams get_detailpage_categories
+#' @inheritParams parse_detailpage_categories
 #'
 #' @return A tibble (data.frame) with two columns (key and value),
 #'   containing the categories and their values, as well as the
@@ -216,20 +216,20 @@ get_price_summary <- function(detailpagehtml) {
 #' \dontrun{
 #' ## get data from multiple geizhals category pages:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
-#' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
-#' dat_listpage <- get_all_listpages(listpagehtml_list)
+#' listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2)
+#' dat_listpage <- parse_all_listpages(listpagehtml_list)
 #' ## get url of a single detail page and read html:
 #' url_detailpage <- dat_listpage[["detailpage_url"]][1]
 #' detailpagehtml <- xml2::read_html(url_detailpage)
 #' ## get data from detailpage:
-#' get_single_detailpage(detailpagehtml)
+#' parse_single_detailpage(detailpagehtml)
 #' }
 #'
 #' @export
-get_single_detailpage <- function(detailpagehtml) {
+parse_single_detailpage <- function(detailpagehtml) {
   ## get data:
-  ret_keyval <- get_keyval_tbl(detailpagehtml)
-  ret_price_summary <- get_price_summary(detailpagehtml)
+  ret_keyval <- parse_keyval_tbl(detailpagehtml)
+  ret_price_summary <- calc_price_summary(detailpagehtml)
 
   ## modify data types (all character, currently):
   ret_price_summary[["value"]] <- as.character(ret_price_summary[["value"]])
@@ -259,17 +259,17 @@ get_single_detailpage <- function(detailpagehtml) {
 #' \dontrun{
 #' ## first, get data from all listing pages:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
-#' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
-#' dat_listpages <- get_all_listpages(listpagehtml_list)
+#' listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2)
+#' dat_listpages <- parse_all_listpages(listpagehtml_list)
 #'
 #' ## pick only the the first 3 urls (e.g.):
 #' wch_urls <- dat_listpages$detailpage_url[1:3]
-#' detailpagehtml_list <- read_all_detailpage_html(wch_urls)
+#' detailpagehtml_list <- fetch_all_detailpage_html(wch_urls)
 #' detailpagehtml_list
 #' }
 #'
 #' @export
-read_all_detailpage_html <- function(detailpageurls) {
+fetch_all_detailpage_html <- function(detailpageurls) {
   ## get html for all urls:
   ret <- list(
     url = detailpageurls,
@@ -277,7 +277,7 @@ read_all_detailpage_html <- function(detailpageurls) {
       message("Fetching detailpage ", i, "...")
       ret <- try(xml2::read_html(i), silent = TRUE)
       ## if it fails, return NA:
-      if (class(ret) == "try-error") {
+      if (class(ret)[1] == "try-error") {
         warning("Something unexpected happened when fetching listpage. \n",
                 "(", ret[1], ")\n",
                 "Returning NA instead of web page html.")
@@ -299,7 +299,7 @@ read_all_detailpage_html <- function(detailpageurls) {
 #' detailed product description pages, as well as
 #' a summary of all price values from the price list
 #' in each of the  detailed product description pages.
-#' In contrast to the \code{get_single_detailpage}
+#' In contrast to the \code{parse_single_detailpage}
 #' function, the categories describing a product are
 #' the columns, and each product is represented as a
 #' row in the resulting tibble (data.frame).
@@ -319,20 +319,20 @@ read_all_detailpage_html <- function(detailpageurls) {
 #' \dontrun{
 #' ## get data from multiple geizhals category pages:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
-#' listpagehtml_list <- read_all_listpages(url_geizhals, max_pages = 2)
-#' dat_listpage <- get_all_listpages(listpagehtml_list)
+#' listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2)
+#' dat_listpage <- parse_all_listpages(listpagehtml_list)
 #' ## pick only the three first detailpage urls:
 #' wch_detailpage_urls <- dat_listpage[["detailpage_url"]][1:3]
-#' detailpagehtml_list <- read_all_detailpage_html(wch_detailpage_urls)
+#' detailpagehtml_list <- fetch_all_detailpage_html(wch_detailpage_urls)
 #' ## get data from all detailpages:
-#' dat_detailpages <- get_all_detailpages(detailpagehtml_list)
+#' dat_detailpages <- parse_all_detailpages(detailpagehtml_list)
 #' head(dat_detailpages)
 #' }
 #'
 #' @export
-get_all_detailpages <- function(detailpagehtml_list) {
+parse_all_detailpages <- function(detailpagehtml_list) {
   ## get detailpage tibble:
-  singlepage_list <- purrr::map(detailpagehtml_list$html, get_single_detailpage)
+  singlepage_list <- purrr::map(detailpagehtml_list$html, parse_single_detailpage)
 
   ## add url to tibble (to serve as join key later):
   singlepage_list_with_url <- purrr::map2(singlepage_list, detailpagehtml_list$url, ~ dplyr::bind_rows(
