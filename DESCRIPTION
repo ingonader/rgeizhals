@@ -1,8 +1,8 @@
 Package: rgeizhals
-Title: What the Package Does (one line, title case)
+Title: Scrapes www.geizhals.at Pages
 Version: 0.0.0.9000
 Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: R package to scrape www.geizhals.at price and feature lists.
 Depends: R (>= 3.5.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
