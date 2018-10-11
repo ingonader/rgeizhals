@@ -1,4 +1,4 @@
-#' Get product names from geizhals category page
+#' Parse product names from geizhals category page
 #'
 #' Returns all product names in a geizhals page listing all products
 #' within a specific  category (i.e., not the generic page-wide search from
@@ -42,7 +42,7 @@ parse_product_names <- function(listpagehtml) {
 
 
 
-#' Get product ratings from geizhals category page
+#' Parse product ratings from geizhals category page
 #'
 #' Returns all product ratings in a geizhals page listing all products
 #' within a specific  category (i.e., not the generic page-wide search from
@@ -82,7 +82,7 @@ parse_ratings <- function(listpagehtml) {
 }
 
 
-#' Get number of product ratings from geizhals category page
+#' Parse number of product ratings from geizhals category page
 #'
 #' Returns the number of product ratings for each product in a
 #' geizhals page listing all products within a specific category
@@ -125,7 +125,7 @@ parse_ratings_n <- function(listpagehtml) {
 }
 
 
-#' Get numbers of offers from geizhals search
+#' Parse numbers of offers from geizhals search
 #'
 #' Returns the numbers of offers for a product in a single geizhals
 #' html page of search results. The order
@@ -163,7 +163,7 @@ parse_offers_n <- function(listpagehtml) {
 
 
 
-#' Get urls of detail pages for items in geizhals category page
+#' Parse urls of detail pages for items in geizhals category page
 #'
 #' Returns all urls of links to details pages (product details)
 #' in a geizhals page listing all products within a specific
@@ -204,7 +204,7 @@ parse_detailpage_urls <- function(listpagehtml) {
 }
 
 
-#' Get information from geizhals category page
+#' Parse information from geizhals category page
 #'
 #' Returns information (e.g., product names, product ratings,
 #' number of ratings, detail page urls) listed in a geizhals page that
@@ -260,7 +260,7 @@ parse_single_listpage <- function(listpagehtml) {
 }
 
 
-#' Get url of next listpage
+#' Parse url of next listpage
 #'
 #' Returns the url of the next page of listings, or \code{NA} if no more
 #' page is availab.e
@@ -306,7 +306,7 @@ parse_next_listpage_url <- function(listpagehtml) {
   return(nextlistpageurl)
 }
 
-#' Get next listing page html
+#' Fetch html of next listing page
 #'
 #' Takes the html of a listing page as input, extracts the url for
 #' the next listing page, reads the html and returns it.
@@ -351,7 +351,7 @@ fetch_next_listpage <- function(listpagehtml) {
 
 
 
-#' Get html from multiple geizhals category pages
+#' Fetch html of multiple geizhals category pages
 #'
 #' Given the url of a geizhals page listing all products
 #' within a specific  category (i.e., not the generic page-wide search from
@@ -408,7 +408,7 @@ fetch_all_listpages <- function(firstlistpageurl,
 }
 
 
-#' Get data from multiple geizhals category pages
+#' Parse data from multiple geizhals category pages
 #'
 #' Takes a list of html as input, and returns the information in
 #' tabluar form.

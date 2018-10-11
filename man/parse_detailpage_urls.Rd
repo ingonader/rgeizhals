@@ -2,7 +2,7 @@
 % Please edit documentation in R/scrape-listpage.R
 \name{parse_detailpage_urls}
 \alias{parse_detailpage_urls}
-\title{Get urls of detail pages for items in geizhals category page}
+\title{Parse urls of detail pages for items in geizhals category page}
 \usage{
 parse_detailpage_urls(listpagehtml)
 }

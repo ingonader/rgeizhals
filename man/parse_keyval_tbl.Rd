@@ -2,7 +2,7 @@
 % Please edit documentation in R/scrape-detailpage.R
 \name{parse_keyval_tbl}
 \alias{parse_keyval_tbl}
-\title{Get categories and their values in product detail page}
+\title{Parse categories and their values in product detail page}
 \usage{
 parse_keyval_tbl(detailpagehtml)
 }

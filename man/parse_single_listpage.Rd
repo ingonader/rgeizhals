@@ -2,7 +2,7 @@
 % Please edit documentation in R/scrape-listpage.R
 \name{parse_single_listpage}
 \alias{parse_single_listpage}
-\title{Get information from geizhals category page}
+\title{Parse information from geizhals category page}
 \usage{
 parse_single_listpage(listpagehtml)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/scrape-detailpage.R
 \name{parse_all_detailpages}
 \alias{parse_all_detailpages}
-\title{Get data from multiple product detail pages}
+\title{Parse data from multiple product detail pages}
 \usage{
 parse_all_detailpages(detailpagehtml_list)
 }

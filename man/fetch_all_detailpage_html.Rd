@@ -2,7 +2,7 @@
 % Please edit documentation in R/scrape-detailpage.R
 \name{fetch_all_detailpage_html}
 \alias{fetch_all_detailpage_html}
-\title{Read html of detailpage urls}
+\title{Fetch html of detailpage urls}
 \usage{
 fetch_all_detailpage_html(detailpageurls)
 }

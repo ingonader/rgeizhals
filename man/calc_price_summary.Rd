@@ -2,7 +2,7 @@
 % Please edit documentation in R/scrape-detailpage.R
 \name{calc_price_summary}
 \alias{calc_price_summary}
-\title{Get a summary of prices in product detail page}
+\title{Calculate a summary of prices in product detail page}
 \usage{
 calc_price_summary(detailpagehtml)
 }

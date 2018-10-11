@@ -2,7 +2,7 @@
 % Please edit documentation in R/scrape-listpage.R
 \name{fetch_all_listpages}
 \alias{fetch_all_listpages}
-\title{Get html from multiple geizhals category pages}
+\title{Fetch html of multiple geizhals category pages}
 \usage{
 fetch_all_listpages(firstlistpageurl, max_pages = 10)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/scrape-detailpage.R
 \name{parse_detailpage_categories}
 \alias{parse_detailpage_categories}
-\title{Get categories in product detail page}
+\title{Parse categories in product detail page}
 \usage{
 parse_detailpage_categories(detailpagehtml)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/scrape-detailpage.R
 \name{parse_single_detailpage}
 \alias{parse_single_detailpage}
-\title{Get data from product detail page}
+\title{Parse data from product detail page}
 \usage{
 parse_single_detailpage(detailpagehtml)
 }

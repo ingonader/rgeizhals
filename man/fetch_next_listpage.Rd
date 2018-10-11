@@ -2,7 +2,7 @@
 % Please edit documentation in R/scrape-listpage.R
 \name{fetch_next_listpage}
 \alias{fetch_next_listpage}
-\title{Get next listing page html}
+\title{Fetch html of next listing page}
 \usage{
 fetch_next_listpage(listpagehtml)
 }

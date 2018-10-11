@@ -2,7 +2,7 @@
 % Please edit documentation in R/scrape-listpage.R
 \name{parse_ratings}
 \alias{parse_ratings}
-\title{Get product ratings from geizhals category page}
+\title{Parse product ratings from geizhals category page}
 \usage{
 parse_ratings(listpagehtml)
 }

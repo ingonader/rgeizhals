@@ -2,7 +2,7 @@
 % Please edit documentation in R/scrape-listpage.R
 \name{parse_offers_n}
 \alias{parse_offers_n}
-\title{Get numbers of offers from geizhals search}
+\title{Parse numbers of offers from geizhals search}
 \usage{
 parse_offers_n(listpagehtml)
 }

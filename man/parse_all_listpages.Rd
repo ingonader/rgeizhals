@@ -2,7 +2,7 @@
 % Please edit documentation in R/scrape-listpage.R
 \name{parse_all_listpages}
 \alias{parse_all_listpages}
-\title{Get data from multiple geizhals category pages}
+\title{Parse data from multiple geizhals category pages}
 \usage{
 parse_all_listpages(listpagehtml_list)
 }

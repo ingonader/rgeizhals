@@ -2,7 +2,7 @@
 % Please edit documentation in R/scrape-listpage.R
 \name{parse_next_listpage_url}
 \alias{parse_next_listpage_url}
-\title{Get url of next listpage}
+\title{Parse url of next listpage}
 \usage{
 parse_next_listpage_url(listpagehtml)
 }

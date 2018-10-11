@@ -1,4 +1,4 @@
-#' Get categories in product detail page
+#' Parse categories in product detail page
 #'
 #' Returns all categories (titles) in the detailed product
 #' description page. The categories are returned in the order
@@ -34,7 +34,7 @@ parse_detailpage_categories <- function(detailpagehtml) {
 }
 
 
-#' Get categories and their values in product detail page
+#' Parse categories and their values in product detail page
 #'
 #' Returns all categories (titles) and their values
 #' in the detailed product description page. The categories
@@ -99,7 +99,7 @@ parse_keyval_tbl <- function(detailpagehtml) {
 
 
 
-#' Get price list in product detail page
+#' Parse price list in product detail page
 #'
 #' Returns all price values from the price list
 #' in the detailed product description page.
@@ -140,7 +140,7 @@ parse_prices <- function(detailpagehtml) {
 #parse_prices(detailpagehtml)
 
 
-#' Get a summary of prices in product detail page
+#' Calculate a summary of prices in product detail page
 #'
 #' Returns a summary of all price values from the price list
 #' in the detailed product description page. Currently,
@@ -196,7 +196,7 @@ calc_price_summary <- function(detailpagehtml) {
   return(ret)
 }
 
-#' Get data from product detail page
+#' Parse data from product detail page
 #'
 #' Returns all categories (titles) and their values
 #' in the detailed product description page, as well as
@@ -241,7 +241,7 @@ parse_single_detailpage <- function(detailpagehtml) {
 }
 
 
-#' Read html of detailpage urls
+#' Fetch html of detailpage urls
 #'
 #' Retreive the html code for a vector of detailpage urls, returning
 #' the urls as well as the html code.
@@ -293,7 +293,7 @@ fetch_all_detailpage_html <- function(detailpageurls) {
 
 
 
-#' Get data from multiple product detail pages
+#' Parse data from multiple product detail pages
 #'
 #' Returns all categories and their values in a list of
 #' detailed product description pages, as well as

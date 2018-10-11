@@ -2,7 +2,7 @@
 % Please edit documentation in R/scrape-detailpage.R
 \name{parse_prices}
 \alias{parse_prices}
-\title{Get price list in product detail page}
+\title{Parse price list in product detail page}
 \usage{
 parse_prices(detailpagehtml)
 }

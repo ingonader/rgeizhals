@@ -2,7 +2,7 @@
 % Please edit documentation in R/scrape-listpage.R
 \name{parse_product_names}
 \alias{parse_product_names}
-\title{Get product names from geizhals category page}
+\title{Parse product names from geizhals category page}
 \usage{
 parse_product_names(listpagehtml)
 }
