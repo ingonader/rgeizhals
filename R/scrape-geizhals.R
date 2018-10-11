@@ -69,3 +69,42 @@ get_feature_summary <- function(dat_gh, col, sep = ",") {
     sort(decreasing = TRUE)
 }
 
+#' Extract a binary indicator for some feature
+#'
+#' Some features from product detailpages contain a delimited
+#' list with multiple features. This function extracts a
+#' given feature from this list, by searching for a regex
+#' expression in that given column.
+#'
+#' @param dat_gh A tibble (data.frame), usually obtained via
+#'   \code{get_geizhals_data}.
+#' @param col A character vector of length one, specifying
+#'   the name of the colum in \code{dat_gh} that should be
+#'   parsed for the feature.
+#' @param regex A character vector of length one with a
+#'   regular expression. The column \code{col} is scanned
+#'   for that regular expression.
+#'
+#' @return A vector of length \code{nrow(dat_gh)}, containing
+#'   1 if a feature is present in a given product (i.e., if the
+#'   regular expression is found), 0 if the feature is not found,
+#'   and \code{NA} if that column is missing (i.e., that category
+#'   was not present in the detailed product description page).
+#'
+#' @examples
+#' \dontrun{
+#' url_geizhals <- "https://geizhals.at/?cat=hwaeschtr"
+#' dat_gh <- get_geizhals_data(url_geizhals, max_pages = 1)
+#' extract_feature_ind(dat_gh, col = "Ausstattung", regex = "wartungsfreier Kondensator")
+#' extract_feature_ind(dat_gh, col = "Ausstattung", regex = "Anschlussmöglichkeit")
+#' extract_feature_ind(dat_gh, col = "Ausstattung",
+#'   regex = "Anschlussmöglichkeit.*Kondenswasserablauf")
+#' }
+#'
+#' @export
+extract_feature_ind <- function(dat_gh, col, regex) {
+  dat_gh[[col]] %>%
+    stringr::str_detect(regex) %>%
+    as.numeric()
+}
+
