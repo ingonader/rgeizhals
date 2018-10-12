@@ -249,6 +249,11 @@ parse_single_detailpage <- function(detailpagehtml) {
 #' @param detailpageurls A character vector containing urls to
 #'   sub-pages with detailed product descriptions (as found when following
 #'   a link in the listing page).
+#' @param max_items A numeric (integer) vector of length one, specifying
+#'   the maximum number of items to scrape. (Default: \code{Inf}).
+#'   If \code{max_items} is smaller than the length of the passed urls
+#'   in \code{detailpageurls}, only the first \code{max_items} entries
+#'   are fetched.
 #'
 #' @return A list of length two. The first element, \code{url}, contains
 #'   the vector of urls that was passed to the function. The second list
@@ -262,14 +267,18 @@ parse_single_detailpage <- function(detailpagehtml) {
 #' listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2)
 #' dat_listpages <- parse_all_listpages(listpagehtml_list)
 #'
-#' ## pick only the the first 3 urls (e.g.):
-#' wch_urls <- dat_listpages$detailpage_url[1:3]
-#' detailpagehtml_list <- fetch_all_detailpage_html(wch_urls)
+#' ## now, get (first three) detailpages:
+#' urls <- dat_listpages$detailpage_url
+#' detailpagehtml_list <- fetch_all_detailpage_html(urls, max_items = 3)
 #' detailpagehtml_list
 #' }
 #'
 #' @export
-fetch_all_detailpage_html <- function(detailpageurls) {
+fetch_all_detailpage_html <- function(detailpageurls, max_items = Inf) {
+  ## check if there are more urls than max_items:
+  if (length(detailpageurls) > max_items) {
+    detailpageurls <- detailpageurls[1:max_items]
+  }
   ## get html for all urls:
   ret <- list(
     url = detailpageurls,

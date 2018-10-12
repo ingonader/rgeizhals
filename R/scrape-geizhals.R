@@ -4,6 +4,7 @@
 #' list (and the following pages), as well as the information
 #' in the detail pages that correspond to these items.
 #'
+#' @inheritParams fetch_all_detailpage_html
 #' @param firstlistpageurl The url of a single geizhals page listing
 #'   items in a selected category.
 #' @param max_pages Maximal number of pages to be scraped. Default is 10.
@@ -17,10 +18,15 @@
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' dat_gh <- get_geizhals_data(url_geizhals, max_pages = 1)
 #' head(dat_gh)
+#'
+#' dat_gh <- get_geizhals_data(url_geizhals, max_items = 3)
+#' head(dat_gh)
 #' }
 #'
 #' @export
-get_geizhals_data <- function(firstlistpageurl, max_pages = 10) {
+get_geizhals_data <- function(firstlistpageurl,
+                              max_pages = 10,
+                              max_items = Inf) {
   ## get all listpages:
   listpagehtml_list <- fetch_all_listpages(firstlistpageurl,
                                           max_pages = max_pages)
@@ -28,7 +34,8 @@ get_geizhals_data <- function(firstlistpageurl, max_pages = 10) {
 
   ## get all detailpages:
   detailpagehtml_list <- fetch_all_detailpage_html(
-    parse_all_listpages(listpagehtml_list)$detailpage_url
+    parse_all_listpages(listpagehtml_list)$detailpage_url,
+    max_items = max_items
   )
   dat_detailpage <- parse_all_detailpages(detailpagehtml_list)
 

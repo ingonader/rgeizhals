@@ -4,12 +4,18 @@
 \alias{fetch_all_detailpage_html}
 \title{Fetch html of detailpage urls}
 \usage{
-fetch_all_detailpage_html(detailpageurls)
+fetch_all_detailpage_html(detailpageurls, max_items = Inf)
 }
 \arguments{
 \item{detailpageurls}{A character vector containing urls to
 sub-pages with detailed product descriptions (as found when following
 a link in the listing page).}
+
+\item{max_items}{A numeric (integer) vector of length one, specifying
+the maximum number of items to scrape. (Default: \code{Inf}).
+If \code{max_items} is smaller than the length of the passed urls
+in \code{detailpageurls}, only the first \code{max_items} entries
+are fetched.}
 }
 \value{
 A list of length two. The first element, \code{url}, contains
@@ -28,9 +34,9 @@ url_geizhals <- "https://geizhals.at/?cat=acam35"
 listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2)
 dat_listpages <- parse_all_listpages(listpagehtml_list)
 
-## pick only the the first 3 urls (e.g.):
-wch_urls <- dat_listpages$detailpage_url[1:3]
-detailpagehtml_list <- fetch_all_detailpage_html(wch_urls)
+## now, get (first three) detailpages:
+urls <- dat_listpages$detailpage_url
+detailpagehtml_list <- fetch_all_detailpage_html(urls, max_items = 3)
 detailpagehtml_list
 }
 

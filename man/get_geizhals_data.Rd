@@ -4,13 +4,19 @@
 \alias{get_geizhals_data}
 \title{Get data from geizhals list and detail pages}
 \usage{
-get_geizhals_data(firstlistpageurl, max_pages = 10)
+get_geizhals_data(firstlistpageurl, max_pages = 10, max_items = Inf)
 }
 \arguments{
 \item{firstlistpageurl}{The url of a single geizhals page listing
 items in a selected category.}
 
 \item{max_pages}{Maximal number of pages to be scraped. Default is 10.}
+
+\item{max_items}{A numeric (integer) vector of length one, specifying
+the maximum number of items to scrape. (Default: \code{Inf}).
+If \code{max_items} is smaller than the length of the passed urls
+in \code{detailpageurls}, only the first \code{max_items} entries
+are fetched.}
 }
 \value{
 A tibble (data.frame) with all the infromation in
@@ -26,6 +32,9 @@ in the detail pages that correspond to these items.
 \dontrun{
 url_geizhals <- "https://geizhals.at/?cat=acam35"
 dat_gh <- get_geizhals_data(url_geizhals, max_pages = 1)
+head(dat_gh)
+
+dat_gh <- get_geizhals_data(url_geizhals, max_items = 3)
 head(dat_gh)
 }
 
