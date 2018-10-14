@@ -9,7 +9,7 @@ parse_detailpage_urls(listpagehtml)
 \arguments{
 \item{listpagehtml}{html structure from a single geizhals page listing
 items in a selected category, as gathered via \code{xml2::read_html()}
-or via a single entry of the list of search pages resulting from
+or via a single entry of the list of listing pages resulting from
 \code{fetch_all_listpages}.}
 }
 \value{
@@ -28,12 +28,12 @@ the same order in all related functions.
 }
 \examples{
 \dontrun{
-## get html of a geizhals search page via read_html():
+## get html of a geizhals category listing page via read_html():
 url_geizhals <- "https://geizhals.at/?cat=acam35"
 listpagehtml <- xml2::read_html(url_geizhals)
 parse_detailpage_urls(listpagehtml)
 
-## get html of multiple geizhals search pages:
+## get html of multiple geizhals category listing pages:
 listpagehtml_list <- fetch_all_listpages(url_geizhals)
 parse_detailpage_urls(listpagehtml_list[[1]])
 }

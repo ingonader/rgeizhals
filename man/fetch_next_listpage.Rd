@@ -9,7 +9,7 @@ fetch_next_listpage(listpagehtml)
 \arguments{
 \item{listpagehtml}{html structure from a single geizhals page listing
 items in a selected category, as gathered via \code{xml2::read_html()}
-or via a single entry of the list of search pages resulting from
+or via a single entry of the list of listing pages resulting from
 \code{fetch_all_listpages}.}
 }
 \value{

@@ -10,7 +10,7 @@
 #'
 #' @param listpagehtml html structure from a single geizhals page listing
 #'   items in a selected category, as gathered via \code{xml2::read_html()}
-#'   or via a single entry of the list of search pages resulting from
+#'   or via a single entry of the list of listing pages resulting from
 #'   \code{fetch_all_listpages}.
 #'
 #' @return A character vector of the product names appearing in the
@@ -18,12 +18,12 @@
 #'
 #' @examples
 #' \dontrun{
-#' ## get html of a geizhals search page via read_html():
+#' ## get html of a geizhals category listing page via read_html():
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
 #' parse_product_names(listpagehtml)
 #'
-#' ## get html of multiple geizhals search pages:
+#' ## get html of multiple geizhals category listing pages:
 #' listpagehtml_list <- fetch_all_listpages(url_geizhals)
 #' parse_product_names(listpagehtml_list[[1]])
 #' }
@@ -59,12 +59,12 @@ parse_product_names <- function(listpagehtml) {
 #'
 #' @examples
 #' \dontrun{
-#' ## get html of a geizhals search page via read_html():
+#' ## get html of a geizhals category listing page via read_html():
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
 #' parse_ratings(listpagehtml)
 #'
-#' ## get html of multiple geizhals search pages:
+#' ## get html of multiple geizhals category listing pages:
 #' listpagehtml_list <- fetch_all_listpages(url_geizhals)
 #' parse_ratings(listpagehtml_list[[1]])
 #' }
@@ -100,12 +100,12 @@ parse_ratings <- function(listpagehtml) {
 #'
 #' @examples
 #' \dontrun{
-#' ## get html of a geizhals search page via read_html():
+#' ## get html of a geizhals category listing page via read_html():
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
 #' parse_ratings_n(listpagehtml)
 #'
-#' ## get html of multiple geizhals search pages:
+#' ## get html of multiple geizhals category listing pages:
 #' listpagehtml_list <- fetch_all_listpages(url_geizhals)
 #' parse_ratings_n(listpagehtml_list[[1]])
 #' }
@@ -125,27 +125,27 @@ parse_ratings_n <- function(listpagehtml) {
 }
 
 
-#' Parse numbers of offers from geizhals search
+#' Parse numbers of offers from geizhals listing page
 #'
 #' Returns the numbers of offers for a product in a single geizhals
-#' html page of search results. The order
+#' html page of category listing results. The order
 #' might not correspond to the order listed on the webpage, but it is
 #' the same order in all related functions.
 #'
 #' @inheritParams parse_product_names
 #'
 #' @return A numeric vector containing the number of offers in the same
-#'   order of the products as appearing in the search results returned from
-#'   \code{parse_product_names}.
+#'   order of the products as appearing in the category listing page
+#'   returned from \code{parse_product_names}.
 #'
 #' @examples
 #' \dontrun{
-#' ## get html of a geizhals search page via read_html():
+#' ## get html of a geizhals category listing page via read_html():
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
 #' parse_offers_n(listpagehtml)
 #'
-#' ## get html of multiple geizhals search pages:
+#' ## get html of multiple geizhals category listing pages:
 #' listpagehtml_list <- fetch_all_listpages(url_geizhals)
 #' parse_offers_n(listpagehtml_list[[1]])
 #' }
@@ -182,7 +182,7 @@ parse_offers_n <- function(listpagehtml) {
 #' listpagehtml <- xml2::read_html(url_geizhals)
 #' parse_listprice(listpagehtml)
 #'
-#' ## get html of multiple geizhals search pages:
+#' ## get html of multiple geizhals category listing pages:
 #' listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2)
 #' parse_listprice(listpagehtml_list[[1]])
 #' }
@@ -220,12 +220,12 @@ parse_listprice <- function(listpagehtml) {
 #'
 #' @examples
 #' \dontrun{
-#' ## get html of a geizhals search page via read_html():
+#' ## get html of a geizhals category listing page via read_html():
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
 #' parse_detailpage_urls(listpagehtml)
 #'
-#' ## get html of multiple geizhals search pages:
+#' ## get html of multiple geizhals category listing pages:
 #' listpagehtml_list <- fetch_all_listpages(url_geizhals)
 #' parse_detailpage_urls(listpagehtml_list[[1]])
 #' }
@@ -262,12 +262,12 @@ parse_detailpage_urls <- function(listpagehtml) {
 #'
 #' @examples
 #' \dontrun{
-#' ## get html of a geizhals search page via read_html():
+#' ## get html of a geizhals category listing page via read_html():
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
 #' parse_single_listpage(listpagehtml)
 #'
-#' ## get html of multiple geizhals search pages:
+#' ## get html of multiple geizhals category listing pages:
 #' listpagehtml_list <- fetch_all_listpages(url_geizhals)
 #' parse_single_listpage(listpagehtml_list[[1]])
 #' }
