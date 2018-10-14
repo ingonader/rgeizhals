@@ -1,3 +1,44 @@
+#' Join details to listpage data
+#'
+#' Joins the data from the product detail pages to
+#' the data from the category pages.
+#'
+#' @param dat_listpage A tibble (data.frame) containing
+#'   all the data from the scraped geizhals category
+#'   listing pages, with the join column
+#'   \code{detailpage_url}.
+#' @param dat_detailpage A tibble (data.frame) containing
+#'   the data from corresponding detail pages, with the
+#'   column specifying the \code{url}.
+#'
+#' @return A tibble (data.frame) containing both the data
+#'   from the category pages as well as the corresponding
+#'   detail page data (or \code{NA} if no match is present).
+#'
+#' @examples
+#' \dontrun{
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
+#' ## fetch html of all listing pages:
+#' listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2)
+#' ## and parse information of these listing pages:
+#' dat_listpage <- parse_all_listpages(listpagehtml_list)
+#' ## get all (or some) detailpages:
+#' detailpagehtml_list <- fetch_all_detailpage_html(dat_listpage$detailpage_url,
+#'                                                  max_items = 5)
+#' dat_detailpage <- parse_all_detailpages(detailpagehtml_list)
+#' dat_geizhals <- join_details_to_listpage(dat_listpage,
+#'                                          dat_detailpage)
+#' head(dat_geizhals)
+#' }
+#' @export
+join_details_to_listpage <- function(dat_listpage, dat_detailpage) {
+  ret <- dplyr::left_join(dat_listpage,
+                          dat_detailpage,
+                          by = c("detailpage_url" = "url"))
+  return(ret)
+}
+
+
 #' Get data from geizhals list and detail pages
 #'
 #' Starting from an url, get the information on all items in this
@@ -40,9 +81,8 @@ get_geizhals_data <- function(firstlistpageurl,
   dat_detailpage <- parse_all_detailpages(detailpagehtml_list)
 
   ## join listpage data to detailpage data:
-  dat_geizhals <- dplyr::left_join(dat_listpage,
-                                   dat_detailpage,
-                                   by = c("detailpage_url" = "url"))
+  dat_geizhals <- join_details_to_listpage(dat_listpage,
+                                           dat_detailpage)
   return(dat_geizhals)
 }
 
