@@ -147,7 +147,7 @@ parse_ratings_n <- function(listpagehtml) {
 #'
 #' ## get html of multiple geizhals search pages:
 #' listpagehtml_list <- fetch_all_listpages(url_geizhals)
-#' parse_offers_(listpagehtml_list[[1]])
+#' parse_offers_n(listpagehtml_list[[1]])
 #' }
 #'
 #' @export
@@ -162,6 +162,45 @@ parse_offers_n <- function(listpagehtml) {
 #parse_offers_n(listpagehtml)
 
 
+#' Parse price from listing page
+#'
+#' Returns the listed price for a product in a single geizhals
+#' html page of a category listing page. The order
+#' might not correspond to the order listed on the webpage, but it is
+#' the same order in all related functions.
+#'
+#' @inheritParams parse_product_names
+#'
+#' @return A numeric vector containing the price in the same
+#'   order of the products as appearing in the listing page
+#'   returned from \code{parse_product_names}.
+#'
+#' @examples
+#' \dontrun{
+#' ## get html of a geizhals category page via read_html():
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
+#' listpagehtml <- xml2::read_html(url_geizhals)
+#' parse_listprice(listpagehtml)
+#'
+#' ## get html of multiple geizhals search pages:
+#' listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2)
+#' parse_listprice(listpagehtml_list[[1]])
+#' }
+#'
+#' @export
+parse_listprice <- function(listpagehtml) {
+  ret <- listpagehtml %>% rvest::html_nodes(css = ".productlist__price") %>%
+    rvest::html_text()
+  ## remove first entry (category heading):
+  ret <- ret[-1]
+  ## convert to numerical:
+  ret <- ret %>% stringr::str_replace("^\n+", "") %>%  ## replace leading newline characters
+    stringr::str_extract("^.*?[0-9,]{1,}") %>%    ## get first occurenc of a number
+    stringr::str_replace_all("[^0-9,]", "") %>%               ## get numerical parts only
+    stringr::str_replace_all(",", "\\.") %>%                  ## "," comma to "." comma
+    as.numeric()
+  return(ret)
+}
 
 #' Parse urls of detail pages for items in geizhals category page
 #'
@@ -243,6 +282,7 @@ parse_single_listpage <- function(listpagehtml) {
       rating = parse_ratings(listpagehtml),
       rating_n = parse_ratings_n(listpagehtml),
       offers_n = parse_offers_n(listpagehtml),
+      listprice = parse_listprice(listpagehtml),
       detailpage_url = parse_detailpage_urls(listpagehtml)
     )
   } else {
@@ -253,6 +293,7 @@ parse_single_listpage <- function(listpagehtml) {
       rating = NA,
       rating_n = NA,
       offers_n = NA,
+      listprice = NA,
       detailpage_url = NA
     )
   }
