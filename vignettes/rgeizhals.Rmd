@@ -1,10 +1,10 @@
 ---
-title: "Vignette Title"
+title: "rgeizhals"
 author: "Vignette Author"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{rgeizhals}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -64,26 +64,43 @@ Also a quote using `>`:
 > "He who gives up [code] safety for [code] speed deserves neither."
 ([via](https://twitter.com/hadleywickham/status/504368538874703872))
 
+## The `rgeizhals` package
+
+The `rgheizhals` package can be used to scrape category listings from a
+specific product category on [https://geizhals.at/](https://geizhals.at/),
+including the links to the detailed product info pages.
+
+To use the package, navigate to a specific geizhals page by selecting
+the appropriate page in the sidebar of the page (1) and then choosing
+a category that should be scraped (2).
+
+```{r, echo=FALSE, fig.show="hold", fig.cap="Geizhals main page: Select category", out.width="100%", fig.align="left"}
+knitr::include_graphics(path = "./img/geizhals-mainpage.jpg")
+```
+
+Furthermore, it is advised that the choices displayed on the page are
+limited by choosing the filters (3) that are appropriate for the search
+in question. This helps to avoid being banned (temporarily) from the 
+geizhals page for issuing too many requests.
+
+Once the listing page contains the information that should be scraped,
+the url can be copied from the browser.
+
 ```{r}
 library(rvest)
+library(stringr)
 library(rgeizhals)
+library(dplyr)
 
-## naming conventions:
-## * listpage, listpagehtml
-## * detailpage, detailpagehtml
 
-#url_geizhals <- "https://geizhals.at/?cat=hwaeschtr&xf=1027_W%E4rmepumpentrockner%7E1296_10%7E1747_8%7E7641_40%7E7653_9"
+## first, define filters on geizhals.
+## then, get url:
+firstlistpageurl <- "https://geizhals.at/?cat=hwaeschtr&xf=1027_W%E4rmepumpentrockner%7E1296_10%7E1747_8%7E7641_40%7E7653_9"
 
-## get html of url:
-#listpagehtml <- read_html(url_geizhals)
-
-# data.frame(
-#   prodname = get_product_names(listpagehtml),
-#   rating = get_ratings(listpagehtml),
-#   rating_n = get_ratings_n(listpagehtml),
-#   offers_n = get_offers_n(listpagehtml),
-#   detaipage_url = get_detailpage_urls(listpagehtml)
-# )
+## most high-level function:
+#dat_gh_trockn <- get_geizhals_data(firstlistpageurl, max_pages = 1)
+#dat_gh <- dat_gh_trockn
+#head(dat_gh)
 
 ```
 
