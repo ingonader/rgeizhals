@@ -1,9 +1,12 @@
 context("scrape listpage")
 
 # setwd("./tests/testthat/")
-listpagehtml_trockner_01 <- xml2::read_html("gh-lst-trockn-01.html")
-listpagehtml_trockner_02 <- xml2::read_html("gh-lst-trockn-02.html")
-listpagehtml_nas_01 <- xml2::read_html("gh-lst-nas-01.html")
+listpagehtml_trockner_01 <- xml2::read_html(
+  system.file("extdata", "gh-lst-trockn-01.html", package = "rgeizhals"))
+listpagehtml_trockner_02 <- xml2::read_html(
+  system.file("extdata", "gh-lst-trockn-02.html", package = "rgeizhals"))
+listpagehtml_nas_01 <- xml2::read_html(
+  system.file("extdata", "gh-lst-nas-01.html", package = "rgeizhals"))
 
 ## ========================================================================= ##
 ## parse_product_names()
