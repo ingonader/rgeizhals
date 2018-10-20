@@ -79,6 +79,47 @@ test_that("parse_offers_n()
             )
           })
 
+## ========================================================================= ##
+## parse_listprice()
+## ========================================================================= ##
+
+test_that("parse_listprice()
+          parses prices correctly", {
+            r <- parse_listprice(listpagehtml_trockner_02)
+            expect_equal(r,
+                         c(1248.99, 1249.00, 1249.00, 1249.00, 1649.00, 1649.00)
+            )
+            r <- parse_listprice(listpagehtml_nas_01)
+            expect_equal(r,
+                         c(920.89, 2309.55))
+          })
+
+## ========================================================================= ##
+## parse_detailpage_urls()
+## ========================================================================= ##
+
+test_that("parse_detailpage_urls()
+          parses urls correctly", {
+            r <- parse_detailpage_urls(listpagehtml_trockner_02)
+            expect_equal(r, c(
+              "https://geizhals.at/https://geizhals.at/miele-tcf620-wp-eco-waermepumpentrockner-a1599561.html?hloc=at",
+              "https://geizhals.at/https://geizhals.at/aeg-electrolux-t97689ih3-waermepumpentrockner-a1669120.html?hloc=at",
+              "https://geizhals.at/https://geizhals.at/miele-tcf630-wp-eco-waermepumpentrockner-a1519938.html?hloc=at",
+              "https://geizhals.at/https://geizhals.at/miele-twf620-wp-eco-waermepumpentrockner-a1614538.html?hloc=at",
+              "https://geizhals.at/https://geizhals.at/miele-tmm840-wp-waermepumpentrockner-a1397066.html?hloc=at",
+              "https://geizhals.at/https://geizhals.at/miele-tmm843-wp-sfinish-eco-wifi-waermepumpentrockner-a1522652.html?hloc=at")
+            )
+            r <- parse_detailpage_urls(listpagehtml_nas_01)
+            expect_equal(r, c(
+              "https://geizhals.at/https://geizhals.at/asustor-as6210t-90ix00x1-bw3s10-a1472925.html?hloc=at",
+              "https://geizhals.at/https://geizhals.at/qnap-turbo-station-ts-ec1080-pro-a1136118.html?hloc=at")
+            )
+          })
+
+## ========================================================================= ##
+## parse_single_listpage()
+## ========================================================================= ##
+
 
 
 ## ========================================================================= ##
