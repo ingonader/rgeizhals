@@ -98,12 +98,12 @@ library(dplyr)
 firstlistpageurl <- "https://geizhals.at/?cat=hwaeschtr&xf=1027_W%E4rmepumpentrockner%7E1296_10%7E1747_8%7E7641_40%7E7653_9"
 
 
-firstlistpageurl <- system.file("extdata", "gh-lst-trockn-01.html", package = "rgeizhals")
+#firstlistpageurl <- system.file("extdata", "gh-lst-trockn-01.html", package = "rgeizhals")
 
 ## most high-level function:
-dat_gh_trockn <- get_geizhals_data(firstlistpageurl, max_pages = 1)
-dat_gh <- dat_gh_trockn
-head(dat_gh)
+#dat_gh_trockn <- get_geizhals_data(firstlistpageurl, max_pages = 1)
+#dat_gh <- dat_gh_trockn
+#head(dat_gh)
 
 ```
 
