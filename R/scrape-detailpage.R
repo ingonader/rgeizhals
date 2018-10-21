@@ -28,6 +28,7 @@
 #' @export
 parse_detailpage_categories <- function(detailpagehtml) {
   ret <- detailpagehtml %>%
+    rvest::html_nodes(css = "#productdata") %>%
     rvest::html_nodes(css = ".gh-data-table__key") %>%
     rvest::html_text()
   return(ret)
@@ -66,24 +67,33 @@ parse_keyval_tbl <- function(detailpagehtml) {
   ## if there is data...
   if (!is.na(detailpagehtml)) {
     ## ...get keys (categories):
-    keys_from_table <- parse_detailpage_categories(detailpagehtml)
+    keys <- parse_detailpage_categories(detailpagehtml)
+    #keys_from_table <- parse_detailpage_categories(detailpagehtml)
 
-    ## get text of all table rows (some containing keys, some not):
-    keys_value_text_all <- detailpagehtml %>%
-      rvest::html_nodes(css = ".gh-data-table__row") %>%
+    ## get values:
+    vals <- detailpagehtml %>%
+      rvest::html_nodes(css = "#productdata") %>%
+      rvest::html_nodes(css = ".gh-data-table__value") %>%
       rvest::html_text()
 
-    ## get keyval-text that contain keys:
-    keys_value_text_sel <- stringr::str_subset(keys_value_text_all, paste(keys_from_table, collapse = "|"))
-
-    ## get keys from keyvalue text:
-    keys <- stringr::str_extract(keys_value_text_sel,  paste(keys_from_table, collapse = "|"))
-
-    ## remove keys to get values:
-    vals <- stringr::str_replace_all(keys_value_text_sel,  paste(keys, collapse = "|"), "")
-
-    ## remove unnecessary characters:
-    vals <- stringr::str_replace_all(vals, "[\n]", "")
+    # ## get text of all table rows of the product data listing
+    # ## (some containing keys, some not):
+    # keys_value_text_all <- detailpagehtml %>%
+    #   rvest::html_nodes(css = "#productdata") %>%
+    #   rvest::html_nodes(css = ".gh-data-table__row") %>%
+    #   rvest::html_text()
+    #
+    # ## get keyval-text that contain keys:
+    # keys_value_text_sel <- stringr::str_subset(keys_value_text_all, paste(keys_from_table, collapse = "|"))
+    #
+    # ## get keys from keyvalue text:
+    # keys <- stringr::str_extract(keys_value_text_sel,  paste(keys_from_table, collapse = "|"))
+    #
+    # ## remove keys to get values:
+    # vals <- stringr::str_replace_all(keys_value_text_sel,  paste(keys, collapse = "|"), "")
+    #
+    # ## remove unnecessary characters:
+    # vals <- stringr::str_replace_all(vals, "[\n]", "")
 
     ## make data.frame:
     ret <- tibble::tibble(key = keys, value = vals)
