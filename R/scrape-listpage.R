@@ -214,6 +214,8 @@ parse_listprice <- function(listpagehtml) {
 #' the same order in all related functions.
 #'
 #' @inheritParams parse_product_names
+#' @param domain Character vector of length one specifying the domain.
+#'   Defaults to \code{"https://geizhals.at"}.
 #'
 #' @return A character vector containing the urls appearing in the
 #'   geizhals listing page.
@@ -231,14 +233,14 @@ parse_listprice <- function(listpagehtml) {
 #' }
 #'
 #' @export
-parse_detailpage_urls <- function(listpagehtml) {
+parse_detailpage_urls <- function(listpagehtml, domain = "https://geizhals.at") {
   ret <- listpagehtml %>% rvest::html_nodes(css = ".productlist__item.productlist__name") %>%
     rvest::html_nodes(css = "a") %>%
     rvest::html_attr("href")
   ## remove first entry:
   ret <- ret[-1]
   ## add domain:
-  ret <- paste0("https://geizhals.at/", ret)
+  ret <- paste0(domain, "/", ret)
   return(ret)
 }
 
@@ -255,7 +257,7 @@ parse_detailpage_urls <- function(listpagehtml) {
 #' might not correspond to the order listed on the webpage, but it is
 #' the same order in all related functions.
 #'
-#' @inheritParams parse_product_names
+#' @inheritParams parse_detailpage_urls
 #'
 #' @return A tibble (data.frame) containing all information scraped
 #'   from the geizhals page.
@@ -273,7 +275,7 @@ parse_detailpage_urls <- function(listpagehtml) {
 #' }
 #'
 #' @export
-parse_single_listpage <- function(listpagehtml) {
+parse_single_listpage <- function(listpagehtml, domain) {
   ## check if there is html data:
   if (!is.na(listpagehtml)) {
     ## if data can be extracted, do so:
@@ -283,7 +285,7 @@ parse_single_listpage <- function(listpagehtml) {
       rating_n = parse_ratings_n(listpagehtml),
       offers_n = parse_offers_n(listpagehtml),
       listprice = parse_listprice(listpagehtml),
-      detailpage_url = parse_detailpage_urls(listpagehtml)
+      detailpage_url = parse_detailpage_urls(listpagehtml, domain = domain)
     )
   } else {
     ## when no data can be parsed, just return same structure with NAs:
@@ -306,7 +308,7 @@ parse_single_listpage <- function(listpagehtml) {
 #' Returns the url of the next page of listings, or \code{NA} if no more
 #' page is availab.e
 #'
-#' @inheritParams parse_product_names
+#' @inheritParams parse_detailpage_urls
 #'
 #' @return Character vector of length 1 with the full url of the next page
 #'   with product listings, or \code{NA} if no more page is available.
@@ -325,7 +327,7 @@ parse_single_listpage <- function(listpagehtml) {
 #' }
 #'
 #' @export
-parse_next_listpage_url <- function(listpagehtml) {
+parse_next_listpage_url <- function(listpagehtml, domain = "https://geizhals.at") {
   ## check if there is html present; if not, return NA.
   if (is.na(listpagehtml)) return(NA)
 
@@ -342,7 +344,7 @@ parse_next_listpage_url <- function(listpagehtml) {
     rvest::html_attr("href")
 
   ## add domain (replace "." with geizhals domain::
-  nextlistpageurl <- stringr::str_replace( nextlistpageurl, "^\\.", "https://geizhals.at")
+  nextlistpageurl <- stringr::str_replace( nextlistpageurl, "^\\.", domain)
 
   return(nextlistpageurl)
 }
@@ -352,7 +354,7 @@ parse_next_listpage_url <- function(listpagehtml) {
 #' Takes the html of a listing page as input, extracts the url for
 #' the next listing page, reads the html and returns it.
 #'
-#' @inheritParams parse_product_names
+#' @inheritParams parse_detailpage_urls
 #'
 #' @return An xml document as returned by \code{xml2::read_html}
 #'
@@ -372,9 +374,9 @@ parse_next_listpage_url <- function(listpagehtml) {
 #' parse_single_listpage(fetch_next_listpage(listpagehtml))
 #' }
 #' @export
-fetch_next_listpage <- function(listpagehtml) {
+fetch_next_listpage <- function(listpagehtml, domain = "https://geizhals.at") {
   ## check if there is another page left and get url:
-  nextlistpageurl <- parse_next_listpage_url(listpagehtml)
+  nextlistpageurl <- parse_next_listpage_url(listpagehtml, domain = domain)
   if (is.na(nextlistpageurl)) ## no next page available
     return(NA)
 
@@ -403,6 +405,7 @@ fetch_next_listpage <- function(listpagehtml) {
 #' This list is meant to be processed by the \code{\link{parse_all_listpages}}
 #' function.
 #'
+#' @inheritParams parse_detailpage_urls
 #' @param firstlistpageurl Character vector of lenght 1 containting the
 #'   url of a geizhals category page (listing all items of a selected
 #'   category).
@@ -421,7 +424,8 @@ fetch_next_listpage <- function(listpagehtml) {
 #'
 #' @export
 fetch_all_listpages <- function(firstlistpageurl,
-                               max_pages = 10)
+                               max_pages = 10,
+                               domain = "https://geizhals.at")
 {
   ## initialize list to store all htmls:
   listpagehtml_list <- list()
@@ -432,7 +436,8 @@ fetch_all_listpages <- function(firstlistpageurl,
   listpagehtml_list[[1]] <- xml2::read_html(firstlistpageurl)
 
   i <- 1
-  nextlistpagehtml <- fetch_next_listpage(listpagehtml_list[[i]])
+  nextlistpagehtml <- fetch_next_listpage(listpagehtml_list[[i]],
+                                          domain = domain)
   while ((!is.na(nextlistpagehtml)) & (i < max_pages)) {
     ## increase counter variable:
     i <- i + 1
@@ -442,7 +447,8 @@ fetch_all_listpages <- function(firstlistpageurl,
 
     ## read next page:
     message("Fetching listing page ", i, "...")
-    nextlistpagehtml <- fetch_next_listpage(listpagehtml_list[[i]])
+    nextlistpagehtml <- fetch_next_listpage(listpagehtml_list[[i]],
+                                            domain = domain)
   }
   message("Done.")
   return(listpagehtml_list)
@@ -454,6 +460,7 @@ fetch_all_listpages <- function(firstlistpageurl,
 #' Takes a list of html as input, and returns the information in
 #' tabluar form.
 #'
+#' @inheritParams parse_detailpage_urls
 #' @param listpagehtml_list List of html structures from a multiple
 #'   geizhals pages, each listing items in a selected category,
 #'   as gathered via \code{fetch_all_listpages}.
@@ -469,6 +476,7 @@ fetch_all_listpages <- function(firstlistpageurl,
 #' }
 #'
 #' @export
-parse_all_listpages <- function(listpagehtml_list) {
-  purrr::map(listpagehtml_list, parse_single_listpage) %>% dplyr::bind_rows()
+parse_all_listpages <- function(listpagehtml_list,
+                                domain) {
+  purrr::map(listpagehtml_list, parse_single_listpage, domain) %>% dplyr::bind_rows()
 }

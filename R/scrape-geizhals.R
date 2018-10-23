@@ -45,6 +45,7 @@ join_details_to_listpage <- function(dat_listpage, dat_detailpage) {
 #' list (and the following pages), as well as the information
 #' in the detail pages that correspond to these items.
 #'
+#' @inheritParams parse_detailpage_urls
 #' @inheritParams fetch_all_detailpage_html
 #' @param firstlistpageurl The url of a single geizhals page listing
 #'   items in a selected category.
@@ -67,15 +68,19 @@ join_details_to_listpage <- function(dat_listpage, dat_detailpage) {
 #' @export
 get_geizhals_data <- function(firstlistpageurl,
                               max_pages = 10,
-                              max_items = Inf) {
+                              max_items = Inf,
+                              domain = "https://geizhals.at") {
   ## get all listpages:
   listpagehtml_list <- fetch_all_listpages(firstlistpageurl,
-                                          max_pages = max_pages)
-  dat_listpage <- parse_all_listpages(listpagehtml_list)
+                                          max_pages = max_pages,
+                                          domain = domain)
+  dat_listpage <- parse_all_listpages(listpagehtml_list,
+                                      domain = domain)
 
   ## get all detailpages:
   detailpagehtml_list <- fetch_all_detailpage_html(
-    parse_all_listpages(listpagehtml_list)$detailpage_url,
+    parse_all_listpages(listpagehtml_list,
+                        domain = domain)$detailpage_url,
     max_items = max_items
   )
   dat_detailpage <- parse_all_detailpages(detailpagehtml_list)

@@ -4,12 +4,15 @@
 \alias{parse_all_listpages}
 \title{Parse data from multiple geizhals category pages}
 \usage{
-parse_all_listpages(listpagehtml_list)
+parse_all_listpages(listpagehtml_list, domain)
 }
 \arguments{
 \item{listpagehtml_list}{List of html structures from a multiple
 geizhals pages, each listing items in a selected category,
 as gathered via \code{fetch_all_listpages}.}
+
+\item{domain}{Character vector of length one specifying the domain.
+Defaults to \code{"https://geizhals.at"}.}
 }
 \value{
 A tibble (data.frame) containing all information scraped

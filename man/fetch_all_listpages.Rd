@@ -4,7 +4,8 @@
 \alias{fetch_all_listpages}
 \title{Fetch html of multiple geizhals category pages}
 \usage{
-fetch_all_listpages(firstlistpageurl, max_pages = 10)
+fetch_all_listpages(firstlistpageurl, max_pages = 10,
+  domain = "https://geizhals.at")
 }
 \arguments{
 \item{firstlistpageurl}{Character vector of lenght 1 containting the
@@ -12,6 +13,9 @@ url of a geizhals category page (listing all items of a selected
 category).}
 
 \item{max_pages}{Maximal number of pages to be scraped. Default is 10.}
+
+\item{domain}{Character vector of length one specifying the domain.
+Defaults to \code{"https://geizhals.at"}.}
 }
 \value{
 A list of xml documents.

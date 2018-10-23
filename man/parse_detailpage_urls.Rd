@@ -4,13 +4,16 @@
 \alias{parse_detailpage_urls}
 \title{Parse urls of detail pages for items in geizhals category page}
 \usage{
-parse_detailpage_urls(listpagehtml)
+parse_detailpage_urls(listpagehtml, domain = "https://geizhals.at")
 }
 \arguments{
 \item{listpagehtml}{html structure from a single geizhals page listing
 items in a selected category, as gathered via \code{xml2::read_html()}
 or via a single entry of the list of listing pages resulting from
 \code{fetch_all_listpages}.}
+
+\item{domain}{Character vector of length one specifying the domain.
+Defaults to \code{"https://geizhals.at"}.}
 }
 \value{
 A character vector containing the urls appearing in the

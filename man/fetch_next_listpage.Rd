@@ -4,13 +4,16 @@
 \alias{fetch_next_listpage}
 \title{Fetch html of next listing page}
 \usage{
-fetch_next_listpage(listpagehtml)
+fetch_next_listpage(listpagehtml, domain = "https://geizhals.at")
 }
 \arguments{
 \item{listpagehtml}{html structure from a single geizhals page listing
 items in a selected category, as gathered via \code{xml2::read_html()}
 or via a single entry of the list of listing pages resulting from
 \code{fetch_all_listpages}.}
+
+\item{domain}{Character vector of length one specifying the domain.
+Defaults to \code{"https://geizhals.at"}.}
 }
 \value{
 An xml document as returned by \code{xml2::read_html}

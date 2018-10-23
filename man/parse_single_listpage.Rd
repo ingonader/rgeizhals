@@ -4,13 +4,16 @@
 \alias{parse_single_listpage}
 \title{Parse information from geizhals category page}
 \usage{
-parse_single_listpage(listpagehtml)
+parse_single_listpage(listpagehtml, domain)
 }
 \arguments{
 \item{listpagehtml}{html structure from a single geizhals page listing
 items in a selected category, as gathered via \code{xml2::read_html()}
 or via a single entry of the list of listing pages resulting from
 \code{fetch_all_listpages}.}
+
+\item{domain}{Character vector of length one specifying the domain.
+Defaults to \code{"https://geizhals.at"}.}
 }
 \value{
 A tibble (data.frame) containing all information scraped

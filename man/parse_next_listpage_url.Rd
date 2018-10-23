@@ -4,13 +4,16 @@
 \alias{parse_next_listpage_url}
 \title{Parse url of next listpage}
 \usage{
-parse_next_listpage_url(listpagehtml)
+parse_next_listpage_url(listpagehtml, domain = "https://geizhals.at")
 }
 \arguments{
 \item{listpagehtml}{html structure from a single geizhals page listing
 items in a selected category, as gathered via \code{xml2::read_html()}
 or via a single entry of the list of listing pages resulting from
 \code{fetch_all_listpages}.}
+
+\item{domain}{Character vector of length one specifying the domain.
+Defaults to \code{"https://geizhals.at"}.}
 }
 \value{
 Character vector of length 1 with the full url of the next page
