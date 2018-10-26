@@ -5,7 +5,7 @@
 \title{Get data from geizhals list and detail pages}
 \usage{
 get_geizhals_data(firstlistpageurl, max_pages = 10, max_items = Inf,
-  domain = "https://geizhals.at")
+  domain = NA)
 }
 \arguments{
 \item{firstlistpageurl}{The url of a single geizhals page listing
@@ -20,7 +20,7 @@ in \code{detailpageurls}, only the first \code{max_items} entries
 are fetched.}
 
 \item{domain}{Character vector of length one specifying the domain.
-Defaults to \code{"https://geizhals.at"}.}
+If omitted, domain is extracted from \code{firstlistpageurl}.}
 }
 \value{
 A tibble (data.frame) with all the infromation in

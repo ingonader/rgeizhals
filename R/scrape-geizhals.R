@@ -50,6 +50,8 @@ join_details_to_listpage <- function(dat_listpage, dat_detailpage) {
 #' @param firstlistpageurl The url of a single geizhals page listing
 #'   items in a selected category.
 #' @param max_pages Maximal number of pages to be scraped. Default is 10.
+#' @param domain Character vector of length one specifying the domain.
+#'   If omitted, domain is extracted from \code{firstlistpageurl}.
 #'
 #' @return A tibble (data.frame) with all the infromation in
 #'   the list page and the corresponding detail pages.
@@ -69,7 +71,10 @@ join_details_to_listpage <- function(dat_listpage, dat_detailpage) {
 get_geizhals_data <- function(firstlistpageurl,
                               max_pages = 10,
                               max_items = Inf,
-                              domain = "https://geizhals.at") {
+                              domain = NA) {
+  ## get domain, if none is specified:
+  if (is.na(domain)) domain <- extract_domain(firstlistpageurl)
+
   ## get all listpages:
   listpagehtml_list <- fetch_all_listpages(firstlistpageurl,
                                           max_pages = max_pages,
