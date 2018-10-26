@@ -160,3 +160,32 @@ extract_feature_ind <- function(dat_gh, col, regex) {
     as.numeric()
 }
 
+#' Extract the domain from the full URL
+#'
+#' Extracts the domain (usually \code{https://geizhals.at} or
+#' \code{https://geizhals.at}, but may also be the path to a
+#' local file for testing or debugging.)
+#'
+#' @param url_str URL of some (geizhals) page.
+#'   Character vector of length 1.
+#'
+#' @return The domain up to (but not including) the last "/"
+#'   character, as a character vector of length 1.
+#' @examples
+#' extract_domain("https://geizhals.eu/?cat=monlcd19wide")
+#' extract_domain(paste0("https://geizhals.at/?cat=hwaeschtr&",
+#'   "xf=1027_W%E4rmepumpentrockner%7E1296_10%7E1747_8%7E7641_40%7E7653_9"))
+#' extract_domain(paste0("https://geizhals.at/lg-electronics-x-",
+#'   "screen-k500n-weiss-a1419167.html?hloc=at"))
+#' extract_domain(system.file("extdata", "gh-lst-trockn-01.html",
+#'   package = "rgeizhals"))
+#'
+#' @export
+extract_domain <- function(url_str) {
+  ## get everything up to the last "/":
+  ret <- stringr::str_extract(url_str, "^.*/")
+  ## now remove that last "/":
+  ret <- stringr::str_sub(ret, 1, -2)
+  return(ret)
+}
+
