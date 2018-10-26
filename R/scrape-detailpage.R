@@ -142,6 +142,7 @@ parse_prices <- function(detailpagehtml) {
 
   ## convert to numerical:
   ret <- ret %>% stringr::str_extract("^.*[0-9,]{1,}") %>%  ## get first occurenc of a number
+    stringr::str_extract("[0-9]{1,},[0-9]{0,}") %>%         ## get only the number
     stringr::str_replace_all("[^0-9,]", "") %>%               ## get numerical parts only
     stringr::str_replace_all(",", "\\.") %>%                  ## "," comma to "." comma
     as.numeric()
