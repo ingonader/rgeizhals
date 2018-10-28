@@ -8,6 +8,11 @@ listpagehtml_trockner_02 <- xml2::read_html(
 listpagehtml_nas_01 <- xml2::read_html(
   system.file("extdata", "gh-lst-nas-01.html", package = "rgeizhals"))
 
+listpagehtml_list_trockner <- list(
+  listpagehtml_trockner_01,
+  listpagehtml_trockner_02
+)
+
 ## ========================================================================= ##
 ## parse_product_names()
 ## ========================================================================= ##
@@ -222,7 +227,34 @@ test_that("parse_next_listpage_url()
 ## ========================================================================= ##
 
 ## ========================================================================= ##
-## parse_all_listpages
+## parse_all_listpages()
 ## ========================================================================= ##
+
+test_that("parse_all_listpages()
+          parses the list of htmls corretly", {
+            r <- parse_all_listpages(listpagehtml_list_trockner, domain = "")
+            expect_equal(r$rating,
+                         c(NA, 5.0, 4.9, 4.9, 4.6, 5.0, NA, 4.5, 4.8, 5.0,
+                           5.0, 5.0, NA, NA, 4.9, NA, 4.0, 4.8, 1.0, NA, 5.0,
+                           5.0, 5.0, 5.0, NA, 4.8, 4.9, NA, NA, NA, NA, NA,
+                           5.0, NA, NA, 4.9))
+            expect_equal(r$rating_n,
+                         c(NA, 1, 10, 8, 47, 2, NA, 66, 54, 3, 1, 1, NA, NA,
+                           35, NA, 1, 2, 1, NA, 1, 8, 1, 7, NA, 29, 10, NA,
+                           NA, NA, NA, NA, 4, NA, NA, 8))
+            expect_equal(r$offers_n,
+                         c(4, 20, 6, 3, 5, 12, 14, 1, 4, 2, 3, 17, 9, 10, 3,
+                           3, 2, 1, 3, 8, 1, 24, 18, 6, 19, 25, 3, 2, 3, 4,
+                           9, 3, 22, 20, 1, 16))
+            expect_equal(r$listprice,
+                         c(459.08, 495.00, 542.23, 549.00, 549.00, 599.00,
+                           629.00, 633.75, 639.00, 649.00, 649.00, 649.00,
+                           649.00, 649.00, 669.00, 719.00, 775.00, 839.00,
+                           849.00, 899.00, 936.76, 999.00, 999.00, 999.00,
+                           1049.00, 1049.00, 1099.00, 1099.00, 1149.00, 1198.99,
+                           1248.99, 1249.00, 1249.00, 1249.00, 1649.00, 1649.00))
+            expect_equal(dim(r),
+                         c(36, 6))
+          })
 
 
