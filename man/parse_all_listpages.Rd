@@ -4,7 +4,8 @@
 \alias{parse_all_listpages}
 \title{Parse data from multiple geizhals category pages}
 \usage{
-parse_all_listpages(listpagehtml_list, domain)
+parse_all_listpages(listpagehtml_list,
+  domain = "https://www.geizhals.at")
 }
 \arguments{
 \item{listpagehtml_list}{List of html structures from a multiple
@@ -27,6 +28,11 @@ tabluar form.
 url_geizhals <- "https://geizhals.at/?cat=acam35"
 listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2)
 parse_all_listpages(listpagehtml_list)
+
+url_geizhals <- "https://geizhals.eu/?cat=acam35"
+listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2,
+  domain = "https://www.geizhals.eu")
+parse_all_listpages(listpagehtml_list, domain = "https://www.geizhals.eu")
 }
 
 }

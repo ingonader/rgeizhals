@@ -24,17 +24,24 @@ the next listing page, reads the html and returns it.
 }
 \examples{
 \dontrun{
-## url of next page:
+## url of geizhals.at page:
 url_geizhals <- "https://geizhals.at/?cat=acam35"
-listpagehtml <- xml2::read_html(url_geizhals)
-
+listpagehtml_p01 <- xml2::read_html(url_geizhals)
 ## get information from this listing page:
-parse_single_listpage(listpagehtml)
-
+parse_single_listpage(listpagehtml_p01)
 ## get next listing page:
-fetch_next_listpage(listpagehtml)
-
+listpagehtml_p02 <- fetch_next_listpage(listpagehtml_p01)
 #' ## get next listing page and get information:
-parse_single_listpage(fetch_next_listpage(listpagehtml))
+parse_single_listpage(listpagehtml_p02)
+
+## url of geizhals.eu page:
+url_geizhals <- "https://geizhals.eu/?cat=acam35"
+listpagehtml_01 <- xml2::read_html(url_geizhals)
+## get information from this listing page:
+parse_single_listpage(listpagehtml_01, domain = "https://geizhals.eu")
+## get next listing page:
+listpagehtml_p02 <- fetch_next_listpage(listpagehtml, domain = "https://geizhals.eu")
+#' ## get next listing page and get information:
+parse_single_listpage(listpagehtml_p02, domain = "https://geizhals.eu")
 }
 }

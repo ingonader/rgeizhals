@@ -230,6 +230,11 @@ parse_listprice <- function(listpagehtml) {
 #' ## get html of multiple geizhals category listing pages:
 #' listpagehtml_list <- fetch_all_listpages(url_geizhals)
 #' parse_detailpage_urls(listpagehtml_list[[1]])
+#'
+#' ## get html from a geizhals.eu page and parse:
+#' url_geizhals <- "https://geizhals.eu/?cat=acam35"
+#' listpagehtml <- xml2::read_html(url_geizhals)
+#' parse_detailpage_urls(listpagehtml, domain = "https://geizhals.eu")
 #' }
 #'
 #' @export
@@ -272,10 +277,15 @@ parse_detailpage_urls <- function(listpagehtml, domain = "https://geizhals.at") 
 #' ## get html of multiple geizhals category listing pages:
 #' listpagehtml_list <- fetch_all_listpages(url_geizhals)
 #' parse_single_listpage(listpagehtml_list[[1]])
+#'
+#' ## get html from a geizhals.eu page and parse:
+#' url_geizhals <- "https://geizhals.eu/?cat=acam35"
+#' listpagehtml <- xml2::read_html(url_geizhals)
+#' parse_single_listpage(listpagehtml, domain = "https://geizhals.eu")
 #' }
 #'
 #' @export
-parse_single_listpage <- function(listpagehtml, domain) {
+parse_single_listpage <- function(listpagehtml, domain = "https://geizhals.at") {
   ## check if there is html data:
   if (!is.na(listpagehtml)) {
     ## if data can be extracted, do so:
@@ -324,6 +334,11 @@ parse_single_listpage <- function(listpagehtml, domain) {
 #' url_geizhals <- "https://geizhals.at/?cat=acam35&pg=3#productlist"
 #' listpagehtml <- xml2::read_html(url_geizhals)
 #' parse_next_listpage_url(listpagehtml)
+#'
+#' ## get html from a geizhals.eu page and parse:
+#' url_geizhals <- "https://geizhals.eu/?cat=acam35"
+#' listpagehtml <- xml2::read_html(url_geizhals)
+#' parse_next_listpage_url(listpagehtml, domain = "https://geizhals.eu")
 #' }
 #'
 #' @export
@@ -360,18 +375,26 @@ parse_next_listpage_url <- function(listpagehtml, domain = "https://geizhals.at"
 #'
 #' @examples
 #' \dontrun{
-#' ## url of next page:
+#' ## url of geizhals.at page:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
-#' listpagehtml <- xml2::read_html(url_geizhals)
-#'
+#' listpagehtml_p01 <- xml2::read_html(url_geizhals)
 #' ## get information from this listing page:
-#' parse_single_listpage(listpagehtml)
-#'
+#' parse_single_listpage(listpagehtml_p01)
 #' ## get next listing page:
-#' fetch_next_listpage(listpagehtml)
-#'
+#' listpagehtml_p02 <- fetch_next_listpage(listpagehtml_p01)
 #' #' ## get next listing page and get information:
-#' parse_single_listpage(fetch_next_listpage(listpagehtml))
+#' parse_single_listpage(listpagehtml_p02)
+#'
+#' ## url of geizhals.eu page:
+#' url_geizhals <- "https://geizhals.eu/?cat=acam35"
+#' listpagehtml_01 <- xml2::read_html(url_geizhals)
+#' ## get information from this listing page:
+#' parse_single_listpage(listpagehtml_01, domain = "https://geizhals.eu")
+#' ## get next listing page:
+#' listpagehtml_p02 <- fetch_next_listpage(listpagehtml, domain = "https://geizhals.eu")
+#' #' ## get next listing page and get information:
+#' parse_single_listpage(listpagehtml_p02, domain = "https://geizhals.eu")
+
 #' }
 #' @export
 fetch_next_listpage <- function(listpagehtml, domain = "https://geizhals.at") {
@@ -420,6 +443,11 @@ fetch_next_listpage <- function(listpagehtml, domain = "https://geizhals.at") {
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2)
 #' parse_all_listpages(listpagehtml_list)
+#'
+#' url_geizhals <- "https://geizhals.eu/?cat=acam35"
+#' listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2,
+#'   domain = "https://www.geizhals.eu")
+#' parse_all_listpages(listpagehtml_list, domain = "https://www.geizhals.eu")
 #' }
 #'
 #' @export
@@ -473,10 +501,15 @@ fetch_all_listpages <- function(firstlistpageurl,
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2)
 #' parse_all_listpages(listpagehtml_list)
+#'
+#' url_geizhals <- "https://geizhals.eu/?cat=acam35"
+#' listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2,
+#'   domain = "https://www.geizhals.eu")
+#' parse_all_listpages(listpagehtml_list, domain = "https://www.geizhals.eu")
 #' }
 #'
 #' @export
 parse_all_listpages <- function(listpagehtml_list,
-                                domain) {
+                                domain = "https://www.geizhals.at") {
   purrr::map(listpagehtml_list, parse_single_listpage, domain) %>% dplyr::bind_rows()
 }

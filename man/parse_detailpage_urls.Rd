@@ -39,6 +39,11 @@ parse_detailpage_urls(listpagehtml)
 ## get html of multiple geizhals category listing pages:
 listpagehtml_list <- fetch_all_listpages(url_geizhals)
 parse_detailpage_urls(listpagehtml_list[[1]])
+
+## get html from a geizhals.eu page and parse:
+url_geizhals <- "https://geizhals.eu/?cat=acam35"
+listpagehtml <- xml2::read_html(url_geizhals)
+parse_detailpage_urls(listpagehtml, domain = "https://geizhals.eu")
 }
 
 }

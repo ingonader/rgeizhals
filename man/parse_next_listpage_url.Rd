@@ -34,6 +34,11 @@ parse_next_listpage_url(listpagehtml)
 url_geizhals <- "https://geizhals.at/?cat=acam35&pg=3#productlist"
 listpagehtml <- xml2::read_html(url_geizhals)
 parse_next_listpage_url(listpagehtml)
+
+## get html from a geizhals.eu page and parse:
+url_geizhals <- "https://geizhals.eu/?cat=acam35"
+listpagehtml <- xml2::read_html(url_geizhals)
+parse_next_listpage_url(listpagehtml, domain = "https://geizhals.eu")
 }
 
 }
