@@ -187,10 +187,9 @@ extract_feature_ind <- function(dat_gh, col, regex) {
 #'
 #' @export
 extract_domain <- function(url_str) {
-  ## get everything up to the last "/":
+  ## get everything up to the last slash:
   ret <- stringr::str_extract(url_str, "^.*/")
-  ## now remove that last "/":
+  ## now remove that last character (slash):
   ret <- stringr::str_sub(ret, 1, -2)
   return(ret)
 }
-

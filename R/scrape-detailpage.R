@@ -68,32 +68,12 @@ parse_keyval_tbl <- function(detailpagehtml) {
   if (!is.na(detailpagehtml)) {
     ## ...get keys (categories):
     keys <- parse_detailpage_categories(detailpagehtml)
-    #keys_from_table <- parse_detailpage_categories(detailpagehtml)
 
     ## get values:
     vals <- detailpagehtml %>%
       rvest::html_nodes(css = "#productdata") %>%
       rvest::html_nodes(css = ".gh-data-table__value") %>%
       rvest::html_text()
-
-    # ## get text of all table rows of the product data listing
-    # ## (some containing keys, some not):
-    # keys_value_text_all <- detailpagehtml %>%
-    #   rvest::html_nodes(css = "#productdata") %>%
-    #   rvest::html_nodes(css = ".gh-data-table__row") %>%
-    #   rvest::html_text()
-    #
-    # ## get keyval-text that contain keys:
-    # keys_value_text_sel <- stringr::str_subset(keys_value_text_all, paste(keys_from_table, collapse = "|"))
-    #
-    # ## get keys from keyvalue text:
-    # keys <- stringr::str_extract(keys_value_text_sel,  paste(keys_from_table, collapse = "|"))
-    #
-    # ## remove keys to get values:
-    # vals <- stringr::str_replace_all(keys_value_text_sel,  paste(keys, collapse = "|"), "")
-    #
-    # ## remove unnecessary characters:
-    # vals <- stringr::str_replace_all(vals, "[\n]", "")
 
     ## make data.frame:
     ret <- tibble::tibble(key = keys, value = vals)
@@ -141,14 +121,18 @@ parse_prices <- function(detailpagehtml) {
   ret <- ret[-1]
 
   ## convert to numerical:
-  ret <- ret %>% stringr::str_extract("^.*[0-9,]{1,}") %>%  ## get first occurenc of a number
-    stringr::str_extract("[0-9]{1,},[0-9]{0,}") %>%         ## get only the number
-    stringr::str_replace_all("[^0-9,]", "") %>%               ## get numerical parts only
-    stringr::str_replace_all(",", "\\.") %>%                  ## "," comma to "." comma
+  ret <- ret %>%
+    ## get first occurenc of a number:
+    stringr::str_extract("^.*[0-9,]{1,}") %>%
+    ## get only the number:
+    stringr::str_extract("[0-9]{1,},[0-9]{0,}") %>%
+    ## get numerical parts only:
+    stringr::str_replace_all("[^0-9,]", "") %>%
+    ## "," comma to "." comma:
+    stringr::str_replace_all(",", "\\.") %>%
     as.numeric()
   return(ret)
 }
-#parse_prices(detailpagehtml)
 
 
 #' Calculate a summary of prices in product detail page
@@ -352,28 +336,34 @@ fetch_all_detailpage_html <- function(detailpageurls, max_items = Inf) {
 #' @export
 parse_all_detailpages <- function(detailpagehtml_list) {
   ## get detailpage tibble:
-  singlepage_list <- purrr::map(detailpagehtml_list$html, parse_single_detailpage)
+  singlepage_list <- purrr::map(
+    detailpagehtml_list$html,
+    parse_single_detailpage)
 
   ## add url to tibble (to serve as join key later):
-  singlepage_list_with_url <- purrr::map2(singlepage_list, detailpagehtml_list$url, ~ dplyr::bind_rows(
-    tibble::tibble(key = "url", value = .y),
-    .x
+  singlepage_list_with_url <- purrr::map2(
+    singlepage_list, detailpagehtml_list$url,
+    ~ dplyr::bind_rows(
+      tibble::tibble(key = "url", value = .y),
+      .x
   ))
 
   ## get a list of all keys in all of the detailpage tibbles:
   all_keys <- purrr::map(singlepage_list_with_url, ~ .x[["key"]]) %>%
     unlist() %>% unique()
 
-  ## build tibble by joining all detailpage tibbles to key-tibble,
-  ## and transposing wide->long:
+  ## build tibble by joining all detailpage tibbles to tibble with keys,
+  ## and transposing wide to long:
   detaildat_wide <- tibble::tibble(key = all_keys)
   detaildat_long <- NULL
   # detaildat_wide_1 <- dplyr::left_join(detaildat_wide,
   #                                      singlepage_list_with_url[[1]],
   #                                      by = "key")
   for (i in seq_along(singlepage_list_with_url)) {
-    detaildat_wide_tmp <- dplyr::left_join(detaildat_wide, singlepage_list_with_url[[i]], by = "key")
-    detaildat_long_tmp <- tidyr::spread(detaildat_wide_tmp, key = "key", value = "value")
+    detaildat_wide_tmp <- dplyr::left_join(
+      detaildat_wide, singlepage_list_with_url[[i]], by = "key")
+    detaildat_long_tmp <- tidyr::spread(
+      detaildat_wide_tmp, key = "key", value = "value")
     detaildat_long <- dplyr::bind_rows(detaildat_long, detaildat_long_tmp)
   }
   return(detaildat_long)

@@ -31,10 +31,13 @@
 #' @export
 parse_product_names <- function(listpagehtml) {
   ## get relevant parts of html:
-  ret <- listpagehtml %>% rvest::html_nodes(css = ".productlist__item.productlist__name") %>%
+  ret <- listpagehtml %>%
+    rvest::html_nodes(css = ".productlist__item.productlist__name") %>%
     rvest::html_text() %>%
-    stringr::str_replace("^\n+", "") %>%  ## replace leading newline characters
-    stringr::str_extract("^[^\n]+")       ## extract everything up to the next newine character
+    ## replace leading newline characters:
+    stringr::str_replace("^\n+", "") %>%
+    ## extract everything up to the next newine character:
+    stringr::str_extract("^[^\n]+")
   ## remove first entry (string with number of products) and return result:
   ret <- ret[-1]
   return(ret)
@@ -72,7 +75,8 @@ parse_product_names <- function(listpagehtml) {
 #' @export
 parse_ratings <- function(listpagehtml) {
   ## get relevant parts of html:
-  ratings_text <- listpagehtml %>% rvest::html_nodes(css = ".productlist__rating") %>%
+  ratings_text <- listpagehtml %>%
+    rvest::html_nodes(css = ".productlist__rating") %>%
     rvest::html_text()
   ## extract ratings:
   ret <- ratings_text %>% stringr::str_extract("[0-9]\\.[0-9]") %>% as.numeric()
@@ -113,7 +117,8 @@ parse_ratings <- function(listpagehtml) {
 #' @export
 parse_ratings_n <- function(listpagehtml) {
   ## get relevant parts of html:
-  ratings_text <- listpagehtml %>% rvest::html_nodes(css = ".productlist__rating") %>%
+  ratings_text <- listpagehtml %>%
+    rvest::html_nodes(css = ".productlist__rating") %>%
     rvest::html_text()
   ## extract number of ratings:
   ret <- ratings_text %>% stringr::str_extract("[0-9]+ Bewertung.*") %>%
@@ -153,13 +158,13 @@ parse_ratings_n <- function(listpagehtml) {
 #' @export
 parse_offers_n <- function(listpagehtml) {
   ## get relevant parts of html:
-  ret <- listpagehtml %>% rvest::html_nodes(css = ".productlist__offerscount--standard") %>%
+  ret <- listpagehtml %>%
+    rvest::html_nodes(css = ".productlist__offerscount--standard") %>%
     rvest::html_text()
   ## remove first entry, and convert to numeric:
   ret <- ret[-1] %>% as.numeric()
   return(ret)
 }
-#parse_offers_n(listpagehtml)
 
 
 #' Parse price from listing page
@@ -194,10 +199,15 @@ parse_listprice <- function(listpagehtml) {
   ## remove first entry (category heading):
   ret <- ret[-1]
   ## convert to numerical:
-  ret <- ret %>% stringr::str_replace("^\n+", "") %>%  ## replace leading newline characters
-    stringr::str_extract("^.*?[0-9,]{1,}") %>%    ## get first occurenc of a number
-    stringr::str_replace_all("[^0-9,]", "") %>%               ## get numerical parts only
-    stringr::str_replace_all(",", "\\.") %>%                  ## "," comma to "." comma
+  ret <- ret %>%
+    ## replace leading newline characters:
+    stringr::str_replace("^\n+", "") %>%
+    ## get first occurenc of a number:
+    stringr::str_extract("^.*?[0-9,]{1,}") %>%
+    ## get numerical parts only:
+    stringr::str_replace_all("[^0-9,]", "") %>%
+    ## "," comma to "." comma:
+    stringr::str_replace_all(",", "\\.") %>%
     as.numeric()
   return(ret)
 }
@@ -238,8 +248,11 @@ parse_listprice <- function(listpagehtml) {
 #' }
 #'
 #' @export
-parse_detailpage_urls <- function(listpagehtml, domain = "https://geizhals.at") {
-  ret <- listpagehtml %>% rvest::html_nodes(css = ".productlist__item.productlist__name") %>%
+parse_detailpage_urls <- function(listpagehtml,
+                                  domain = "https://geizhals.at")
+{
+  ret <- listpagehtml %>%
+    rvest::html_nodes(css = ".productlist__item.productlist__name") %>%
     rvest::html_nodes(css = "a") %>%
     rvest::html_attr("href")
   ## remove first entry:
@@ -285,7 +298,9 @@ parse_detailpage_urls <- function(listpagehtml, domain = "https://geizhals.at") 
 #' }
 #'
 #' @export
-parse_single_listpage <- function(listpagehtml, domain = "https://geizhals.at") {
+parse_single_listpage <- function(listpagehtml,
+                                  domain = "https://geizhals.at")
+{
   ## check if there is html data:
   if (!is.na(listpagehtml)) {
     ## if data can be extracted, do so:
@@ -342,7 +357,9 @@ parse_single_listpage <- function(listpagehtml, domain = "https://geizhals.at") 
 #' }
 #'
 #' @export
-parse_next_listpage_url <- function(listpagehtml, domain = "https://geizhals.at") {
+parse_next_listpage_url <- function(listpagehtml,
+                                    domain = "https://geizhals.at")
+{
   ## check if there is html present; if not, return NA.
   if (is.na(listpagehtml)) return(NA)
 
@@ -355,7 +372,8 @@ parse_next_listpage_url <- function(listpagehtml, domain = "https://geizhals.at"
     return(NA)
 
   ## get url link for next page:
-  nextlistpageurl <- listpagehtml %>% rvest::html_node(css = ".gh_pag_next_active") %>%
+  nextlistpageurl <- listpagehtml %>%
+    rvest::html_node(css = ".gh_pag_next_active") %>%
     rvest::html_attr("href")
 
   ## add domain (replace "." with geizhals domain::
@@ -466,7 +484,7 @@ fetch_all_listpages <- function(firstlistpageurl,
   i <- 1
   nextlistpagehtml <- fetch_next_listpage(listpagehtml_list[[i]],
                                           domain = domain)
-  while ((!is.na(nextlistpagehtml)) & (i < max_pages)) {
+  while ( (!is.na(nextlistpagehtml)) & (i < max_pages) ) {
     ## increase counter variable:
     i <- i + 1
 
@@ -511,5 +529,6 @@ fetch_all_listpages <- function(firstlistpageurl,
 #' @export
 parse_all_listpages <- function(listpagehtml_list,
                                 domain = "https://www.geizhals.at") {
-  purrr::map(listpagehtml_list, parse_single_listpage, domain) %>% dplyr::bind_rows()
+  purrr::map(listpagehtml_list, parse_single_listpage, domain) %>%
+    dplyr::bind_rows()
 }

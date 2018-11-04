@@ -36,5 +36,3 @@ test_that("parse_detailpage_categories()
                 "Herstellergarantie", "Gelistet seit")
             )
           })
-
-
