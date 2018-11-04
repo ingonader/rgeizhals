@@ -64,7 +64,12 @@ Also a quote using `>`:
 > "He who gives up [code] safety for [code] speed deserves neither."
 ([via](https://twitter.com/hadleywickham/status/504368538874703872))
 
-## The `rgeizhals` package
+
+
+
+
+
+## The `rgeizhals` package: Highlevel functionality
 
 The `rgheizhals` package can be used to scrape category listings from a
 specific product category on [https://geizhals.at/](https://geizhals.at/),
@@ -95,38 +100,41 @@ library(dplyr)
 
 ## first, define filters on geizhals.
 ## then, get url:
-firstlistpageurl <- "https://geizhals.at/?cat=hwaeschtr&xf=1027_W%E4rmepumpentrockner%7E1296_10%7E1747_8%7E7641_40%7E7653_9"
+url_gh <- "https://geizhals.at/?cat=umtsover&xf=11111_6.0~148_Android~157_16384~2392_5.0~2607_1536"
+```
 
+The next step is to use the `get_geizhals_data()` function. It is good 
+practice to use the `max_pages` argument to limit the number of category 
+pages that are scraped. Additionally, it is also possible to use the
+`max_items` argument, which limits the number of detail pages that are
+scraped.
 
-#firstlistpageurl <- system.file("extdata", "gh-lst-trockn-01.html", package = "rgeizhals")
+```{r, eval=FALSE, echo=TRUE}
+dat_gh <- get_geizhals_data(url_gh, max_pages = 3)
+```
 
-## most high-level function:
-#dat_gh_trockn <- get_geizhals_data(firstlistpageurl, max_pages = 1)
-#dat_gh <- dat_gh_trockn
-#head(dat_gh)
+```
+Fetching listing page 1...
+Fetching listing page 2...
+Fetching listing page 3...
+Done.
+Fetching detailpage https://geizhals.at/emporia-smart-2-blau-a1741823.html?hloc=at...
+Fetching detailpage https://geizhals.at/caterpillar-cat-s60-schwarz-a1395802.html?hloc=at...
+Fetching detailpage https://geizhals.at/sony-xperia-m5-schwarz-a1305403.html?hloc=at...
+Fetching detailpage https://geizhals.at/xiaomi-redmi-4x-32gb-schwarz-a1585638.html?hloc=at...
+```
+
+```{r, eval=FALSE, echo=FALSE}
+dat_gh <- get_geizhals_data(url_gh, max_pages = 3)
+saveRDS(dat_gh, file = "/Users/in186000/data-nth-sync/leisure/r-packages/rgeizhals/inst/extdata/dat_vignette.rds")
 
 ```
 
+```{r, eval=TRUE, echo=FALSE}
+dat_gh <- readRDS(system.file("extdata", "dat_vignette.rds", package = "rgeizhals"))
+```
+
 ```{r}
-
-# ## pick one detailpage:
-# detailpage <- get_detailpage_urls(listpagehtml)[1]
-# 
-# ## get html of url:
-# detailpagehtml <- read_html(detailpage)
-# 
-# ## just get categories (without values):
-# get_detailpage_categories(detailpagehtml)
-# 
-# ## get categories and their values:
-# get_keyval_tbl(detailpagehtml)
-# 
-# ## get prices (first page):
-# get_prices(detailpagehtml)
-# 
-# ## get summary of prices (first page):
-# get_price_summary(detailpagehtml)
-# 
-
+head(dat_gh)
 ```
 
