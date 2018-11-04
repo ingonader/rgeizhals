@@ -15,13 +15,13 @@ A tibble (data.frame) with two columns (key and value),
   containing the price summary results (key being a descriptive
   key like \code{price_min}, value being the respective summary
   measure of the prices). The value column is of type
-  \code{character}, on order to be row-binded to the categories
+  \code{character}, in order to be row-binded to the categories
   and their values (which are also of type \code{character}).
 }
 \description{
 Returns a summary of all price values from the price list
 in the detailed product description page. Currently,
-this summary conains the 3 lowest prices (or \code{NA} if
+this summary contains the 3 lowest prices (or \code{NA} if
 there aren't enough prices on that page), and the median
 of all prices.
 }

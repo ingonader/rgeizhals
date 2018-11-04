@@ -11,7 +11,7 @@ extract_feature_ind(dat_gh, col, regex)
 \code{get_geizhals_data}.}
 
 \item{col}{A character vector of length one, specifying
-the name of the colum in \code{dat_gh} that should be
+the name of the column in \code{dat_gh} that should be
 parsed for the feature.}
 
 \item{regex}{A character vector of length one with a

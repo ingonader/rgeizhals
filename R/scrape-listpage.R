@@ -316,7 +316,7 @@ parse_single_listpage <- function(listpagehtml, domain = "https://geizhals.at") 
 #' Parse url of next listpage
 #'
 #' Returns the url of the next page of listings, or \code{NA} if no more
-#' page is availab.e
+#' page is available
 #'
 #' @inheritParams parse_detailpage_urls
 #'
@@ -429,7 +429,7 @@ fetch_next_listpage <- function(listpagehtml, domain = "https://geizhals.at") {
 #' function.
 #'
 #' @inheritParams parse_detailpage_urls
-#' @param firstlistpageurl Character vector of lenght 1 containting the
+#' @param firstlistpageurl Character vector of length 1 containing the
 #'   url of a geizhals category page (listing all items of a selected
 #'   category).
 #' @param max_pages Maximal number of pages to be scraped. Default is 10.
@@ -486,7 +486,7 @@ fetch_all_listpages <- function(firstlistpageurl,
 #' Parse data from multiple geizhals category pages
 #'
 #' Takes a list of html as input, and returns the information in
-#' tabluar form.
+#' tabular form.
 #'
 #' @inheritParams parse_detailpage_urls
 #' @param listpagehtml_list List of html structures from a multiple

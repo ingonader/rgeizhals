@@ -23,7 +23,7 @@ are fetched.}
 If omitted, domain is extracted from \code{firstlistpageurl}.}
 }
 \value{
-A tibble (data.frame) with all the infromation in
+A tibble (data.frame) with all the information in
   the list page and the corresponding detail pages.
   Each row corresponds to one product.
 }

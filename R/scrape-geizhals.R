@@ -53,7 +53,7 @@ join_details_to_listpage <- function(dat_listpage, dat_detailpage) {
 #' @param domain Character vector of length one specifying the domain.
 #'   If omitted, domain is extracted from \code{firstlistpageurl}.
 #'
-#' @return A tibble (data.frame) with all the infromation in
+#' @return A tibble (data.frame) with all the information in
 #'   the list page and the corresponding detail pages.
 #'   Each row corresponds to one product.
 #'
@@ -136,7 +136,7 @@ get_feature_summary <- function(dat_gh, col, sep = ",") {
 #' @param dat_gh A tibble (data.frame), usually obtained via
 #'   \code{get_geizhals_data}.
 #' @param col A character vector of length one, specifying
-#'   the name of the colum in \code{dat_gh} that should be
+#'   the name of the column in \code{dat_gh} that should be
 #'   parsed for the feature.
 #' @param regex A character vector of length one with a
 #'   regular expression. The column \code{col} is scanned

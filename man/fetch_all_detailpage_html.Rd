@@ -24,7 +24,7 @@ A list of length two. The first element, \code{url}, contains
   containing the html.
 }
 \description{
-Retreive the html code for a vector of detailpage urls, returning
+Retrieve the html code for a vector of detailpage urls, returning
 the urls as well as the html code.
 }
 \examples{

@@ -21,7 +21,7 @@ A tibble (data.frame) containing all information scraped
 }
 \description{
 Takes a list of html as input, and returns the information in
-tabluar form.
+tabular form.
 }
 \examples{
 \dontrun{

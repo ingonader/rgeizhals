@@ -21,7 +21,7 @@ Character vector of length 1 with the full url of the next page
 }
 \description{
 Returns the url of the next page of listings, or \code{NA} if no more
-page is availab.e
+page is available
 }
 \examples{
 \dontrun{

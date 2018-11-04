@@ -8,7 +8,7 @@ fetch_all_listpages(firstlistpageurl, max_pages = 10,
   domain = "https://geizhals.at")
 }
 \arguments{
-\item{firstlistpageurl}{Character vector of lenght 1 containting the
+\item{firstlistpageurl}{Character vector of length 1 containing the
 url of a geizhals category page (listing all items of a selected
 category).}
 

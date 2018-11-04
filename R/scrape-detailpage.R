@@ -155,7 +155,7 @@ parse_prices <- function(detailpagehtml) {
 #'
 #' Returns a summary of all price values from the price list
 #' in the detailed product description page. Currently,
-#' this summary conains the 3 lowest prices (or \code{NA} if
+#' this summary contains the 3 lowest prices (or \code{NA} if
 #' there aren't enough prices on that page), and the median
 #' of all prices.
 #'
@@ -165,7 +165,7 @@ parse_prices <- function(detailpagehtml) {
 #'   containing the price summary results (key being a descriptive
 #'   key like \code{price_min}, value being the respective summary
 #'   measure of the prices). The value column is of type
-#'   \code{character}, on order to be row-binded to the categories
+#'   \code{character}, in order to be row-binded to the categories
 #'   and their values (which are also of type \code{character}).
 #'
 #' @examples
@@ -254,7 +254,7 @@ parse_single_detailpage <- function(detailpagehtml) {
 
 #' Fetch html of detailpage urls
 #'
-#' Retreive the html code for a vector of detailpage urls, returning
+#' Retrieve the html code for a vector of detailpage urls, returning
 #' the urls as well as the html code.
 #'
 #' @param detailpageurls A character vector containing urls to
