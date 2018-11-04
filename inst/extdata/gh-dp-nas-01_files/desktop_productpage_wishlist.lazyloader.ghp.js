@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[21],{NIJt:function(e,s,o){"use strict";Object.defineProperty(s,"__esModule",{value:!0});var t=void 0;s.default={add:function(){window.clearTimeout(t);var e=document.getElementById("modal-wishlist__success");e.classList.remove("show"),e.classList.add("show"),t=setTimeout(function(){e.classList.remove("show")},1900)}}}}]);
