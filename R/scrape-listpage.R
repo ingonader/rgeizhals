@@ -18,7 +18,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' ## get html of a geizhals category listing page via read_html():
+#' ## get html of a geizhals category listing page via read_html:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
 #' parse_product_names(listpagehtml)
@@ -62,7 +62,7 @@ parse_product_names <- function(listpagehtml) {
 #'
 #' @examples
 #' \dontrun{
-#' ## get html of a geizhals category listing page via read_html():
+#' ## get html of a geizhals category listing page via read_html:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
 #' parse_ratings(listpagehtml)
@@ -104,7 +104,7 @@ parse_ratings <- function(listpagehtml) {
 #'
 #' @examples
 #' \dontrun{
-#' ## get html of a geizhals category listing page via read_html():
+#' ## get html of a geizhals category listing page via read_html:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
 #' parse_ratings_n(listpagehtml)
@@ -145,7 +145,7 @@ parse_ratings_n <- function(listpagehtml) {
 #'
 #' @examples
 #' \dontrun{
-#' ## get html of a geizhals category listing page via read_html():
+#' ## get html of a geizhals category listing page via read_html:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
 #' parse_offers_n(listpagehtml)
@@ -182,7 +182,7 @@ parse_offers_n <- function(listpagehtml) {
 #'
 #' @examples
 #' \dontrun{
-#' ## get html of a geizhals category page via read_html():
+#' ## get html of a geizhals category page via read_html:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
 #' parse_listprice(listpagehtml)
@@ -232,7 +232,7 @@ parse_listprice <- function(listpagehtml) {
 #'
 #' @examples
 #' \dontrun{
-#' ## get html of a geizhals category listing page via read_html():
+#' ## get html of a geizhals category listing page via read_html:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
 #' parse_detailpage_urls(listpagehtml)
@@ -282,7 +282,7 @@ parse_detailpage_urls <- function(listpagehtml,
 #'
 #' @examples
 #' \dontrun{
-#' ## get html of a geizhals category listing page via read_html():
+#' ## get html of a geizhals category listing page via read_html:
 #' url_geizhals <- "https://geizhals.at/?cat=acam35"
 #' listpagehtml <- xml2::read_html(url_geizhals)
 #' parse_single_listpage(listpagehtml)
@@ -477,7 +477,7 @@ fetch_all_listpages <- function(firstlistpageurl,
   listpagehtml_list <- list()
 
   ## get first listpage html:
-  ## (no try-catch here; if first page fails, error is in order)
+  ## (no try-catch here; if first page fails, error is in order) # nolint
   message("Fetching listing page 1...")
   listpagehtml_list[[1]] <- xml2::read_html(firstlistpageurl)
 

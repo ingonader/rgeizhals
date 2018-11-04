@@ -32,7 +32,7 @@ the same order in all related functions.
 }
 \examples{
 \dontrun{
-## get html of a geizhals category listing page via read_html():
+## get html of a geizhals category listing page via read_html:
 url_geizhals <- "https://geizhals.at/?cat=acam35"
 listpagehtml <- xml2::read_html(url_geizhals)
 parse_single_listpage(listpagehtml)

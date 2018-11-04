@@ -1,6 +1,6 @@
 context("scrape detailpage")
 
-# setwd("./tests/testthat/")
+# setwd("./tests/testthat/")   # nolint
 detailpagehtml_trockner_01 <- xml2::read_html(
   system.file("extdata", "gh-dp-trockn-01.html", package = "rgeizhals"))
 detailpagehtml_trockner_02 <- xml2::read_html(
@@ -9,11 +9,11 @@ detailpagehtml_nas_01 <- xml2::read_html(
   system.file("extdata", "gh-dp-nas-01.html", package = "rgeizhals"))
 
 ## ========================================================================= ##
-## parse_detailpage_categories()
+## parse_detailpage_categories
 ## ========================================================================= ##
 
-#paste0("\"", r, "\"") %>% paste(collapse = ", ") %>% paste0("c(", ., ")") %>% cat()
-#detailpagehtml <- detailpagehtml_trockner_02
+#paste0("\"", r, "\"") %>% paste(collapse = ", ") %>% paste0("c(", ., ")") %>% cat()  # nolint
+#detailpagehtml <- detailpagehtml_trockner_02                                         # nolint
 
 test_that("parse_detailpage_categories()
           parses categories correctly", {
