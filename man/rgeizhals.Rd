@@ -8,6 +8,14 @@
 \description{
 Scrapes www.geizhals.at pages
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/ingonader/rgeizhals}
+  \item Report bugs at \url{https://github.com/ingonader/rgeizhals/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: First Last \email{first.last@example.com}
 
