@@ -88,3 +88,24 @@ test_that("parse_keyval_tbl()
                 "drei Jahre (Abwicklung über ASUS)", "08.07.2016, 15:11")
             )
           })
+
+
+## ========================================================================= ##
+## parse_prices
+## ========================================================================= ##
+
+test_that("parse_prices()
+          parses prices correctly", {
+            r <- parse_prices(detailpagehtml_trockner_01)
+            expect_equal(
+              r,
+              c(1248.99, 1249.00, 1249.00, 1299.00, 1408.00)
+            )
+
+            r <- parse_prices(detailpagehtml_nas_01)
+            expect_equal(
+              r,
+              c(920.29, 920.30, 920.30, 920.30, 923.92, 925.21, 929.00,
+                952.00, 979.27, 1000.90, 1019.66, 1028.10)
+            )
+          })
