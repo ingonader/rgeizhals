@@ -46,7 +46,7 @@ test_that("parse_keyval_tbl()
           parses categories correctly", {
             r <- parse_keyval_tbl(detailpagehtml_trockner_01)
             expect_equal(dim(r),
-                         c(18,2)
+                         c(18, 2)
             )
             expect_equal(
               r[["key"]],
@@ -68,7 +68,7 @@ test_that("parse_keyval_tbl()
 
             r <- parse_keyval_tbl(detailpagehtml_nas_01)
             expect_equal(dim(r),
-                         c(14,2)
+                         c(14, 2)
             )
             expect_equal(
               r[["key"]],
