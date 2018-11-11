@@ -43,7 +43,7 @@ test_that("parse_detailpage_categories()
 ## ========================================================================= ##
 
 test_that("parse_keyval_tbl()
-          parses categories correctly", {
+          parses values and keys correctly", {
             r <- parse_keyval_tbl(detailpagehtml_trockner_01)
             expect_equal(dim(r),
                          c(18, 2)
