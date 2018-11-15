@@ -109,3 +109,44 @@ test_that("parse_prices()
                 952.00, 979.27, 1000.90, 1019.66, 1028.10)
             )
           })
+
+## ========================================================================= ##
+## calc_price_summary
+## ========================================================================= ##
+
+test_that("calc_price_summary()
+          works as expected", {
+            r <- calc_price_summary(detailpagehtml_trockner_01)
+            expect_equal(
+              r %>%
+                dplyr::filter(key == "price_min") %>%
+                dplyr::pull(value),
+              min(parse_prices(detailpagehtml_trockner_01))
+            )
+            expect_equal(
+              r %>%
+                dplyr::filter(key == "price_median") %>%
+                dplyr::pull(value),
+              median(parse_prices(detailpagehtml_trockner_01))
+            )
+            expect_equal(
+              r %>%
+                dplyr::filter(key == "price_2nd_min") %>%
+                dplyr::pull(value),
+              sort(parse_prices(detailpagehtml_trockner_01),
+                   decreasing = FALSE)[2]
+            )
+            expect_equal(
+              r %>%
+                dplyr::filter(key == "price_3rd_min") %>%
+                dplyr::pull(value),
+              sort(parse_prices(detailpagehtml_trockner_01),
+                   decreasing = FALSE)[3]
+            )
+
+            r <- calc_price_summary(detailpagehtml_nas_01)
+            expect_equal(
+              r[["value"]],
+              c(920.290, 920.300, 920.300, 927.105)
+            )
+          })
