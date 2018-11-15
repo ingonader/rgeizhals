@@ -150,3 +150,34 @@ test_that("calc_price_summary()
               c(920.290, 920.300, 920.300, 927.105)
             )
           })
+
+## ========================================================================= ##
+## parse_single_detailpage
+## ========================================================================= ##
+
+test_that("parse_single_detailpage()
+          works as expected", {
+            r <- parse_single_detailpage(detailpagehtml_trockner_01)
+            expect_equal(
+              r[["key"]],
+              c(parse_keyval_tbl(detailpagehtml_trockner_01)[["key"]],
+                calc_price_summary(detailpagehtml_trockner_01)[["key"]])
+            )
+            expect_equal(
+              r[["value"]],
+              c(parse_keyval_tbl(detailpagehtml_trockner_01)[["value"]],
+                calc_price_summary(detailpagehtml_trockner_01)[["value"]])
+            )
+
+            r <- parse_single_detailpage(detailpagehtml_nas_01)
+            expect_equal(
+              r[["key"]],
+              c(parse_keyval_tbl(detailpagehtml_nas_01)[["key"]],
+                calc_price_summary(detailpagehtml_nas_01)[["key"]])
+            )
+            expect_equal(
+              r[["value"]],
+              c(parse_keyval_tbl(detailpagehtml_nas_01)[["value"]],
+                calc_price_summary(detailpagehtml_nas_01)[["value"]])
+            )
+          })
