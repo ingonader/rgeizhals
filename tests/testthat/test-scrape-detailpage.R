@@ -192,24 +192,52 @@ test_that("parse_single_detailpage()
 ## fetch_all_detailpage_html
 ## ========================================================================= ##
 
-r <- fetch_all_detailpage_html(detailpageurls_trockner)
+detailpagehtml_list_trockner <- fetch_all_detailpage_html(
+  detailpageurls_trockner
+)
 
 test_that("fetch_all_detailpage_html()
           has urls are correctly represented in returned list", {
-          expect_equal(r$url,
+          expect_equal(detailpagehtml_list_trockner$url,
                        detailpageurls_trockner)
           })
 
 test_that("fetch_all_detailpage_html()
           returns same lengths for url vector and html list", {
-            expect_equal(length(r$url),
-                         length(r$html))
+            expect_equal(length(detailpagehtml_list_trockner$url),
+                         length(detailpagehtml_list_trockner$html))
           })
 
 test_that("fetch_all_detailpage_html()
           contents are same as individually parsed contents", {
-            expect_equal(r$html[[1]],
+            expect_equal(detailpagehtml_list_trockner$html[[1]],
                          detailpagehtml_trockner_01)
-            expect_equal(r$html[[2]],
+            expect_equal(detailpagehtml_list_trockner$html[[2]],
                          detailpagehtml_trockner_02)
+          })
+
+## ========================================================================= ##
+## parse_all_detailpages
+## ========================================================================= ##
+
+test_that("parse_all_detailpages()
+          returns the same content as parsing page directly", {
+            r <- parse_all_detailpages(detailpagehtml_list_trockner)
+            expect_equal(
+              ## sorted version of contents as vector:
+              sort(as.vector(t(r[1, ]))),
+              ## should be equal to
+              c(
+                ## "url" of file added to content
+                ## (at beginning, as starts with slash):
+                system.file("extdata", "gh-dp-trockn-01.html",
+                            package = "rgeizhals"),
+                ## and then values, also sorted and converted
+                ## to vector:
+                sort(as.vector(
+                  parse_single_detailpage(
+                    detailpagehtml_trockner_01)[["value"]]
+                ))
+              )
+            )
           })
