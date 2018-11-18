@@ -241,3 +241,15 @@ test_that("parse_all_detailpages()
               )
             )
           })
+
+test_that("parse_all_detailpages(),
+          combines keys from two detailpages correctly", {
+            r <- parse_all_detailpages(detailpagehtml_list_trockner)
+            expect_equal(
+              sort(setdiff(names(r), "url")),
+              sort(union(
+                parse_single_detailpage(detailpagehtml_trockner_01)[["key"]],
+                parse_single_detailpage(detailpagehtml_trockner_02)[["key"]]
+              ))
+            )
+          })
