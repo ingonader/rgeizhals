@@ -8,6 +8,12 @@ detailpagehtml_trockner_02 <- xml2::read_html(
 detailpagehtml_nas_01 <- xml2::read_html(
   system.file("extdata", "gh-dp-nas-01.html", package = "rgeizhals"))
 
+detailpageurls_trockner <- c(
+  system.file("extdata", "gh-dp-trockn-01.html", package = "rgeizhals"),
+  system.file("extdata", "gh-dp-trockn-02.html", package = "rgeizhals")
+)
+
+
 ## ========================================================================= ##
 ## parse_detailpage_categories
 ## ========================================================================= ##
@@ -180,4 +186,30 @@ test_that("parse_single_detailpage()
               c(parse_keyval_tbl(detailpagehtml_nas_01)[["value"]],
                 calc_price_summary(detailpagehtml_nas_01)[["value"]])
             )
+          })
+
+## ========================================================================= ##
+## fetch_all_detailpage_html
+## ========================================================================= ##
+
+r <- fetch_all_detailpage_html(detailpageurls_trockner)
+
+test_that("fetch_all_detailpage_html()
+          has urls are correctly represented in returned list", {
+          expect_equal(r$url,
+                       detailpageurls_trockner)
+          })
+
+test_that("fetch_all_detailpage_html()
+          returns same lengths for url vector and html list", {
+            expect_equal(length(r$url),
+                         length(r$html))
+          })
+
+test_that("fetch_all_detailpage_html()
+          contents are same as individually parsed contents", {
+            expect_equal(r$html[[1]],
+                         detailpagehtml_trockner_01)
+            expect_equal(r$html[[2]],
+                         detailpagehtml_trockner_02)
           })
