@@ -15,7 +15,8 @@ Imports:
     tibble,
     magrittr,
     tidyr,
-    xml2
+    xml2,
+    readr
 Suggests:
     knitr,
     rmarkdown,

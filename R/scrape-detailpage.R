@@ -366,5 +366,11 @@ parse_all_detailpages <- function(detailpagehtml_list) {
       detaildat_wide_tmp, key = "key", value = "value")
     detaildat_long <- dplyr::bind_rows(detaildat_long, detaildat_long_tmp)
   }
+
+  ## since all columns are of type are character, guess the
+  ## correct types:
+  detaildat_long <- dplyr::mutate_all(detaildat_long,
+                                      readr::parse_guess)
+
   return(detaildat_long)
 }
