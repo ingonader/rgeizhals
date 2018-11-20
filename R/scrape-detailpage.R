@@ -309,7 +309,8 @@ fetch_all_detailpage_html <- function(detailpageurls, max_items = Inf) {
 #' row in the resulting tibble (data.frame).
 #' The tibble has as many columns as there are categories,
 #' if a product doesn't feature all categories in its
-#' description, this column will be \code{NA}.
+#' description, this column will be \code{NA}. Column
+#' types are inferred from the data automatically.
 #'
 #' @param detailpagehtml_list A list of html structure
 #'   from multiple geizhals page listing details of a
