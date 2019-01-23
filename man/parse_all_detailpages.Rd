@@ -45,6 +45,10 @@ detailpagehtml_list <- fetch_all_detailpage_html(wch_detailpage_urls)
 ## get data from all detailpages:
 dat_detailpages <- parse_all_detailpages(detailpagehtml_list)
 head(dat_detailpages)
+## get the same data as a list:
+dat_detailpages_list <- parse_all_detailpages(detailpagehtml_list,
+                                              returntype = "list")
+head(dat_detailpages_list)
 }
 
 }

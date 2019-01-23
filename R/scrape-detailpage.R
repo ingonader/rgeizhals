@@ -334,6 +334,10 @@ fetch_all_detailpage_html <- function(detailpageurls, max_items = Inf) {
 #' ## get data from all detailpages:
 #' dat_detailpages <- parse_all_detailpages(detailpagehtml_list)
 #' head(dat_detailpages)
+#' ## get the same data as a list:
+#' dat_detailpages_list <- parse_all_detailpages(detailpagehtml_list,
+#'                                               returntype = "list")
+#' head(dat_detailpages_list)
 #' }
 #'
 #' @export
