@@ -4,12 +4,15 @@
 \alias{parse_all_detailpages}
 \title{Parse data from multiple product detail pages}
 \usage{
-parse_all_detailpages(detailpagehtml_list)
+parse_all_detailpages(detailpagehtml_list, returntype = "data.frame")
 }
 \arguments{
 \item{detailpagehtml_list}{A list of html structure
 from multiple geizhals page listing details of a
 specific item.}
+
+\item{returntype}{Either \code{"list"} or
+\code{"data.frame"} (default).}
 }
 \value{
 A tibble (data.frame) with as many columns
@@ -27,7 +30,8 @@ the columns, and each product is represented as a
 row in the resulting tibble (data.frame).
 The tibble has as many columns as there are categories,
 if a product doesn't feature all categories in its
-description, this column will be \code{NA}.
+description, this column will be \code{NA}. Column
+types are inferred from the data automatically.
 }
 \examples{
 \dontrun{

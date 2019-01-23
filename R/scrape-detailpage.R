@@ -315,6 +315,8 @@ fetch_all_detailpage_html <- function(detailpageurls, max_items = Inf) {
 #' @param detailpagehtml_list A list of html structure
 #'   from multiple geizhals page listing details of a
 #'   specific item.
+#' @param returntype Either \code{"list"} or
+#'  \code{"data.frame"} (default).
 #'
 #' @return A tibble (data.frame) with as many columns
 #'   as there are distinct categories in all feature
@@ -335,7 +337,9 @@ fetch_all_detailpage_html <- function(detailpageurls, max_items = Inf) {
 #' }
 #'
 #' @export
-parse_all_detailpages <- function(detailpagehtml_list) {
+parse_all_detailpages <- function(detailpagehtml_list,
+                                  returntype = "data.frame")
+{
   ## get detailpage tibble:
   singlepage_list <- purrr::map(
     detailpagehtml_list$html,
@@ -348,6 +352,12 @@ parse_all_detailpages <- function(detailpagehtml_list) {
       tibble::tibble(key = "url", value = .y),
       .x
   ))
+
+  ## if return type should be list, then just return this list:
+  if (returntype == "list")
+    return(singlepage_list_with_url)
+
+  ## otherwise, build data.frame:
 
   ## get a list of all keys in all of the detailpage tibbles:
   all_keys <- purrr::map(singlepage_list_with_url, ~ .x[["key"]]) %>%
