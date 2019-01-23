@@ -311,6 +311,9 @@ fetch_all_detailpage_html <- function(detailpageurls, max_items = Inf) {
 #' if a product doesn't feature all categories in its
 #' description, this column will be \code{NA}. Column
 #' types are inferred from the data automatically.
+#' If \code{returntype} is specified to be \code{"list"},
+#' the data is returned as a list, without combining
+#' the data into a data frame.
 #'
 #' @param detailpagehtml_list A list of html structure
 #'   from multiple geizhals page listing details of a
