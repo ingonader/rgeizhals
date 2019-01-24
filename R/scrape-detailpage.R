@@ -297,6 +297,8 @@ fetch_all_detailpage_html <- function(detailpageurls, max_items = Inf) {
 
 
 
+
+
 #' Parse data from multiple product detail pages
 #'
 #' Returns all categories and their values in a list of
@@ -370,6 +372,49 @@ parse_all_detailpages <- function(detailpagehtml_list,
     return(singlepage_list_with_url)
 
   ## otherwise, build data.frame:
+  detaildat_long <- combine_detailpages(singlepage_list_with_url)
+  return(detaildat_long)
+}
+
+#' Combine list of detailpages into data.frame
+#'
+#' Takes a list of parsed detailpages and combines them
+#' into a data.frame. The categories describing
+#' a product are
+#' the columns, and each product is represented as a
+#' row in the resulting tibble (data.frame).
+#' The tibble has as many columns as there are categories,
+#' if a product doesn't feature all categories in its
+#' description, this column will be \code{NA}. Column
+#' types are inferred from the data automatically.
+#'
+#' @param singlepage_list_with_url A list of parsed
+#'   detailpages as returned by the function
+#'   \code{parse_all_detailpages} when used with
+#'   \code{returntype = "list"}.
+#'
+#' @return A tibble (data.frame) with as many columns
+#'   as there are distinct categories in all feature
+#'   pages, and as many rows as there are products.
+#'
+#' @examples
+#' \dontrun{
+#' ## get data from multiple geizhals category pages:
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
+#' listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2)
+#' dat_listpage <- parse_all_listpages(listpagehtml_list)
+#' ## pick only the three first detailpage urls:
+#' wch_detailpage_urls <- dat_listpage[["detailpage_url"]][1:3]
+#' detailpagehtml_list <- fetch_all_detailpage_html(wch_detailpage_urls)
+#' ## get the same data as a list:
+#' dat_detailpages_list <- parse_all_detailpages(detailpagehtml_list,
+#'                                               returntype = "list")
+#' ## combine to data.frame:
+#' combine_detailpages(dat_detailpages_list)
+#' }
+#'
+#' @export
+combine_detailpages <- function(singlepage_list_with_url) {
 
   ## get a list of all keys in all of the detailpage tibbles:
   all_keys <- purrr::map(singlepage_list_with_url, ~ .x[["key"]]) %>%
@@ -396,4 +441,5 @@ parse_all_detailpages <- function(detailpagehtml_list,
                                       readr::parse_guess)
 
   return(detaildat_long)
+
 }
