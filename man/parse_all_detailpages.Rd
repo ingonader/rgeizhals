@@ -17,7 +17,12 @@ specific item.}
 \value{
 A tibble (data.frame) with as many columns
   as there are distinct categories in all feature
-  pages, and as many rows as there are products.
+  pages, and as many rows as there are products
+  for \code{returntype = "data.frame"}. Otherwise,
+  a list where each list entry containes the
+  parsed data from a single detailpage (not
+  necessarily with each list entry having the
+  same categories).
 }
 \description{
 Returns all categories and their values in a list of
