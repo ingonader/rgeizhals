@@ -532,3 +532,30 @@ parse_all_listpages <- function(listpagehtml_list,
   purrr::map(listpagehtml_list, parse_single_listpage, domain) %>%
     dplyr::bind_rows()
 }
+
+#' Convenience function to fetch and parse all listpages
+#'
+#' Calls \code{fetch_all_listpages} and then
+#' \code{parse_all_listpages} .
+#'
+#' @inheritParams fetch_all_listpages
+#'
+#' @return A tibble (data.frame) containing all information scraped
+#'   from the geizhals pages.
+#' @examples
+#' \dontrun{
+#' url_geizhals <- "https://geizhals.at/?cat=acam35"
+#' get_listpage_data(url_geizhals, max_pages = 2)
+#' }
+#' @export
+get_listpage_data <- function(firstlistpageurl,
+                              max_pages = 10,
+                              domain = "https://geizhals.at")
+{
+  listpagehtml_list <- fetch_all_listpages(firstlistpageurl,
+                                           max_pages = max_pages,
+                                           domain = domain)
+  ret <- parse_all_listpages(listpagehtml_list,
+                             domain = domain)
+  return(ret)
+}
