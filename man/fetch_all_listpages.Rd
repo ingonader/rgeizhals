@@ -5,7 +5,7 @@
 \title{Fetch html of multiple geizhals category pages}
 \usage{
 fetch_all_listpages(firstlistpageurl, max_pages = 10,
-  domain = "https://geizhals.at")
+  delay_listpage = NA, domain = "https://geizhals.at")
 }
 \arguments{
 \item{firstlistpageurl}{Character vector of length 1 containing the
@@ -13,6 +13,9 @@ url of a geizhals category page (listing all items of a selected
 category).}
 
 \item{max_pages}{Maximal number of pages to be scraped. Default is 10.}
+
+\item{delay_listpage}{Number of seconds to wait between fetching
+subsequent list pages.}
 
 \item{domain}{Character vector of length one specifying the domain.
 Defaults to \code{"https://geizhals.at"}.}
@@ -38,7 +41,7 @@ parse_all_listpages(listpagehtml_list)
 
 url_geizhals <- "https://geizhals.eu/?cat=acam35"
 listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2,
-  domain = "https://www.geizhals.eu")
+  delay_listpage = 1, domain = "https://www.geizhals.eu")
 parse_all_listpages(listpagehtml_list, domain = "https://www.geizhals.eu")
 }
 

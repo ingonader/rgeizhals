@@ -5,7 +5,7 @@
 \title{Convenience function to fetch and parse all listpages}
 \usage{
 get_listpage_data(firstlistpageurl, max_pages = 10,
-  domain = "https://geizhals.at")
+  delay_listpage = NA, domain = "https://geizhals.at")
 }
 \arguments{
 \item{firstlistpageurl}{Character vector of length 1 containing the
@@ -13,6 +13,9 @@ url of a geizhals category page (listing all items of a selected
 category).}
 
 \item{max_pages}{Maximal number of pages to be scraped. Default is 10.}
+
+\item{delay_listpage}{Number of seconds to wait between fetching
+subsequent list pages.}
 
 \item{domain}{Character vector of length one specifying the domain.
 Defaults to \code{"https://geizhals.at"}.}

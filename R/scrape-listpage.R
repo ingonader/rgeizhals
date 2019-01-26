@@ -451,6 +451,8 @@ fetch_next_listpage <- function(listpagehtml, domain = "https://geizhals.at") {
 #'   url of a geizhals category page (listing all items of a selected
 #'   category).
 #' @param max_pages Maximal number of pages to be scraped. Default is 10.
+#' @param delay_listpage Number of seconds to wait between fetching
+#'   subsequent list pages.
 #'
 #' @return A list of xml documents.
 #'
@@ -464,13 +466,14 @@ fetch_next_listpage <- function(listpagehtml, domain = "https://geizhals.at") {
 #'
 #' url_geizhals <- "https://geizhals.eu/?cat=acam35"
 #' listpagehtml_list <- fetch_all_listpages(url_geizhals, max_pages = 2,
-#'   domain = "https://www.geizhals.eu")
+#'   delay_listpage = 1, domain = "https://www.geizhals.eu")
 #' parse_all_listpages(listpagehtml_list, domain = "https://www.geizhals.eu")
 #' }
 #'
 #' @export
 fetch_all_listpages <- function(firstlistpageurl,
                                max_pages = 10,
+                               delay_listpage = NA,
                                domain = "https://geizhals.at")
 {
   ## initialize list to store all htmls:
@@ -490,6 +493,12 @@ fetch_all_listpages <- function(firstlistpageurl,
 
     ## store page in list:
     listpagehtml_list[[i]] <- nextlistpagehtml
+
+    ## wait for specified delay time, if any:
+    if (!is.na(delay_listpage)) {
+      message("Sleeping for ", delay_listpage, " second(s)...")
+      Sys.sleep(delay_listpage)
+    }
 
     ## read next page:
     message("Fetching listing page ", i, "...")
@@ -550,10 +559,12 @@ parse_all_listpages <- function(listpagehtml_list,
 #' @export
 get_listpage_data <- function(firstlistpageurl,
                               max_pages = 10,
+                              delay_listpage = NA,
                               domain = "https://geizhals.at")
 {
   listpagehtml_list <- fetch_all_listpages(firstlistpageurl,
                                            max_pages = max_pages,
+                                           delay_listpage = delay_listpage,
                                            domain = domain)
   ret <- parse_all_listpages(listpagehtml_list,
                              domain = domain)

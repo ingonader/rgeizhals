@@ -5,7 +5,7 @@
 \title{Get data from geizhals list and detail pages}
 \usage{
 get_geizhals_data(firstlistpageurl, max_pages = 10, max_items = Inf,
-  delay_detailpage = NA, domain = NA)
+  delay_listpage = NA, delay_detailpage = NA, domain = NA)
 }
 \arguments{
 \item{firstlistpageurl}{The url of a single geizhals page listing
@@ -18,6 +18,9 @@ the maximum number of items to scrape. (Default: \code{Inf}).
 If \code{max_items} is smaller than the length of the passed urls
 in \code{detailpageurls}, only the first \code{max_items} entries
 are fetched.}
+
+\item{delay_listpage}{Number of seconds to wait between fetching
+subsequent list pages.}
 
 \item{delay_detailpage}{Number of seconds to wait after fetching
 html of each detailpage (defaults to \code{NA}).}
@@ -42,7 +45,7 @@ dat_gh <- get_geizhals_data(url_geizhals, max_pages = 1)
 head(dat_gh)
 
 dat_gh <- get_geizhals_data(url_geizhals, max_items = 3,
-  delay_detailpage = 1)
+  delay_listpage = 1, delay_detailpage = 1)
 head(dat_gh)
 }
 
