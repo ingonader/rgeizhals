@@ -249,6 +249,8 @@ parse_single_detailpage <- function(detailpagehtml) {
 #'   If \code{max_items} is smaller than the length of the passed urls
 #'   in \code{detailpageurls}, only the first \code{max_items} entries
 #'   are fetched.
+#' @param delay_detailpage Number of seconds to wait after fetching
+#'   html of each detailpage (defaults to \code{NA}).
 #'
 #' @return A list of length two. The first element, \code{url}, contains
 #'   the vector of urls that was passed to the function. The second list
@@ -264,12 +266,14 @@ parse_single_detailpage <- function(detailpagehtml) {
 #'
 #' ## now, get (first three) detailpages:
 #' urls <- dat_listpages$detailpage_url
-#' detailpagehtml_list <- fetch_all_detailpage_html(urls, max_items = 3)
+#' detailpagehtml_list <- fetch_all_detailpage_html(urls, max_items = 3,
+#'   delay_detailpage = 1)
 #' detailpagehtml_list
 #' }
 #'
 #' @export
-fetch_all_detailpage_html <- function(detailpageurls, max_items = Inf) {
+fetch_all_detailpage_html <- function(detailpageurls, max_items = Inf,
+                                      delay_detailpage = NA) {
   ## check if there are more urls than max_items:
   if (length(detailpageurls) > max_items) {
     detailpageurls <- detailpageurls[1:max_items]
@@ -280,6 +284,10 @@ fetch_all_detailpage_html <- function(detailpageurls, max_items = Inf) {
     html = purrr::map(detailpageurls, function(i) {
       message("Fetching detailpage ", i, "...")
       ret <- try(xml2::read_html(i), silent = TRUE)
+      if (!is.na(delay_detailpage)) {
+        message("Sleeping for ", delay_detailpage, " second(s)...")
+        Sys.sleep(delay_detailpage)
+      }
       ## if it fails, return NA:
       if (class(ret)[1] == "try-error") {
         warning("Something unexpected happened when fetching listpage. \n",

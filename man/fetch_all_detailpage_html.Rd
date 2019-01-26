@@ -4,7 +4,8 @@
 \alias{fetch_all_detailpage_html}
 \title{Fetch html of detailpage urls}
 \usage{
-fetch_all_detailpage_html(detailpageurls, max_items = Inf)
+fetch_all_detailpage_html(detailpageurls, max_items = Inf,
+  delay_detailpage = NA)
 }
 \arguments{
 \item{detailpageurls}{A character vector containing urls to
@@ -16,6 +17,9 @@ the maximum number of items to scrape. (Default: \code{Inf}).
 If \code{max_items} is smaller than the length of the passed urls
 in \code{detailpageurls}, only the first \code{max_items} entries
 are fetched.}
+
+\item{delay_detailpage}{Number of seconds to wait after fetching
+html of each detailpage (defaults to \code{NA}).}
 }
 \value{
 A list of length two. The first element, \code{url}, contains
@@ -36,7 +40,8 @@ dat_listpages <- parse_all_listpages(listpagehtml_list)
 
 ## now, get (first three) detailpages:
 urls <- dat_listpages$detailpage_url
-detailpagehtml_list <- fetch_all_detailpage_html(urls, max_items = 3)
+detailpagehtml_list <- fetch_all_detailpage_html(urls, max_items = 3,
+  delay_detailpage = 1)
 detailpagehtml_list
 }
 

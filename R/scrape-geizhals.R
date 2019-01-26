@@ -63,7 +63,8 @@ join_details_to_listpage <- function(dat_listpage, dat_detailpage) {
 #' dat_gh <- get_geizhals_data(url_geizhals, max_pages = 1)
 #' head(dat_gh)
 #'
-#' dat_gh <- get_geizhals_data(url_geizhals, max_items = 3)
+#' dat_gh <- get_geizhals_data(url_geizhals, max_items = 3,
+#'   delay_detailpage = 1)
 #' head(dat_gh)
 #' }
 #'
@@ -71,6 +72,7 @@ join_details_to_listpage <- function(dat_listpage, dat_detailpage) {
 get_geizhals_data <- function(firstlistpageurl,
                               max_pages = 10,
                               max_items = Inf,
+                              delay_detailpage = NA,
                               domain = NA) {
   ## get domain, if none is specified:
   if (is.na(domain)) domain <- extract_domain(firstlistpageurl)
@@ -86,7 +88,8 @@ get_geizhals_data <- function(firstlistpageurl,
   detailpagehtml_list <- fetch_all_detailpage_html(
     parse_all_listpages(listpagehtml_list,
                         domain = domain)$detailpage_url,
-    max_items = max_items
+    max_items = max_items,
+    delay_detailpage = delay_detailpage
   )
   dat_detailpage <- parse_all_detailpages(detailpagehtml_list)
 
